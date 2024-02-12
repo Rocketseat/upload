@@ -8,9 +8,10 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@nivo/drizzle": "workspace:*",
     "@nivo/env": "workspace:*",
     "@nivo/qstash": "workspace:*",
-    "@nivo/drizzle": "workspace:*",
+    "drizzle-orm": "^0.29.3",
     "zod": "^3.22.4"
   },
   "devDependencies": {

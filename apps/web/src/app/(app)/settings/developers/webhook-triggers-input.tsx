@@ -6,7 +6,7 @@ import { Label } from '@/components/ui/label'
 import { Skeleton } from '@/components/ui/skeleton'
 import { trpc } from '@/lib/trpc/react'
 
-import { CreateWebhookSchema } from './create-webhook'
+import { CreateWebhookSchema } from './webhook-form'
 
 export function WebhookTriggersInput() {
   const { data, isLoading } = trpc.getAvailableTriggers.useQuery()

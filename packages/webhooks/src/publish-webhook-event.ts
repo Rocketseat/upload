@@ -1,13 +1,12 @@
 import { env } from '@nivo/env'
 import { qstash } from '@nivo/qstash/client'
 
-import { getWebhookDeliverUrls } from './get-webhook-deliver-urls'
+import { getCompanyWebhooksForTrigger } from './get-company-webhooks-for-trigger'
 import { WebhookEvent } from './webhook-event'
-import { WebhookEventTrigger } from './webhook-event-trigger'
 
 export type PublishWebhookEventsParams = Parameters<typeof publishWebhookEvents>
 
-export async function publishWebhookEvents<T extends WebhookEventTrigger>({
+export async function publishWebhookEvents<T extends WebhookEvent['trigger']>({
   companyId,
   trigger,
   events,
@@ -16,12 +15,12 @@ export async function publishWebhookEvents<T extends WebhookEventTrigger>({
   trigger: T
   events: Array<Extract<WebhookEvent, { trigger: T }>['payload']>
 }) {
-  const deliverToUrls = await getWebhookDeliverUrls({
+  const companyWebhooksForTrigger = await getCompanyWebhooksForTrigger({
     companyId,
     trigger,
   })
 
-  if (deliverToUrls.length === 0) {
+  if (companyWebhooksForTrigger.length === 0) {
     return
   }
 
@@ -40,15 +39,16 @@ export async function publishWebhookEvents<T extends WebhookEventTrigger>({
   }
 
   await Promise.all(
-    deliverToUrls.flatMap(async (url) => {
-      return events.map((event) => {
+    companyWebhooksForTrigger.flatMap(async (webhook) => {
+      return events.map((payload) => {
         return qstash.publishJSON({
           topic: env.QSTASH_WEBHOOKS_TOPIC,
           contentBasedDeduplication: true,
           body: {
-            deliverTo: url,
+            deliverTo: webhook.url,
+            companyWebhookId: webhook.id,
             trigger,
-            event,
+            payload,
           },
         })
       })

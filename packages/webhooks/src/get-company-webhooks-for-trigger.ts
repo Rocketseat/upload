@@ -5,21 +5,21 @@ import { z } from 'zod'
 
 import { webhookEventTriggerSchema } from './webhook-event-trigger'
 
-const getWebhookDeliverUrlsParamsSchema = z.object({
+const getCompanyWebhooksForTriggerParamsSchema = z.object({
   companyId: z.string().uuid(),
   trigger: webhookEventTriggerSchema,
 })
 
-type GetWebhookDeliverUrlsParams = z.infer<
-  typeof getWebhookDeliverUrlsParamsSchema
+type GetCompanyWebhooksForTriggerParams = z.infer<
+  typeof getCompanyWebhooksForTriggerParamsSchema
 >
 
-export async function getWebhookDeliverUrls({
+export async function getCompanyWebhooksForTrigger({
   companyId,
   trigger,
-}: GetWebhookDeliverUrlsParams) {
+}: GetCompanyWebhooksForTriggerParams) {
   const webhooks = await db
-    .select({ url: companyWebhook.url })
+    .select({ id: companyWebhook.id, url: companyWebhook.url })
     .from(companyWebhook)
     .where(
       and(
@@ -28,7 +28,5 @@ export async function getWebhookDeliverUrls({
       ),
     )
 
-  const deliverToUrls = webhooks.map((webhook) => webhook.url)
-
-  return deliverToUrls
+  return webhooks
 }

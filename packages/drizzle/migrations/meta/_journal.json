@@ -22,6 +22,41 @@
       "when": 1707584877777,
       "tag": "0002_wooden_firebrand",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1707739948497,
+      "tag": "0003_serious_blockbuster",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "5",
+      "when": 1707741442688,
+      "tag": "0004_loud_yellow_claw",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "5",
+      "when": 1707741498741,
+      "tag": "0005_nebulous_moon_knight",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "5",
+      "when": 1707741995556,
+      "tag": "0006_chief_stingray",
+      "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "5",
+      "when": 1707742472006,
+      "tag": "0007_glossy_banshee",
+      "breakpoints": true
     }
   ]
 }

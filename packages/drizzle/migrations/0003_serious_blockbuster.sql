@@ -1,0 +1,2 @@
+ALTER TABLE "company_webhooks" ALTER COLUMN "events" SET NOT NULL;--> statement-breakpoint
+CREATE UNIQUE INDEX IF NOT EXISTS "company_webhooks_company_id_url_index" ON "company_webhooks" ("company_id","url");
