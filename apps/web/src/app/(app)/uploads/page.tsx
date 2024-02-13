@@ -72,8 +72,8 @@ export default async function UploadsPage({
           <TableHeader>
             <TableRow>
               <TableHead>Video</TableHead>
-              <TableHead style={{ width: 120 }}>Duration</TableHead>
-              <TableHead style={{ width: 140 }}>Size</TableHead>
+              <TableHead style={{ width: 100 }}>Duration</TableHead>
+              <TableHead style={{ width: 120 }}>Size</TableHead>
               <TableHead style={{ width: 200 }}>
                 <div className="flex items-center gap-2">
                   <Cable className="size-4" />
@@ -130,11 +130,9 @@ export default async function UploadsPage({
                           </CopyButton>
                         </div>
                       ) : (
-                        <div className="flex items-center font-medium">
+                        <div className="flex items-center font-medium text-muted-foreground/80">
                           <SymbolIcon className="mr-2 h-3 w-3 animate-spin" />
-                          <span className="text-muted-foreground">
-                            Processing
-                          </span>
+                          <span>Processing</span>
                         </div>
                       )}
                     </TableCell>

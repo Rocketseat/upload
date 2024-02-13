@@ -1,7 +1,7 @@
 'use client'
 
-import { DotsHorizontalIcon, Pencil2Icon } from '@radix-ui/react-icons'
-import { Loader2, Trash2 } from 'lucide-react'
+import { Pencil2Icon } from '@radix-ui/react-icons'
+import { Loader2, MoreHorizontal, Trash2 } from 'lucide-react'
 import Link from 'next/link'
 import { useState } from 'react'
 
@@ -73,10 +73,11 @@ export function UploadItemActions({ videoId }: UploadItemActionsProps) {
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button
-            variant="ghost"
-            className="flex h-8 w-8 p-0 data-[state=open]:bg-muted"
+            variant="outline"
+            size="xs"
+            className="data-[state=open]:bg-muted"
           >
-            <DotsHorizontalIcon className="h-4 w-4" />
+            <MoreHorizontal className="size-3" />
             <span className="sr-only">Open menu</span>
           </Button>
         </DropdownMenuTrigger>

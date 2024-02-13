@@ -114,7 +114,7 @@ export function VideoForm({ video }: VideoFormProps) {
 
         <div className="space-y-2">
           <Label htmlFor="externalProviderId">External Status/ID</Label>
-          <div className="flex items-center gap-2 rounded-lg border border-slate-200 px-3 has-[input:focus-visible]:ring-2 has-[input:focus-visible]:ring-slate-400 has-[input:focus-visible]:ring-offset-2 dark:border-slate-800 dark:bg-slate-950 dark:ring-offset-slate-950 dark:has-[input:focus-visible]:ring-slate-800">
+          <div className="flex items-center gap-2 rounded-lg border border-zinc-200 px-3 has-[input:focus-visible]:ring-2 has-[input:focus-visible]:ring-zinc-400 has-[input:focus-visible]:ring-offset-2 dark:border-zinc-800 dark:bg-zinc-950 dark:ring-offset-zinc-950 dark:has-[input:focus-visible]:ring-zinc-800">
             <Badge variant="secondary">
               {video.externalStatus || 'waiting'}
             </Badge>

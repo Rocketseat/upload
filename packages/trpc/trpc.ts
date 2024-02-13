@@ -10,6 +10,7 @@ type TRPCContext = {
 const t = initTRPC.context<TRPCContext>().create({
   transformer: SuperJSON,
   errorFormatter({ shape, error }) {
+    console.log(error)
     return {
       ...shape,
       data: {

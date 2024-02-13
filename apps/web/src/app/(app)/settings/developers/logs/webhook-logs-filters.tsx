@@ -41,7 +41,7 @@ export async function WebhookLogsFilters() {
           aria-label="Show all webhook statuses"
         >
           <div className="flex items-center gap-2">
-            <span className="size-2 shrink-0 rounded-full bg-slate-400" />
+            <span className="size-2 shrink-0 rounded-full bg-zinc-400" />
             <span className="text-xs font-semibold">All</span>
           </div>
         </ToggleGroupItem>

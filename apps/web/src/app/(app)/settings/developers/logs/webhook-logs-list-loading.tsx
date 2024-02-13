@@ -7,7 +7,7 @@ export function WebhookLogsListLoading() {
         return (
           <div
             key={i}
-            className="flex items-center gap-4 border-b border-l-4 border-l-slate-100 px-4 py-2.5 dark:border-l-slate-900"
+            className="flex items-center gap-4 border-b border-l-4 border-l-zinc-100 px-4 py-2.5 dark:border-l-zinc-900"
           >
             <Skeleton className="h-[22px] w-11" />
             <span className="font-mono text-sm font-semibold">

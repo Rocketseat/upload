@@ -1,6 +1,11 @@
+import { dayjs } from '@nivo/dayjs'
 import { db } from '@nivo/drizzle'
-import { companyWebhook, webhookEventTrigger } from '@nivo/drizzle/schema'
-import { and, eq } from 'drizzle-orm'
+import {
+  companyWebhook,
+  companyWebhookLog,
+  webhookEventTrigger,
+} from '@nivo/drizzle/schema'
+import { and, count, eq, gte, sql } from 'drizzle-orm'
 import { z } from 'zod'
 
 import { createTRPCRouter, protectedProcedure } from '../trpc'
@@ -40,11 +45,96 @@ export const companyWebhooksRouter = createTRPCRouter({
   getCompanyWebhooks: protectedProcedure.query(async ({ ctx }) => {
     const { companyId } = ctx.session.user
 
-    const companyWebhooks = await db.query.companyWebhook.findMany({
-      where(fields, { eq }) {
-        return eq(fields.companyId, companyId)
-      },
-    })
+    const sevenDaysAgo = dayjs().subtract(7, 'days').startOf('day').toDate()
+
+    const amountOfLogsPerDatePerWebhook = db
+      .$with('amount_of_logs_per_date_per_webhook')
+      .as(
+        db
+          .select({
+            companyWebhookId: companyWebhook.id,
+            date: sql<string>/* sql */ `
+              TO_CHAR(${companyWebhookLog.createdAt}, 'YYYY-MM-DD')
+            `.as('date'),
+            amount: count(companyWebhookLog.id).as('amount'),
+          })
+          .from(companyWebhookLog)
+          .innerJoin(
+            companyWebhook,
+            eq(companyWebhook.id, companyWebhookLog.companyWebhookId),
+          )
+          .where(
+            and(
+              eq(companyWebhook.companyId, companyId),
+              gte(companyWebhookLog.createdAt, sevenDaysAgo),
+            ),
+          )
+          .groupBy(
+            companyWebhook.id,
+            sql/* sql */ `TO_CHAR(${companyWebhookLog.createdAt}, 'YYYY-MM-DD')`,
+          ),
+      )
+
+    const successRatePerWebhook = db.$with('success_rate_per_webhook').as(
+      db
+        .select({
+          companyWebhookId: companyWebhook.id,
+          successRate: sql<number>`
+            ROUND(
+              (
+                (
+                  SUM(
+                    CASE
+                      WHEN ${companyWebhookLog.status} = 'SUCCESS' THEN 1
+                      ELSE 0
+                    END
+                  ) * 100
+                ) / COUNT(${companyWebhookLog.id})
+              ),
+              2
+            )
+          `
+            .mapWith(Number)
+            .as('success_rate'),
+        })
+        .from(companyWebhookLog)
+        .innerJoin(
+          companyWebhook,
+          eq(companyWebhook.id, companyWebhookLog.companyWebhookId),
+        )
+        .where(
+          and(
+            eq(companyWebhook.companyId, companyId),
+            gte(companyWebhookLog.createdAt, sevenDaysAgo),
+          ),
+        )
+        .groupBy(companyWebhook.id),
+    )
+
+    const companyWebhooks = await db
+      .with(amountOfLogsPerDatePerWebhook, successRatePerWebhook)
+      .select({
+        id: companyWebhook.id,
+        url: companyWebhook.url,
+        triggers: companyWebhook.triggers,
+        amountOfLogs: sql<{ date: string; amount: number }[]>/* sql */ `
+          json_agg (
+            json_build_object ('date', "date", 'amount', "amount")
+          )
+        `,
+        successRate: successRatePerWebhook.successRate,
+      })
+      .from(companyWebhook)
+      .leftJoin(
+        amountOfLogsPerDatePerWebhook,
+        eq(amountOfLogsPerDatePerWebhook.companyWebhookId, companyWebhook.id),
+      )
+      .leftJoin(
+        successRatePerWebhook,
+        eq(successRatePerWebhook.companyWebhookId, companyWebhook.id),
+      )
+      .where(eq(companyWebhook.companyId, companyId))
+      .groupBy(companyWebhook.id, successRatePerWebhook.successRate)
 
     return { companyWebhooks }
   }),

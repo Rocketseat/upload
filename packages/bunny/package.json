@@ -8,7 +8,8 @@
     "lint": "eslint ."
   },
   "dependencies": {
-    "@nivo/env": "workspace:*"
+    "@nivo/env": "workspace:*",
+    "@nivo/dayjs": "workspace:*"
   },
   "devDependencies": {
     "@nivo/tsconfig": "workspace:*",

@@ -7,6 +7,7 @@ import { FormEvent, useState, useTransition } from 'react'
 import { TagInput } from '@/components/tag-input'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import { Separator } from '@/components/ui/separator'
 
 export function UploadsFilters() {
   const router = useRouter()
@@ -58,6 +59,8 @@ export function UploadsFilters() {
       />
 
       <TagInput value={tags} onValueChange={setTags} allowTagCreation={false} />
+
+      <Separator orientation="vertical" className="h-6" />
 
       <Button type="submit" size="sm" variant="secondary">
         {isPendingFilterTransition ? (

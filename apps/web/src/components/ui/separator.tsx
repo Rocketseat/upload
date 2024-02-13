@@ -17,7 +17,7 @@ const Separator = React.forwardRef<
       decorative={decorative}
       orientation={orientation}
       className={twMerge(
-        'shrink-0 bg-slate-200 dark:bg-slate-800',
+        'shrink-0 bg-zinc-200 dark:bg-zinc-800',
         orientation === 'horizontal' ? 'h-[1px] w-full' : 'h-full w-[1px]',
         className,
       )}

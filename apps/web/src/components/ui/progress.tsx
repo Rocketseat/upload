@@ -11,7 +11,7 @@ const Progress = React.forwardRef<
   <ProgressPrimitive.Root
     ref={ref}
     className={twMerge(
-      'relative h-2 w-full overflow-hidden rounded-full bg-slate-200 dark:bg-slate-800',
+      'relative h-2 w-full overflow-hidden rounded-full bg-zinc-200 dark:bg-zinc-800',
       className,
     )}
     {...props}

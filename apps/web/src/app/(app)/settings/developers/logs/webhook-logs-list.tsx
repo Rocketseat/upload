@@ -1,4 +1,5 @@
 import { dayjs } from '@nivo/dayjs'
+import { ArrowDown } from 'lucide-react'
 
 import { NavLink } from '@/components/nav-link'
 import { Badge } from '@/components/ui/badge'
@@ -16,9 +17,14 @@ export async function WebhookLogsList() {
           <NavLink
             href={`/settings/developers/logs/${webhookLog.id}`}
             key={webhookLog.id}
-            className="flex items-center gap-4 border-b border-l-4 border-l-slate-100 px-4 py-2.5 hover:bg-accent/50 data-[current=true]:border-l-teal-400 data-[current=true]:bg-accent dark:border-l-slate-900 dark:data-[current=true]:border-l-teal-400"
+            className="flex items-center gap-4 border-b border-l-4 border-l-zinc-100 px-4 py-2.5 hover:bg-accent/50 data-[current=true]:border-l-teal-400 data-[current=true]:bg-accent dark:border-l-zinc-900 dark:data-[current=true]:border-l-teal-400"
           >
-            <Badge variant="secondary">{webhookLog.httpCode ?? '-'}</Badge>
+            <Badge
+              variant="secondary"
+              className="border border-zinc-400 dark:border-zinc-700"
+            >
+              {webhookLog.httpCode ?? '-'}
+            </Badge>
             <span className="font-mono text-sm font-semibold">
               {webhookLog.httpMethod}
             </span>
@@ -33,6 +39,14 @@ export async function WebhookLogsList() {
           </NavLink>
         )
       })}
+      <button
+        type="button"
+        disabled
+        className="flex items-center justify-center gap-2 border-b py-4 text-sm text-muted-foreground enabled:hover:bg-accent/50 disabled:opacity-50"
+      >
+        <ArrowDown className="size-3" />
+        Load more...
+      </button>
     </div>
   )
 }

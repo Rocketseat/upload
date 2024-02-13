@@ -41,10 +41,15 @@ export function WebhooksList() {
             <TableHead>URL</TableHead>
             <TableHead style={{ width: 120 }}>Triggers</TableHead>
             <TableHead style={{ width: 164 }}>Last 7 days</TableHead>
-            <TableHead style={{ width: 96 }} className="text-right">
-              Error rate
+            <TableHead style={{ width: 120 }} className="text-right">
+              <div className="flex flex-col">
+                <span>Success rate</span>
+                <span className="text-xxs text-muted-foreground">
+                  (last 7 days)
+                </span>
+              </div>
             </TableHead>
-            <TableHead style={{ width: 96 }}>Status</TableHead>
+            <TableHead style={{ width: 64 }}>Status</TableHead>
             <TableHead style={{ width: 220 }}></TableHead>
           </TableRow>
         </TableHeader>
@@ -71,9 +76,11 @@ export function WebhooksList() {
                   </Tooltip>
                 </TableCell>
                 <TableCell className="py-1.5">
-                  <WebhookEventsChart />
+                  <WebhookEventsChart data={webhook.amountOfLogs} />
                 </TableCell>
-                <TableCell className="py-1.5 text-right">3%</TableCell>
+                <TableCell className="py-1.5 text-right font-medium">
+                  {String(webhook.successRate).concat('%')}
+                </TableCell>
                 <TableCell className="py-1.5">
                   <div className="flex items-center gap-2">
                     <span className="size-2 shrink-0 rounded-full bg-teal-400" />
