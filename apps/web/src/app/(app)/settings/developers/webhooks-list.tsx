@@ -40,7 +40,14 @@ export function WebhooksList() {
           <TableRow>
             <TableHead>URL</TableHead>
             <TableHead style={{ width: 120 }}>Triggers</TableHead>
-            <TableHead style={{ width: 164 }}>Last 7 days</TableHead>
+            <TableHead style={{ width: 164 }}>
+              <div className="flex flex-col">
+                <span>Events</span>
+                <span className="text-xxs text-muted-foreground">
+                  (last 7 days)
+                </span>
+              </div>
+            </TableHead>
             <TableHead style={{ width: 120 }} className="text-right">
               <div className="flex flex-col">
                 <span>Success rate</span>

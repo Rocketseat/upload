@@ -5,6 +5,7 @@ import { RouterOutput } from '@nivo/trpc'
 import { CheckCircledIcon } from '@radix-ui/react-icons'
 import { Loader2 } from 'lucide-react'
 import { FormProvider, useForm } from 'react-hook-form'
+import { toast } from 'sonner'
 import { z } from 'zod'
 
 import { Badge } from '@/components/ui/badge'
@@ -12,7 +13,6 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Separator } from '@/components/ui/separator'
-import { useToast } from '@/components/ui/use-toast'
 import { trpc } from '@/lib/trpc/react'
 
 import { VideoDescriptionInput } from './video-description-input'
@@ -37,8 +37,6 @@ const editVideoFormSchema = z.object({
 export type EditVideoFormSchema = z.infer<typeof editVideoFormSchema>
 
 export function VideoForm({ video }: VideoFormProps) {
-  const { toast } = useToast()
-
   const editVideoForm = useForm<EditVideoFormSchema>({
     resolver: zodResolver(editVideoFormSchema),
     defaultValues: {
@@ -66,10 +64,8 @@ export function VideoForm({ video }: VideoFormProps) {
         commitUrl,
       })
     } catch {
-      toast({
-        title: 'Uh oh! Something went wrong.',
+      toast.error('Uh oh! Something went wrong.', {
         description: `An error ocurred while trying to save the video.`,
-        variant: 'destructive',
       })
     }
   }

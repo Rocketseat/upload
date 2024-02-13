@@ -1,6 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { AlertCircle, Loader2 } from 'lucide-react'
 import { useForm } from 'react-hook-form'
+import { toast } from 'sonner'
 import { z } from 'zod'
 
 import { trpc } from '@/lib/trpc/react'
@@ -17,7 +18,6 @@ import {
 } from './ui/dialog'
 import { Input } from './ui/input'
 import { Label } from './ui/label'
-import { useToast } from './ui/use-toast'
 
 const newTagFormSchema = z.object({
   tag: z
@@ -38,7 +38,6 @@ interface CreateNewTagDialogProps {
 export function CreateNewTagDialog({
   onRequestClose,
 }: CreateNewTagDialogProps) {
-  const { toast } = useToast()
   const utils = trpc.useUtils()
 
   const {
@@ -66,10 +65,8 @@ export function CreateNewTagDialog({
       reset()
       onRequestClose()
     } catch (err) {
-      toast({
-        title: 'Uh oh! Something went wrong.',
+      toast.error('Uh oh! Something went wrong.', {
         description: `An error ocurred while trying to create the tag. Maybe you're trying to create a duplicated tag.`,
-        variant: 'destructive',
       })
     }
   }

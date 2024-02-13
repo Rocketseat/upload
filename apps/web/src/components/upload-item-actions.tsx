@@ -4,6 +4,7 @@ import { Pencil2Icon } from '@radix-ui/react-icons'
 import { Loader2, MoreHorizontal, Trash2 } from 'lucide-react'
 import Link from 'next/link'
 import { useState } from 'react'
+import { toast } from 'sonner'
 
 import {
   AlertDialog,
@@ -23,8 +24,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { ToastAction } from '@/components/ui/toast'
-import { useToast } from '@/components/ui/use-toast'
 import { trpc } from '@/lib/trpc/react'
 
 interface UploadItemActionsProps {
@@ -32,7 +31,6 @@ interface UploadItemActionsProps {
 }
 
 export function UploadItemActions({ videoId }: UploadItemActionsProps) {
-  const { toast } = useToast()
   const utils = trpc.useUtils()
 
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
@@ -50,20 +48,9 @@ export function UploadItemActions({ videoId }: UploadItemActionsProps) {
 
       setIsDeleteDialogOpen(false)
     } catch {
-      toast({
-        title: 'Uh oh! Something went wrong.',
+      toast.error('Uh oh! Something went wrong.', {
         description:
           'An error ocurred while trying to delete the video. If the error persists, please contact an administrator.',
-        variant: 'destructive',
-        action: (
-          <ToastAction
-            altText="Try again"
-            disabled={isDeletingVideo}
-            onClick={handleDeleteVideo}
-          >
-            Try again
-          </ToastAction>
-        ),
       })
     }
   }

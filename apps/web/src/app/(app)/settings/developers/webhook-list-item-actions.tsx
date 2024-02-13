@@ -4,6 +4,7 @@ import { RouterOutput } from '@nivo/trpc'
 import { Pencil2Icon } from '@radix-ui/react-icons'
 import { Loader2, MoreHorizontal, X } from 'lucide-react'
 import { useState } from 'react'
+import { toast } from 'sonner'
 
 import {
   AlertDialog,
@@ -31,7 +32,6 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { useToast } from '@/components/ui/use-toast'
 import { trpc } from '@/lib/trpc/react'
 
 import { WebhookForm } from './webhook-form'
@@ -43,7 +43,6 @@ interface WebhookListItemActionsProps {
 export function WebhookListItemActions({
   webhook,
 }: WebhookListItemActionsProps) {
-  const { toast } = useToast()
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
   const utils = trpc.useUtils()
 
@@ -62,10 +61,8 @@ export function WebhookListItemActions({
 
       setIsDeleteDialogOpen(false)
     } catch {
-      toast({
-        title: 'Uh oh! Something went wrong.',
+      toast('Uh oh! Something went wrong.', {
         description: `An error ocurred while trying to delete the webhook.`,
-        variant: 'destructive',
       })
     }
   }

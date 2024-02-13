@@ -5,13 +5,13 @@ import { webhookEventTrigger } from '@nivo/drizzle/schema'
 import { RouterOutput } from '@nivo/trpc'
 import { Loader2 } from 'lucide-react'
 import { FormProvider, useForm } from 'react-hook-form'
+import { toast } from 'sonner'
 import { z } from 'zod'
 
 import { Button } from '@/components/ui/button'
 import { DialogTrigger } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { useToast } from '@/components/ui/use-toast'
 import { trpc } from '@/lib/trpc/react'
 
 import { WebhookTriggersInput } from './webhook-triggers-input'
@@ -30,7 +30,6 @@ interface WebhookFormProps {
 }
 
 export function WebhookForm({ webhookToEdit }: WebhookFormProps) {
-  const { toast } = useToast()
   const utils = trpc.useUtils()
 
   const webhookForm = useForm<CreateWebhookSchema>({
@@ -70,16 +69,12 @@ export function WebhookForm({ webhookToEdit }: WebhookFormProps) {
 
       utils.getCompanyWebhooks.invalidate()
 
-      toast({
-        title: 'Webhook successfully saved!',
-        description: `Now your endpoint is listening to Nivo events!`,
-        variant: 'default',
+      toast.success('Webhook successfully saved!', {
+        description: 'Now your endpoint is listening to Nivo events!',
       })
     } catch {
-      toast({
-        title: 'Uh oh! Something went wrong.',
+      toast.error('Uh oh! Something went wrong.', {
         description: `An error ocurred while trying to save the webhook.`,
-        variant: 'destructive',
       })
     }
   }

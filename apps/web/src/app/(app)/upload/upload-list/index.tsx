@@ -3,10 +3,9 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useRouter } from 'next/navigation'
 import { FormProvider, useForm } from 'react-hook-form'
+import { toast } from 'sonner'
 import { z } from 'zod'
 
-import { ToastAction } from '@/components/ui/toast'
-import { useToast } from '@/components/ui/use-toast'
 import { trpc } from '@/lib/trpc/react'
 
 import { Header } from './header'
@@ -20,7 +19,7 @@ const uploadsFormSchema = z.object({
         id: z.string(),
         title: z.string().min(1),
         duration: z.coerce.number().transform(Math.round),
-        language: z.string(),
+        language: z.enum(['pt', 'es']),
         sizeInBytes: z.coerce.number(),
         tags: z.array(z.string()).min(1, 'At least one tag is required.'),
       }),
@@ -31,17 +30,13 @@ const uploadsFormSchema = z.object({
 export type UploadsFormSchema = z.infer<typeof uploadsFormSchema>
 
 export function UploadList() {
-  const { toast } = useToast()
   const router = useRouter()
 
   const uploadsForm = useForm<UploadsFormSchema>({
     resolver: zodResolver(uploadsFormSchema),
   })
 
-  const {
-    handleSubmit,
-    formState: { isSubmitting },
-  } = uploadsForm
+  const { handleSubmit } = uploadsForm
 
   const { mutateAsync: createUploadBatch } =
     trpc.createUploadBatch.useMutation()
@@ -52,20 +47,9 @@ export function UploadList() {
 
       router.push(`/batches/${batchId}`)
     } catch {
-      toast({
-        title: 'Uh oh! Something went wrong.',
+      toast.error('Uh oh! Something went wrong.', {
         description:
           'An error ocurred while trying to create the upload batch. If the error persists, please contact an administrator.',
-        variant: 'destructive',
-        action: (
-          <ToastAction
-            altText="Try again"
-            disabled={isSubmitting}
-            onClick={handleSubmit(handleCreateUploadBatch)}
-          >
-            Try again
-          </ToastAction>
-        ),
       })
     }
   }
