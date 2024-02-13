@@ -14,7 +14,6 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Separator } from '@/components/ui/separator'
 
-import { CreateWebhook } from './create-webhook'
 import { WebhookDocsButton } from './webhooks-docs-button'
 import { WebhooksList } from './webhooks-list'
 
@@ -67,20 +66,7 @@ export default async function SettingsPage() {
 
           <Separator />
 
-          <div className="space-y-2">
-            <div className="flex items-center justify-between">
-              <div>
-                <Label asChild>
-                  <span>Webhooks</span>
-                </Label>
-                <p className="text-[0.8rem] text-muted-foreground">
-                  Listen to Nivo events in your application.
-                </p>
-              </div>
-              <CreateWebhook />
-            </div>
-            <WebhooksList />
-          </div>
+          <WebhooksList />
 
           <Separator />
 

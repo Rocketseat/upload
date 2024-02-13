@@ -42,44 +42,53 @@ export const companyWebhooksRouter = createTRPCRouter({
     return { triggers }
   }),
 
-  getCompanyWebhooks: protectedProcedure.query(async ({ ctx }) => {
-    const { companyId } = ctx.session.user
+  getCompanyWebhooks: protectedProcedure
+    .input(
+      z.object({
+        pageIndex: z.coerce.number().default(0),
+      }),
+    )
+    .query(async ({ ctx, input }) => {
+      const { companyId } = ctx.session.user
+      const { pageIndex } = input
 
-    const sevenDaysAgo = dayjs().subtract(7, 'days').startOf('day').toDate()
+      const pageSize = 5
 
-    const amountOfLogsPerDatePerWebhook = db
-      .$with('amount_of_logs_per_date_per_webhook')
-      .as(
+      const sevenDaysAgo = dayjs().subtract(7, 'days').startOf('day').toDate()
+
+      const amountOfLogsPerDatePerWebhook = db
+        .$with('amount_of_logs_per_date_per_webhook')
+        .as(
+          db
+            .select({
+              companyWebhookId: companyWebhook.id,
+              date: sql<string>/* sql */ `
+              TO_CHAR(${companyWebhookLog.createdAt}, 'YYYY-MM-DD')
+            `.as('date'),
+              amount: count(companyWebhookLog.id).as('amount'),
+            })
+            .from(companyWebhookLog)
+            .innerJoin(
+              companyWebhook,
+              eq(companyWebhook.id, companyWebhookLog.companyWebhookId),
+            )
+            .where(
+              and(
+                eq(companyWebhook.companyId, companyId),
+                gte(companyWebhookLog.createdAt, sevenDaysAgo),
+              ),
+            )
+            .groupBy(
+              companyWebhook.id,
+              sql/* sql */ `TO_CHAR(${companyWebhookLog.createdAt}, 'YYYY-MM-DD')`,
+            ),
+        )
+
+      const successRatePerWebhook = db.$with('success_rate_per_webhook').as(
         db
           .select({
             companyWebhookId: companyWebhook.id,
-            date: sql<string>/* sql */ `
-              TO_CHAR(${companyWebhookLog.createdAt}, 'YYYY-MM-DD')
-            `.as('date'),
-            amount: count(companyWebhookLog.id).as('amount'),
-          })
-          .from(companyWebhookLog)
-          .innerJoin(
-            companyWebhook,
-            eq(companyWebhook.id, companyWebhookLog.companyWebhookId),
-          )
-          .where(
-            and(
-              eq(companyWebhook.companyId, companyId),
-              gte(companyWebhookLog.createdAt, sevenDaysAgo),
-            ),
-          )
-          .groupBy(
-            companyWebhook.id,
-            sql/* sql */ `TO_CHAR(${companyWebhookLog.createdAt}, 'YYYY-MM-DD')`,
-          ),
-      )
-
-    const successRatePerWebhook = db.$with('success_rate_per_webhook').as(
-      db
-        .select({
-          companyWebhookId: companyWebhook.id,
-          successRate: sql<number>`
+            successRate: sql<number>`
             ROUND(
               (
                 (
@@ -94,50 +103,64 @@ export const companyWebhooksRouter = createTRPCRouter({
               2
             )
           `
-            .mapWith(Number)
-            .as('success_rate'),
-        })
-        .from(companyWebhookLog)
-        .innerJoin(
-          companyWebhook,
-          eq(companyWebhook.id, companyWebhookLog.companyWebhookId),
-        )
-        .where(
-          and(
-            eq(companyWebhook.companyId, companyId),
-            gte(companyWebhookLog.createdAt, sevenDaysAgo),
-          ),
-        )
-        .groupBy(companyWebhook.id),
-    )
-
-    const companyWebhooks = await db
-      .with(amountOfLogsPerDatePerWebhook, successRatePerWebhook)
-      .select({
-        id: companyWebhook.id,
-        url: companyWebhook.url,
-        triggers: companyWebhook.triggers,
-        amountOfLogs: sql<{ date: string; amount: number }[]>/* sql */ `
-          json_agg (
-            json_build_object ('date', "date", 'amount', "amount")
+              .mapWith(Number)
+              .as('success_rate'),
+          })
+          .from(companyWebhookLog)
+          .innerJoin(
+            companyWebhook,
+            eq(companyWebhook.id, companyWebhookLog.companyWebhookId),
           )
-        `,
-        successRate: successRatePerWebhook.successRate,
-      })
-      .from(companyWebhook)
-      .leftJoin(
-        amountOfLogsPerDatePerWebhook,
-        eq(amountOfLogsPerDatePerWebhook.companyWebhookId, companyWebhook.id),
+          .where(
+            and(
+              eq(companyWebhook.companyId, companyId),
+              gte(companyWebhookLog.createdAt, sevenDaysAgo),
+            ),
+          )
+          .groupBy(companyWebhook.id),
       )
-      .leftJoin(
-        successRatePerWebhook,
-        eq(successRatePerWebhook.companyWebhookId, companyWebhook.id),
-      )
-      .where(eq(companyWebhook.companyId, companyId))
-      .groupBy(companyWebhook.id, successRatePerWebhook.successRate)
 
-    return { companyWebhooks }
-  }),
+      const [companyWebhooks, [{ amount }]] = await Promise.all([
+        db
+          .with(amountOfLogsPerDatePerWebhook, successRatePerWebhook)
+          .select({
+            id: companyWebhook.id,
+            url: companyWebhook.url,
+            triggers: companyWebhook.triggers,
+            amountOfLogs: sql<{ date: string; amount: number }[]>/* sql */ `
+            json_agg (
+              json_build_object ('date', "date", 'amount', "amount")
+            )
+          `,
+            successRate: successRatePerWebhook.successRate,
+          })
+          .from(companyWebhook)
+          .leftJoin(
+            amountOfLogsPerDatePerWebhook,
+            eq(
+              amountOfLogsPerDatePerWebhook.companyWebhookId,
+              companyWebhook.id,
+            ),
+          )
+          .leftJoin(
+            successRatePerWebhook,
+            eq(successRatePerWebhook.companyWebhookId, companyWebhook.id),
+          )
+          .where(eq(companyWebhook.companyId, companyId))
+          .offset(pageIndex * pageSize)
+          .limit(pageSize)
+          .groupBy(companyWebhook.id, successRatePerWebhook.successRate),
+
+        db
+          .select({ amount: count() })
+          .from(companyWebhook)
+          .where(eq(companyWebhook.companyId, companyId)),
+      ])
+
+      const pageCount = Math.ceil(amount / pageSize)
+
+      return { companyWebhooks, pageCount }
+    }),
 
   createCompanyWebhook: protectedProcedure
     .input(
