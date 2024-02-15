@@ -92,6 +92,10 @@ export default async function WebhookLogsDetails({
               </TableCell>
             </TableRow>
             <TableRow>
+              <TableCell>Error reason</TableCell>
+              <TableCell>{webhookLog.errorReason || '-'}</TableCell>
+            </TableRow>
+            <TableRow>
               <TableCell>HTTP Status</TableCell>
               <TableCell>
                 <Badge variant="secondary">{webhookLog.httpCode ?? '-'}</Badge>

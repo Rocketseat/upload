@@ -57,6 +57,20 @@
       "when": 1707742472006,
       "tag": "0007_glossy_banshee",
       "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "5",
+      "when": 1707862279417,
+      "tag": "0008_closed_cardiac",
+      "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "5",
+      "when": 1707862300883,
+      "tag": "0009_silent_hedge_knight",
+      "breakpoints": true
     }
   ]
 }

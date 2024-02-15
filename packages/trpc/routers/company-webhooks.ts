@@ -9,6 +9,7 @@ import { and, count, eq, gte, sql } from 'drizzle-orm'
 import { z } from 'zod'
 
 import { createTRPCRouter, protectedProcedure } from '../trpc'
+import { generateSigningKey } from '../utils/generate-signing-key'
 
 export const companyWebhooksRouter = createTRPCRouter({
   getAvailableTriggers: protectedProcedure.query(async () => {
@@ -127,6 +128,7 @@ export const companyWebhooksRouter = createTRPCRouter({
             id: companyWebhook.id,
             url: companyWebhook.url,
             triggers: companyWebhook.triggers,
+            signingKey: companyWebhook.signingKey,
             amountOfLogs: sql<{ date: string; amount: number }[]>/* sql */ `
             json_agg (
               json_build_object ('date', "date", 'amount', "amount")
@@ -177,6 +179,7 @@ export const companyWebhooksRouter = createTRPCRouter({
         companyId,
         url,
         triggers,
+        signingKey: generateSigningKey(),
       })
     }),
 

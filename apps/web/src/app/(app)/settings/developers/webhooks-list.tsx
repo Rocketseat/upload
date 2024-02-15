@@ -5,6 +5,7 @@ import { ClipboardCopy, Globe } from 'lucide-react'
 import dynamic from 'next/dynamic'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useCallback } from 'react'
+import { toast } from 'sonner'
 import { z } from 'zod'
 
 import { Button } from '@/components/ui/button'
@@ -33,6 +34,7 @@ import { WebhooksListLoading } from './webhooks-list-loading'
 const WebhookEventsChart = dynamic(() => import('./webhook-events-chart'), {
   ssr: false,
 })
+
 export function WebhooksList() {
   const router = useRouter()
   const searchParams = useSearchParams()
@@ -59,6 +61,12 @@ export function WebhooksList() {
     router.push(
       `/settings/developers?${createQueryString('pageIndex', String(pageIndex))}`,
     )
+  }
+
+  function handleCopySigningKey(signingKey: string) {
+    navigator.clipboard.writeText(signingKey)
+
+    toast.info('Signing key copied to clipboard!')
   }
 
   const page = pageIndex + 1
@@ -164,7 +172,9 @@ export function WebhooksList() {
                       <WebhookEventsChart data={webhook.amountOfLogs} />
                     </TableCell>
                     <TableCell className="py-1.5 text-right font-medium">
-                      {String(webhook.successRate).concat('%')}
+                      {webhook.successRate
+                        ? String(webhook.successRate).concat('%')
+                        : '-'}
                     </TableCell>
                     <TableCell className="py-1.5">
                       <div className="flex items-center gap-2">
@@ -174,7 +184,13 @@ export function WebhooksList() {
                     </TableCell>
                     <TableCell className="py-1.5">
                       <div className="flex items-center justify-end space-x-2">
-                        <Button variant="link" size="sm">
+                        <Button
+                          onClick={() =>
+                            handleCopySigningKey(webhook.signingKey)
+                          }
+                          variant="link"
+                          size="sm"
+                        >
                           <ClipboardCopy className="mr-2 size-3" />
                           Signing key
                         </Button>

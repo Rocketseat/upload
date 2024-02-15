@@ -1,6 +1,7 @@
 import { db } from '@nivo/drizzle'
 import { companyWebhookLog } from '@nivo/drizzle/schema'
 import { eq } from 'drizzle-orm'
+import { SignJWT } from 'jose'
 
 import { WebhookEvent } from './webhook-event'
 
@@ -18,6 +19,19 @@ export async function handleWebhookEvent({
   })
 
   try {
+    const companyWebhook = await db.query.companyWebhook.findFirst({
+      columns: {
+        signingKey: true,
+      },
+      where(fields, { eq }) {
+        return eq(fields.id, companyWebhookId)
+      },
+    })
+
+    if (!companyWebhook) {
+      throw new Error('Company webhook does not exist anymore.')
+    }
+
     await db.insert(companyWebhookLog).values({
       id: webhookLogId,
       companyWebhookId,
@@ -26,11 +40,24 @@ export async function handleWebhookEvent({
       requestBody,
     })
 
+    const encoder = new TextEncoder()
+    const encodedSigningKey = encoder.encode(companyWebhook.signingKey)
+
+    const signJWT = new SignJWT({})
+      .setJti(webhookLogId)
+      .setExpirationTime('5 minutes')
+      .setProtectedHeader({ alg: 'HS256' })
+      .setIssuer('nivo')
+      .setSubject(deliverTo)
+
+    const jwt = await signJWT.sign(encodedSigningKey)
+
     const response = await fetch(deliverTo, {
       method: 'POST',
       body: requestBody,
       headers: {
         'Content-Type': 'application/json',
+        'Nivo-Signature': jwt,
       },
     })
 

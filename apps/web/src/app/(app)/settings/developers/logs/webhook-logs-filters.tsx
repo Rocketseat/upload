@@ -1,39 +1,12 @@
 import { Filter, X } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select'
 import { Separator } from '@/components/ui/separator'
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
-import { serverClient } from '@/lib/trpc/server'
 
 export async function WebhookLogsFilters() {
-  const { triggers } = await serverClient.getAvailableTriggers()
-
   return (
     <form className="flex items-center gap-2">
-      <Select>
-        <SelectTrigger className="h-8 w-[180px]">
-          <SelectValue placeholder="Filter by event" />
-        </SelectTrigger>
-        <SelectContent>
-          {triggers.map(({ trigger }) => {
-            return (
-              <SelectItem key={trigger} value={trigger}>
-                {trigger}
-              </SelectItem>
-            )
-          })}
-        </SelectContent>
-      </Select>
-
-      <Separator orientation="vertical" className="h-6" />
-
       <ToggleGroup defaultValue="all" type="single" variant="outline">
         <ToggleGroupItem
           className="h-8"

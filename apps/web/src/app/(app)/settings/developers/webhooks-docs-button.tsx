@@ -23,7 +23,7 @@ export async function WebhookDocsButton() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button size="sm" variant="outline">
+        <Button size="default" variant="outline">
           <BookText className="mr-2 size-4" />
           Documentation
         </Button>

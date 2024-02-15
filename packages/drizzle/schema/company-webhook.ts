@@ -26,6 +26,7 @@ export const companyWebhook = pgTable(
         onUpdate: 'cascade',
       }),
     url: text('url').notNull(),
+    signingKey: text('signing_key').notNull(),
     triggers: text('events').array().$type<WebhookEventTrigger[]>().notNull(),
   },
   (table) => {

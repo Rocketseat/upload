@@ -25,6 +25,7 @@ export const companyWebhookLogsRouter = createTRPCRouter({
       )
       .where(eq(companyWebhook.companyId, companyId))
       .orderBy(desc(companyWebhookLog.createdAt))
+      .limit(50)
 
     return { companyWebhookLogs }
   }),

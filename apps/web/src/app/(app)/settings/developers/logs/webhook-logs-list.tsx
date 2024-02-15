@@ -1,5 +1,4 @@
 import { dayjs } from '@nivo/dayjs'
-import { ArrowDown } from 'lucide-react'
 
 import { NavLink } from '@/components/nav-link'
 import { Badge } from '@/components/ui/badge'
@@ -25,28 +24,20 @@ export async function WebhookLogsList() {
             >
               {webhookLog.httpCode ?? '-'}
             </Badge>
-            <span className="font-mono text-sm font-semibold">
-              {webhookLog.httpMethod}
-            </span>
-            <div className="flex flex-1 items-center justify-end gap-4 truncate font-mono text-sm">
+            <div className="flex items-baseline gap-2">
+              <span className="font-mono text-sm font-semibold">
+                {webhookLog.httpMethod}
+              </span>
               <span className="text-xs text-muted-foreground">
-                {webhookUrl.hostname.concat(webhookUrl.pathname)}
+                {webhookUrl.pathname}
               </span>
             </div>
-            <time className="whitespace-nowrap text-sm text-muted-foreground">
+            <time className="ml-auto whitespace-nowrap text-sm text-muted-foreground">
               {dayjs(webhookLog.createdAt).fromNow()}
             </time>
           </NavLink>
         )
       })}
-      <button
-        type="button"
-        disabled
-        className="flex items-center justify-center gap-2 border-b py-4 text-sm text-muted-foreground enabled:hover:bg-accent/50 disabled:opacity-50"
-      >
-        <ArrowDown className="size-3" />
-        Load more...
-      </button>
     </div>
   )
 }
