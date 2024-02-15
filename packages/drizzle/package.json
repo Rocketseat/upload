@@ -19,7 +19,6 @@
   },
   "devDependencies": {
     "drizzle-kit": "^0.20.14",
-    "pg": "^8.11.3",
     "@nivo/tsconfig": "workspace:*",
     "@nivo/prettier": "workspace:*",
     "@nivo/eslint-config": "workspace:*"
