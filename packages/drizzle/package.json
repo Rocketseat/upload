@@ -5,23 +5,25 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "db:generate": "drizzle-kit generate:pg",
-    "db:migrate": "bun migrate.ts",
-    "db:studio": "drizzle-kit studio",
-    "lint": "eslint ."
+    "db:generate": "pnpm env:load drizzle-kit generate:pg",
+    "db:migrate": "pnpm env:load bun migrate.ts",
+    "db:studio": "pnpm env:load drizzle-kit studio",
+    "lint": "eslint .",
+    "env:load": "dotenv -e ../../.env --"
   },
   "dependencies": {
     "@neondatabase/serverless": "^0.7.2",
     "@nivo/bunny": "workspace:*",
     "@nivo/env": "workspace:*",
+    "dotenv-cli": "7.3.0",
     "drizzle-orm": "^0.29.3",
     "zod": "^3.22.4"
   },
   "devDependencies": {
-    "drizzle-kit": "^0.20.14",
-    "@nivo/tsconfig": "workspace:*",
+    "@nivo/eslint-config": "workspace:*",
     "@nivo/prettier": "workspace:*",
-    "@nivo/eslint-config": "workspace:*"
+    "@nivo/tsconfig": "workspace:*",
+    "drizzle-kit": "^0.20.14"
   },
   "eslintConfig": {
     "root": true,

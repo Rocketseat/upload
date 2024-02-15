@@ -362,6 +362,9 @@ importers:
       '@nivo/env':
         specifier: workspace:*
         version: link:../env
+      dotenv-cli:
+        specifier: 7.3.0
+        version: 7.3.0
       drizzle-orm:
         specifier: ^0.29.3
         version: 0.29.3(@neondatabase/serverless@0.7.2)
