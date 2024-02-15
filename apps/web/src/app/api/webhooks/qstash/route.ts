@@ -60,6 +60,8 @@ async function handler(request: NextRequest) {
 
     return new NextResponse(null, { status: 204 })
   } catch (err) {
+    console.log(err)
+
     await db
       .update(uploadWebhook)
       .set({

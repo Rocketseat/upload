@@ -1,4 +1,5 @@
-import { CopyObjectCommand, r2 } from '@nivo/cloudflare'
+import { r2 } from '@nivo/cloudflare'
+import { CopyObjectCommand } from '@aws-sdk/client-s3'
 import { db } from '@nivo/drizzle'
 import { upload } from '@nivo/drizzle/schema'
 import { env } from '@nivo/env'
