@@ -1,12 +1,11 @@
 'use client'
 
+import { dayjs } from '@nivo/dayjs'
 import {
   CheckCircledIcon,
   CrossCircledIcon,
   DotsHorizontalIcon,
 } from '@radix-ui/react-icons'
-import dayjs from 'dayjs'
-import relativeTime from 'dayjs/plugin/relativeTime'
 import { Loader2 } from 'lucide-react'
 
 import {
@@ -23,8 +22,6 @@ import { formatSecondsToMinutes } from '@/utils/format-seconds-to-minutes'
 
 import { MetadataTooltip } from './metadata-tooltip'
 import { WebhooksSkeletonTable } from './webhooks-skeleton-table'
-
-dayjs.extend(relativeTime)
 
 export interface WebhooksProps {
   videoId: string

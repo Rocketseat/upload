@@ -1,5 +1,5 @@
 import { db } from '@nivo/drizzle'
-import { upload, uploadWebhook } from '@nivo/drizzle/schema'
+import { uploadWebhook } from '@nivo/drizzle/schema'
 import { and, desc, eq, getTableColumns } from 'drizzle-orm'
 import { z } from 'zod'
 
@@ -12,17 +12,13 @@ export const uploadWebhooksRouter = createTRPCRouter({
         videoId: z.string().uuid(),
       }),
     )
-    .query(async ({ input, ctx }) => {
-      const { companyId } = ctx.session.user
+    .query(async ({ input }) => {
       const { videoId } = input
 
       const webhooks = await db
         .select(getTableColumns(uploadWebhook))
         .from(uploadWebhook)
-        .innerJoin(upload, eq(upload.id, uploadWebhook.uploadId))
-        .where(
-          and(eq(uploadWebhook.uploadId, videoId), eq(upload.companyId, companyId)),
-        )
+        .where(and(eq(uploadWebhook.uploadId, videoId)))
         .orderBy(desc(uploadWebhook.createdAt))
 
       return { webhooks }

@@ -14,7 +14,7 @@ export async function processVideo(videoId: string) {
       return eq(fields.id, videoId)
     },
   })
-
+ 
   if (!sourceUpload) {
     throw new WebhookError('Video not found.')
   }
