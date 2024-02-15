@@ -1,10 +1,5 @@
 {
   "private": true,
-  "workspaces": [
-    "apps/*",
-    "packages/*",
-    "config/*"
-  ],
   "scripts": {
     "dev": "turbo run dev --",
     "build": "turbo run build --",

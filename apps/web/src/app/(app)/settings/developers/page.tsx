@@ -1,6 +1,7 @@
 import { ClipboardCopy, Code2 } from 'lucide-react'
 import { Metadata } from 'next'
 import Link from 'next/link'
+import { Suspense } from 'react'
 
 import { Button } from '@/components/ui/button'
 import {
@@ -16,6 +17,7 @@ import { Separator } from '@/components/ui/separator'
 
 import { WebhookDocsButton } from './webhooks-docs-button'
 import { WebhooksList } from './webhooks-list'
+import { WebhooksListLoading } from './webhooks-list-loading'
 
 export const metadata: Metadata = {
   title: 'Developers settings',
@@ -66,7 +68,9 @@ export default async function SettingsPage() {
 
           <Separator />
 
-          <WebhooksList />
+          <Suspense fallback={<WebhooksListLoading />}>
+            <WebhooksList />
+          </Suspense>
 
           <Separator />
 

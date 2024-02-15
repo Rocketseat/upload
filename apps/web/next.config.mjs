@@ -6,6 +6,10 @@ const nextConfig = {
     },
   },
 
+  experimental: {
+    serverComponentsExternalPackages: ['pg'],
+  },
+
   typescript: {
     ignoreBuildErrors: true,
   },

@@ -50,7 +50,6 @@ export const authConfig = {
       }
 
       if (trigger === 'update' && isSessionAvailable(session)) {
-        console.log(session)
         token.name = session.user.name
       }
 

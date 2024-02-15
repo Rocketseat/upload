@@ -3,10 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "eslint ."
+    "dev": "pnpm env:load next dev",
+    "build": "pnpm env:load next build",
+    "start": "pnpm env:load next start",
+    "lint": "eslint .",
+    "env:load": "dotenv -e ../../.env --"
   },
   "dependencies": {
     "@hookform/resolvers": "3.3.4",
@@ -51,6 +52,7 @@
     "axios": "1.4.0",
     "bunnycdn-stream": "^2.2.2",
     "cmdk": "0.2.0",
+    "dotenv-cli": "7.3.0",
     "drizzle-orm": "^0.29.3",
     "form-data": "4.0.0",
     "immer": "10.0.3",
@@ -75,17 +77,17 @@
     "zod": "3.22.4"
   },
   "devDependencies": {
+    "@nivo/eslint-config": "workspace:*",
+    "@nivo/prettier": "workspace:*",
+    "@nivo/tsconfig": "workspace:*",
     "@types/node": "20.4.0",
-    "@types/react-dom": "18.2.19",
     "@types/react": "18.2.55",
+    "@types/react-dom": "18.2.19",
     "@types/recharts": "1.8.24",
     "autoprefixer": "10.4.17",
     "postcss": "8.4.33",
     "tailwindcss": "3.4.1",
     "tailwindcss-animate": "1.0.6",
-    "@nivo/tsconfig": "workspace:*",
-    "@nivo/eslint-config": "workspace:*",
-    "@nivo/prettier": "workspace:*",
     "typescript": "5.3.3"
   },
   "eslintConfig": {
