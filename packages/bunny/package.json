@@ -8,13 +8,14 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@nivo/dayjs": "workspace:*",
     "@nivo/env": "workspace:*",
-    "@nivo/dayjs": "workspace:*"
+    "zod": "3.22.4"
   },
   "devDependencies": {
-    "@nivo/tsconfig": "workspace:*",
+    "@nivo/eslint-config": "workspace:*",
     "@nivo/prettier": "workspace:*",
-    "@nivo/eslint-config": "workspace:*"
+    "@nivo/tsconfig": "workspace:*"
   },
   "eslintConfig": {
     "root": true,

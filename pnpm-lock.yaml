@@ -302,6 +302,9 @@ importers:
       '@nivo/env':
         specifier: workspace:*
         version: link:../env
+      zod:
+        specifier: 3.22.4
+        version: 3.22.4
     devDependencies:
       '@nivo/eslint-config':
         specifier: workspace:*
