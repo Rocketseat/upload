@@ -13,7 +13,7 @@ export function SignInButton() {
     setLoading(true)
 
     await signIn('google', {
-      callbackUrl: '/uploads',
+      callbackUrl: '/',
     })
   }
 
