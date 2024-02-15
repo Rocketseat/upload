@@ -5,6 +5,7 @@ export const env = createEnv({
   server: {
     NODE_ENV: z.enum(['development', 'production', 'test']),
     DATABASE_URL: z.string().min(1),
+    DIRECT_DATABASE_URL: z.string().min(1),
     CLOUDFLARE_ACCOUNT_ID: z.string().min(1),
     CLOUDFLARE_ACCESS_KEY: z.string().min(1),
     CLOUDFLARE_SECRET_KEY: z.string().min(1),
@@ -43,6 +44,7 @@ export const env = createEnv({
     VERCEL_ENV: process.env.VERCEL_ENV,
     NODE_ENV: process.env.NODE_ENV,
     DATABASE_URL: process.env.DATABASE_URL,
+    DIRECT_DATABASE_URL: process.env.DATABASE_URL,
     CLOUDFLARE_ACCOUNT_ID: process.env.CLOUDFLARE_ACCOUNT_ID,
     CLOUDFLARE_ACCESS_KEY: process.env.CLOUDFLARE_ACCESS_KEY,
     CLOUDFLARE_SECRET_KEY: process.env.CLOUDFLARE_SECRET_KEY,

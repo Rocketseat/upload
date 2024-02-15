@@ -400,6 +400,9 @@ importers:
       '@nivo/tsconfig':
         specifier: workspace:*
         version: link:../../config/tsconfig
+      '@types/node':
+        specifier: 20.4.0
+        version: 20.4.0
 
   packages/ffmpeg:
     dependencies:
