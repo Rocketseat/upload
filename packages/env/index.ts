@@ -29,9 +29,6 @@ export const env = createEnv({
       .string()
       .transform((value) => value === 'true')
       .default('true'),
-    KAFKA_BROKER_URL: z.string().optional(),
-    KAFKA_USERNAME: z.string().optional(),
-    KAFKA_PASSWORD: z.string().optional(),
   },
   client: {
     NEXT_PUBLIC_VERCEL_URL: z.string().url().min(1),
@@ -64,9 +61,6 @@ export const env = createEnv({
     QSTASH_NEXT_SIGNING_KEY: process.env.QSTASH_NEXT_SIGNING_KEY,
     QSTASH_PUBLISH_MESSAGES: process.env.QSTASH_PUBLISH_MESSAGES,
     QSTASH_VALIDATE_SIGNATURE: process.env.QSTASH_VALIDATE_SIGNATURE,
-    KAFKA_BROKER_URL: process.env.KAFKA_BROKER_URL,
-    KAFKA_USERNAME: process.env.KAFKA_USERNAME,
-    KAFKA_PASSWORD: process.env.KAFKA_PASSWORD,
   },
   emptyStringAsUndefined: true,
 })
