@@ -27,7 +27,7 @@ export async function ViewsCount() {
         </CardTitle>
         <Eye className="h-4 w-4 text-muted-foreground" />
       </CardHeader>
-      <CardContent className="p-0">
+      <CardContent className="h-[76px] p-0">
         <ViewsCountChart dates={categories} views={values} />
       </CardContent>
     </Card>
