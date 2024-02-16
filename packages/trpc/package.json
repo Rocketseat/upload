@@ -16,6 +16,7 @@
     "@nivo/dayjs": "workspace:*",
     "@nivo/webhooks": "workspace:*",
     "@nivo/bunny": "workspace:*",
+    "@nivo/crypto": "workspace:*",
     "@trpc/server": "next",
     "drizzle-orm": "^0.29.3",
     "superjson": "^2.2.1",
@@ -28,9 +29,7 @@
   },
   "eslintConfig": {
     "root": true,
-    "extends": [
-      "@nivo/eslint-config/lib"
-    ]
+    "extends": ["@nivo/eslint-config/lib"]
   },
   "prettier": "@nivo/prettier"
 }

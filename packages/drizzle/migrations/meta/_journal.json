@@ -71,6 +71,13 @@
       "when": 1707862300883,
       "tag": "0009_silent_hedge_knight",
       "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "5",
+      "when": 1708109787828,
+      "tag": "0010_glamorous_sharon_ventura",
+      "breakpoints": true
     }
   ]
 }

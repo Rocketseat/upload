@@ -1,0 +1,1 @@
+ALTER TABLE "companies" ADD COLUMN "external_api_key" json;

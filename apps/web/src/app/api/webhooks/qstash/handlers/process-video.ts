@@ -1,5 +1,5 @@
-import { r2 } from '@nivo/cloudflare'
 import { CopyObjectCommand } from '@aws-sdk/client-s3'
+import { r2 } from '@nivo/cloudflare'
 import { db } from '@nivo/drizzle'
 import { upload } from '@nivo/drizzle/schema'
 import { env } from '@nivo/env'
@@ -14,7 +14,7 @@ export async function processVideo(videoId: string) {
       return eq(fields.id, videoId)
     },
   })
- 
+
   if (!sourceUpload) {
     throw new WebhookError('Video not found.')
   }

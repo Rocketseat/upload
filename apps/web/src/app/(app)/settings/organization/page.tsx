@@ -17,6 +17,8 @@ import { Separator } from '@/components/ui/separator'
 import { Table, TableBody, TableCell, TableRow } from '@/components/ui/table'
 import { serverClient } from '@/lib/trpc/server'
 
+import { ConnectBunnyAccount } from './connect-bunny-account'
+
 export const metadata: Metadata = {
   title: 'Organization settings',
 }
@@ -57,6 +59,15 @@ export default async function OrganizationPage() {
               join your organization.
             </p>
           </div>
+
+          <Separator />
+
+          <div className="space-y-2">
+            <Label htmlFor="bunnyLibraryId">Bunny integration</Label>
+            <ConnectBunnyAccount externalId={company.externalId} />
+          </div>
+
+          <Separator />
 
           <div className="space-y-2">
             <Label>Members</Label>

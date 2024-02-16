@@ -1,4 +1,5 @@
 import { PutObjectCommand, r2 } from '@nivo/cloudflare'
+import { aesDecrypt } from '@nivo/crypto'
 import { db } from '@nivo/drizzle'
 import { upload } from '@nivo/drizzle/schema'
 import { env } from '@nivo/env'
@@ -28,6 +29,7 @@ export async function createSubtitlesFromTranscription(videoId: string) {
       company: {
         columns: {
           externalId: true,
+          externalApiKey: true,
         },
       },
     },
@@ -45,8 +47,8 @@ export async function createSubtitlesFromTranscription(videoId: string) {
     throw new WebhookError('Video transcription was not generated.')
   }
 
-  if (!sourceVideo.company.externalId) {
-    throw new WebhookError('Company has no external ID created.')
+  if (!sourceVideo.company.externalId || !sourceVideo.company.externalApiKey) {
+    throw new WebhookError('Company has no external connection.')
   }
 
   if (sourceVideo.subtitlesStorageKey) {
@@ -83,8 +85,12 @@ export async function createSubtitlesFromTranscription(videoId: string) {
     errors: [],
   })
 
+  const { ciphertext, iv } = sourceVideo.company.externalApiKey
+
+  const apiKey = await aesDecrypt(ciphertext, iv, env.AES_ENCRYPTION_KEY)
+
   const bunny = new BunnyCdnStream({
-    apiKey: env.BUNNY_API_KEY,
+    apiKey,
     videoLibrary: sourceVideo.company.externalId,
   })
 

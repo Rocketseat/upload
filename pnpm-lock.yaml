@@ -25,6 +25,9 @@ importers:
       '@nivo/cloudflare':
         specifier: workspace:*
         version: link:../../packages/cloudflare
+      '@nivo/crypto':
+        specifier: workspace:*
+        version: link:../../packages/crypto
       '@nivo/dayjs':
         specifier: workspace:*
         version: link:../../packages/dayjs
@@ -344,6 +347,22 @@ importers:
         specifier: workspace:*
         version: link:../../config/tsconfig
 
+  packages/crypto:
+    dependencies:
+      zod:
+        specifier: 3.22.4
+        version: 3.22.4
+    devDependencies:
+      '@nivo/eslint-config':
+        specifier: workspace:*
+        version: link:../../config/eslint-config
+      '@nivo/prettier':
+        specifier: workspace:*
+        version: link:../../config/prettier
+      '@nivo/tsconfig':
+        specifier: workspace:*
+        version: link:../../config/tsconfig
+
   packages/dayjs:
     dependencies:
       dayjs:
@@ -493,6 +512,9 @@ importers:
       '@nivo/cloudflare':
         specifier: workspace:*
         version: link:../cloudflare
+      '@nivo/crypto':
+        specifier: workspace:*
+        version: link:../crypto
       '@nivo/dayjs':
         specifier: workspace:*
         version: link:../dayjs
@@ -513,7 +535,7 @@ importers:
         version: 11.0.0-next-beta.286
       drizzle-orm:
         specifier: ^0.29.3
-        version: 0.29.3(@types/react@18.2.55)(react@18.2.0)
+        version: 0.29.3(@neondatabase/serverless@0.7.2)(pg@8.11.3)
       superjson:
         specifier: ^2.2.1
         version: 2.2.1
@@ -544,7 +566,7 @@ importers:
         version: link:../qstash
       drizzle-orm:
         specifier: ^0.29.3
-        version: 0.29.3(@types/react@18.2.55)(react@18.2.0)
+        version: 0.29.3(@neondatabase/serverless@0.7.2)(pg@8.11.3)
       jose:
         specifier: ^5.2.2
         version: 5.2.2

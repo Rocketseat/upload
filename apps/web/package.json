@@ -20,6 +20,7 @@
     "@nivo/env": "workspace:*",
     "@nivo/ffmpeg": "workspace:*",
     "@nivo/openai": "workspace:*",
+    "@nivo/crypto": "workspace:*",
     "@nivo/qstash": "workspace:*",
     "@nivo/trpc": "workspace:*",
     "@nivo/webhooks": "workspace:*",
@@ -93,9 +94,7 @@
   },
   "eslintConfig": {
     "root": true,
-    "extends": [
-      "@nivo/eslint-config/next"
-    ]
+    "extends": ["@nivo/eslint-config/next"]
   },
   "prettier": "@nivo/prettier"
 }

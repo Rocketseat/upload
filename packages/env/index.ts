@@ -15,7 +15,6 @@ export const env = createEnv({
     CLOUDFLARE_UPLOAD_BUCKET_NAME: z.string().min(1),
     CLOUDFLARE_STORAGE_BUCKET_NAME: z.string().min(1),
     OPENAI_API_KEY: z.string().min(1),
-    BUNNY_API_KEY: z.string(),
     AUTH_SECRET: z.string().min(1),
     GOOGLE_CLIENT_ID: z.string().min(1),
     GOOGLE_CLIENT_SECRET: z.string().min(1),
@@ -32,6 +31,7 @@ export const env = createEnv({
       .string()
       .transform((value) => value === 'true')
       .default('true'),
+    AES_ENCRYPTION_KEY: z.string(),
   },
   client: {
     NEXT_PUBLIC_VERCEL_URL: z.string().url().min(1),
@@ -54,7 +54,6 @@ export const env = createEnv({
     CLOUDFLARE_UPLOAD_BUCKET_NAME: process.env.CLOUDFLARE_UPLOAD_BUCKET_NAME,
     CLOUDFLARE_STORAGE_BUCKET_NAME: process.env.CLOUDFLARE_STORAGE_BUCKET_NAME,
     OPENAI_API_KEY: process.env.OPENAI_API_KEY,
-    BUNNY_API_KEY: process.env.BUNNY_API_KEY,
     AUTH_SECRET: process.env.AUTH_SECRET,
     GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
     GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
@@ -65,6 +64,7 @@ export const env = createEnv({
     QSTASH_NEXT_SIGNING_KEY: process.env.QSTASH_NEXT_SIGNING_KEY,
     QSTASH_PUBLISH_MESSAGES: process.env.QSTASH_PUBLISH_MESSAGES,
     QSTASH_VALIDATE_SIGNATURE: process.env.QSTASH_VALIDATE_SIGNATURE,
+    AES_ENCRYPTION_KEY: process.env.AES_ENCRYPTION_KEY,
   },
   emptyStringAsUndefined: true,
 })

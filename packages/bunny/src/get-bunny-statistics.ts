@@ -1,12 +1,19 @@
 import { dayjs } from '@nivo/dayjs'
-import { env } from '@nivo/env'
 import { z } from 'zod'
 
 export const bunnyStatisticsSchema = z.object({
   viewsChart: z.record(z.string(), z.number()),
 })
 
-export async function getBunnyStatistics(libraryId: string) {
+interface GetBunnyStatisticsParams {
+  libraryId: string
+  apiKey: string
+}
+
+export async function getBunnyStatistics({
+  apiKey,
+  libraryId,
+}: GetBunnyStatisticsParams) {
   const url = new URL(
     `https://video.bunnycdn.com/library/${libraryId}/statistics`,
   )
@@ -16,7 +23,7 @@ export async function getBunnyStatistics(libraryId: string) {
 
   const response = await fetch(url, {
     headers: {
-      AccessKey: env.BUNNY_API_KEY,
+      AccessKey: apiKey,
     },
   })
 

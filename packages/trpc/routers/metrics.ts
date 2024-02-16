@@ -1,7 +1,9 @@
 import { getBunnyStatistics } from '@nivo/bunny'
+import { aesDecrypt } from '@nivo/crypto'
 import { dayjs } from '@nivo/dayjs'
 import { db } from '@nivo/drizzle'
 import { upload } from '@nivo/drizzle/schema'
+import { env } from '@nivo/env'
 import { TRPCError } from '@trpc/server'
 import { and, count, eq, gte, sum } from 'drizzle-orm'
 
@@ -12,20 +14,27 @@ export const metricsRouter = createTRPCRouter({
     const { companyId } = ctx.session.user
 
     const company = await db.query.company.findFirst({
-      columns: { externalId: true },
+      columns: { externalId: true, externalApiKey: true },
       where(fields, { eq }) {
         return eq(fields.id, companyId)
       },
     })
 
-    if (!company || !company.externalId) {
+    if (!company || !company.externalId || !company.externalApiKey) {
       throw new TRPCError({
         code: 'BAD_REQUEST',
-        message: 'No library ID registered for your company.',
+        message: 'The company has not external connection.',
       })
     }
 
-    const { statistics } = await getBunnyStatistics(company.externalId)
+    const { ciphertext, iv } = company.externalApiKey
+
+    const apiKey = await aesDecrypt(ciphertext, iv, env.AES_ENCRYPTION_KEY)
+
+    const { statistics } = await getBunnyStatistics({
+      apiKey,
+      libraryId: company.externalId,
+    })
 
     return { views: statistics.viewsChart }
   }),

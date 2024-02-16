@@ -1,4 +1,5 @@
 import { getBunnyStreamUrl } from '@nivo/bunny'
+import { aesDecrypt } from '@nivo/crypto'
 import { db } from '@nivo/drizzle'
 import { upload } from '@nivo/drizzle/schema'
 import { env } from '@nivo/env'
@@ -18,6 +19,7 @@ export async function uploadToExternalProvider(videoId: string) {
       company: {
         columns: {
           externalId: true,
+          externalApiKey: true,
         },
       },
       tagToUploads: {
@@ -40,8 +42,8 @@ export async function uploadToExternalProvider(videoId: string) {
     throw new WebhookError("Video hasn't processed yet.")
   }
 
-  if (!sourceVideo.company.externalId) {
-    throw new WebhookError('Company has no external ID.')
+  if (!sourceVideo.company.externalId || !sourceVideo.company.externalApiKey) {
+    throw new WebhookError('Company has no external connection.')
   }
 
   if (sourceVideo.externalProviderId) {
@@ -52,8 +54,12 @@ export async function uploadToExternalProvider(videoId: string) {
     return
   }
 
+  const { ciphertext, iv } = sourceVideo.company.externalApiKey
+
+  const apiKey = await aesDecrypt(ciphertext, iv, env.AES_ENCRYPTION_KEY)
+
   const bunny = new BunnyCdnStream({
-    apiKey: env.BUNNY_API_KEY,
+    apiKey,
     videoLibrary: sourceVideo.company.externalId,
   })
 
