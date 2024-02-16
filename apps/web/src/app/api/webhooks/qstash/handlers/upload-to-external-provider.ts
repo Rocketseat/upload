@@ -91,6 +91,7 @@ export async function uploadToExternalProvider(videoId: string) {
         duration: sourceVideo.duration,
         title: sourceVideo.title,
         tags,
+        externalId: externalProviderId,
         streamUrl,
       },
     ],

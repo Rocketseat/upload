@@ -144,6 +144,7 @@ export const uploadsBatchesRouter = createTRPCRouter({
             duration: video.duration,
             title: video.title,
             tags: video.tags,
+            externalId: null,
             streamUrl: null,
           }
         }),

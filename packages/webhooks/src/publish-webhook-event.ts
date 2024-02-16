@@ -28,7 +28,7 @@ export async function publishWebhookEvents<T extends WebhookEvent['trigger']>({
     console.log(
       '---------------------------------',
       '\n',
-      `[Skipped] [Webhook] Event: "${trigger}" [${deliverToUrls.join(', ')}]:`,
+      `[Skipped] [Webhook] Event: "${trigger}":`,
       '\n',
       JSON.stringify(events, null, 2),
       '\n',

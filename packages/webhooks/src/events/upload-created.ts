@@ -5,6 +5,7 @@ export const uploadCreatedSchema = z.object({
   title: z.string(),
   description: z.string().nullable(),
   duration: z.number(),
+  externalId: z.string().nullable(),
   streamUrl: z.string().url().nullable(),
   tags: z.array(z.string()),
 })

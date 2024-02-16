@@ -230,6 +230,7 @@ export const uploadsRouter = createTRPCRouter({
             duration: updatedVideo.duration,
             title: updatedVideo.title,
             tags,
+            externalId: updatedVideo.externalProviderId,
             streamUrl: updatedVideo.externalStreamUrl,
           },
         ],
