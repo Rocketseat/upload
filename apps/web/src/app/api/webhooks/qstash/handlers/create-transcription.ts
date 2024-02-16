@@ -87,29 +87,25 @@ export async function createTranscription(videoId: string) {
     },
   )
 
-  const { transcriptionId } = await db.transaction(async (tx) => {
-    const [{ transcriptionId }] = await tx
-      .insert(transcription)
-      .values({
-        uploadId: videoId,
-      })
-      .returning({
-        transcriptionId: transcription.id,
-      })
+  const [{ transcriptionId }] = await db
+    .insert(transcription)
+    .values({
+      uploadId: videoId,
+    })
+    .returning({
+      transcriptionId: transcription.id,
+    })
 
-    await tx.insert(transcriptionSegment).values(
-      response.data.segments.map((segment) => {
-        return {
-          transcriptionId,
-          text: segment.text,
-          start: segment.start.toString(),
-          end: segment.end.toString(),
-        }
-      }),
-    )
-
-    return { transcriptionId }
-  })
+  await db.insert(transcriptionSegment).values(
+    response.data.segments.map((segment) => {
+      return {
+        transcriptionId,
+        text: segment.text,
+        start: segment.start.toString(),
+        end: segment.end.toString(),
+      }
+    }),
+  )
 
   await publishWebhookEvents({
     companyId: sourceVideo.companyId,

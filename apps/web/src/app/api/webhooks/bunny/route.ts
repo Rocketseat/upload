@@ -90,19 +90,17 @@ async function handler(request: NextRequest) {
   }
 
   try {
-    await db.transaction(async (tx) => {
-      await tx
-        .update(upload)
-        .set({ externalStatus })
-        .where(eq(upload.id, sourceVideo.id))
+    await db
+      .update(upload)
+      .set({ externalStatus })
+      .where(eq(upload.id, sourceVideo.id))
 
-      await tx.insert(uploadWebhook).values({
-        id: webhookId,
-        type: 'UPDATE_EXTERNAL_PROVIDER_STATUS',
-        uploadId: sourceVideo.id,
-        status: 'SUCCESS',
-        finishedAt: new Date(),
-      })
+    await db.insert(uploadWebhook).values({
+      id: webhookId,
+      type: 'UPDATE_EXTERNAL_PROVIDER_STATUS',
+      uploadId: sourceVideo.id,
+      status: 'SUCCESS',
+      finishedAt: new Date(),
     })
 
     return new NextResponse(null, { status: 204 })

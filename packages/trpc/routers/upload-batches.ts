@@ -74,65 +74,61 @@ export const uploadsBatchesRouter = createTRPCRouter({
       const { companyId, id: userId } = ctx.session.user
       const { files: videos } = input
 
-      const { batchId } = await db.transaction(async (tx) => {
-        const [{ id: batchId }] = await tx
-          .insert(uploadBatch)
-          .values({
+      const [{ id: batchId }] = await db
+        .insert(uploadBatch)
+        .values({
+          companyId,
+          authorId: userId,
+        })
+        .returning({
+          id: uploadBatch.id,
+        })
+
+      await db.insert(upload).values(
+        videos.map((videoItem, index) => {
+          return {
+            id: videoItem.id,
+            language: videoItem.language,
+            uploadBatchId: batchId,
+            uploadOrder: index + 1,
+            title: videoItem.title,
+            sizeInBytes: videoItem.sizeInBytes,
+            duration: videoItem.duration,
             companyId,
             authorId: userId,
-          })
-          .returning({
-            id: uploadBatch.id,
-          })
+          }
+        }),
+      )
 
-        await tx.insert(upload).values(
-          videos.map((videoItem, index) => {
-            return {
-              id: videoItem.id,
-              language: videoItem.language,
-              uploadBatchId: batchId,
-              uploadOrder: index + 1,
-              title: videoItem.title,
-              sizeInBytes: videoItem.sizeInBytes,
-              duration: videoItem.duration,
-              companyId,
-              authorId: userId,
-            }
-          }),
-        )
-
-        const tagsOnVideos = await tx.query.tag.findMany({
-          where(fields, { inArray }) {
-            return inArray(
-              fields.slug,
-              videos.flatMap((videoItem) => videoItem.tags),
-            )
-          },
-        })
-
-        const tagSlugToId = tagsOnVideos.reduce((map, item) => {
-          return map.set(item.slug, item.id)
-        }, new Map<string, string>())
-
-        const tagToUploads = videos.flatMap((videoItem) => {
-          return videoItem.tags.map((videoTag) => {
-            const tagId = tagSlugToId.get(videoTag)
-
-            if (!tagId) {
-              throw new Error(`Tag with slug "${videoTag}" was not found.`)
-            }
-
-            return {
-              tagId,
-              uploadId: videoItem.id,
-            }
-          })
-        })
-
-        await tx.insert(tagToUpload).values(tagToUploads)
-
-        return { batchId }
+      const tagsOnVideos = await db.query.tag.findMany({
+        where(fields, { inArray }) {
+          return inArray(
+            fields.slug,
+            videos.flatMap((videoItem) => videoItem.tags),
+          )
+        },
       })
+
+      const tagSlugToId = tagsOnVideos.reduce((map, item) => {
+        return map.set(item.slug, item.id)
+      }, new Map<string, string>())
+
+      const tagToUploads = videos.flatMap((videoItem) => {
+        return videoItem.tags.map((videoTag) => {
+          const tagId = tagSlugToId.get(videoTag)
+
+          if (!tagId) {
+            throw new Error(`Tag with slug "${videoTag}" was not found.`)
+          }
+
+          return {
+            tagId,
+            uploadId: videoItem.id,
+          }
+        })
+      })
+
+      await db.insert(tagToUpload).values(tagToUploads)
 
       await publishWebhookEvents({
         companyId,

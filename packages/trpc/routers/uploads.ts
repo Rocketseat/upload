@@ -173,52 +173,48 @@ export const uploadsRouter = createTRPCRouter({
         return !currentVideoTagsSlugs.includes(slug)
       })
 
-      const updatedVideo = await db.transaction(async (tx) => {
-        const [updatedVideo] = await tx
-          .update(upload)
-          .set({
-            title,
-            description,
-            commitUrl,
-          })
-          .where(eq(upload.id, videoId))
-          .returning()
+      const [updatedVideo] = await db
+        .update(upload)
+        .set({
+          title,
+          description,
+          commitUrl,
+        })
+        .where(eq(upload.id, videoId))
+        .returning()
 
-        if (tagsToRemoveIds.length > 0) {
-          await tx
-            .delete(tagToUpload)
-            .where(
-              and(
-                eq(tagToUpload.uploadId, videoId),
-                inArray(tagToUpload.tagId, tagsToRemoveIds),
-              ),
-            )
-        }
-
-        if (tagsSlugsToAdd.length > 0) {
-          const tagsToAdd = await tx.query.tag.findMany({
-            columns: {
-              id: true,
-            },
-            where(fields, { inArray }) {
-              return inArray(fields.slug, tagsSlugsToAdd)
-            },
-          })
-
-          const tagsToAddIds = tagsToAdd.map((item) => item.id)
-
-          await tx.insert(tagToUpload).values(
-            tagsToAddIds.map((tagId) => {
-              return {
-                tagId,
-                uploadId: videoId,
-              }
-            }),
+      if (tagsToRemoveIds.length > 0) {
+        await db
+          .delete(tagToUpload)
+          .where(
+            and(
+              eq(tagToUpload.uploadId, videoId),
+              inArray(tagToUpload.tagId, tagsToRemoveIds),
+            ),
           )
-        }
+      }
 
-        return updatedVideo
-      })
+      if (tagsSlugsToAdd.length > 0) {
+        const tagsToAdd = await db.query.tag.findMany({
+          columns: {
+            id: true,
+          },
+          where(fields, { inArray }) {
+            return inArray(fields.slug, tagsSlugsToAdd)
+          },
+        })
+
+        const tagsToAddIds = tagsToAdd.map((item) => item.id)
+
+        await db.insert(tagToUpload).values(
+          tagsToAddIds.map((tagId) => {
+            return {
+              tagId,
+              uploadId: videoId,
+            }
+          }),
+        )
+      }
 
       await publishWebhookEvents({
         companyId,
