@@ -3,7 +3,9 @@ import { z } from 'zod'
 
 export const env = createEnv({
   server: {
-    NODE_ENV: z.enum(['development', 'production', 'test']),
+    NODE_ENV: z
+      .enum(['development', 'production', 'test'])
+      .default('development'),
     DATABASE_URL: z.string().min(1),
     DIRECT_DATABASE_URL: z.string().min(1),
     CLOUDFLARE_ACCOUNT_ID: z.string().min(1),

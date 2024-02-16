@@ -23,7 +23,8 @@
     "@nivo/eslint-config": "workspace:*",
     "@nivo/prettier": "workspace:*",
     "@nivo/tsconfig": "workspace:*",
-    "drizzle-kit": "^0.20.14"
+    "drizzle-kit": "^0.20.14",
+    "pg": "8.11.3"
   },
   "eslintConfig": {
     "root": true,

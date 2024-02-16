@@ -12,6 +12,16 @@ interface WebhookLogsDetails {
   }
 }
 
+function getParsedText(text: string) {
+  try {
+    const textAsJSON = JSON.parse(text)
+
+    return { code: JSON.stringify(textAsJSON, null, 2), lang: 'json' }
+  } catch {
+    return { code: text, lang: 'html' }
+  }
+}
+
 export default async function WebhookLogsDetails({
   params,
 }: WebhookLogsDetails) {
@@ -20,35 +30,31 @@ export default async function WebhookLogsDetails({
   })
 
   const highlighter = await getHighlighter({
-    langs: ['json'],
-    themes: ['min-light', 'min-dark'],
+    langs: ['json', 'html'],
+    themes: ['rose-pine-dawn', 'vesper'],
   })
 
-  const requestBodyHighlighted = webhookLog.requestBody
-    ? highlighter.codeToHtml(
-        JSON.stringify(JSON.parse(webhookLog.requestBody), null, 2),
-        {
-          lang: 'json',
-          themes: {
-            light: 'min-light',
-            dark: 'min-dark',
-          },
-        },
-      )
-    : ''
+  const parsedRequestBody = webhookLog.requestBody
+    ? getParsedText(webhookLog.requestBody)
+    : null
 
-  const responseBodyHighlighted = webhookLog.responseBody
-    ? highlighter.codeToHtml(
-        JSON.stringify(JSON.parse(webhookLog.responseBody), null, 2),
-        {
-          lang: 'json',
-          themes: {
-            light: 'min-light',
-            dark: 'min-dark',
-          },
-        },
-      )
-    : ''
+  const parsedResponseBody = webhookLog.responseBody
+    ? getParsedText(webhookLog.responseBody)
+    : null
+
+  const highlightedRequestBody = parsedRequestBody
+    ? highlighter.codeToHtml(parsedRequestBody.code, {
+        lang: parsedRequestBody.lang,
+        themes: { light: 'rose-pine-dawn', dark: 'vesper' },
+      })
+    : null
+
+  const highlightedResponseBody = parsedResponseBody
+    ? highlighter.codeToHtml(parsedResponseBody.code, {
+        lang: parsedResponseBody.lang,
+        themes: { light: 'rose-pine-dawn', dark: 'vesper' },
+      })
+    : null
 
   return (
     <div className="space-y-4 p-6">
@@ -131,25 +137,25 @@ export default async function WebhookLogsDetails({
         </Table>
       </div>
       <Separator />
-      {webhookLog.requestBody && (
+      {highlightedRequestBody && (
         <div className="space-y-2">
           <span className="text-sm font-semibold tracking-tight">
             Request Body
           </span>
           <div
-            className="bg-muted p-6 text-sm"
-            dangerouslySetInnerHTML={{ __html: requestBodyHighlighted }}
+            className="max-h-72 overflow-y-scroll bg-muted p-6 text-sm"
+            dangerouslySetInnerHTML={{ __html: highlightedRequestBody }}
           />
         </div>
       )}
-      {webhookLog.responseBody && (
+      {highlightedResponseBody && (
         <div className="space-y-2">
           <span className="text-sm font-semibold tracking-tight">
             Response Body
           </span>
           <div
-            className="bg-muted p-6 text-sm"
-            dangerouslySetInnerHTML={{ __html: responseBodyHighlighted }}
+            className="max-h-72 overflow-y-scroll bg-muted p-6 text-sm"
+            dangerouslySetInnerHTML={{ __html: highlightedResponseBody }}
           />
         </div>
       )}

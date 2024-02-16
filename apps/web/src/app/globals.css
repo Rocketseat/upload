@@ -61,23 +61,9 @@
     font-feature-settings: "rlig" 1, "calt" 1;
   }
 }
-code {
-  counter-reset: step;
-  counter-increment: step 0;
-}
-
-code .line::before {
-  content: counter(step);
-  counter-increment: step;
-  width: 1rem;
-  margin-right: 1.5rem;
-  display: inline-block;
-  text-align: right;
-  color: #8F8CA8;
-}
 
 .shiki {
-  @apply !bg-transparent;
+  @apply !bg-transparent !whitespace-pre-wrap !break-all;
 }
 
 html.dark .shiki,

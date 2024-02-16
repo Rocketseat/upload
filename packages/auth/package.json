@@ -11,12 +11,13 @@
     "@auth/core": "^0.25.0",
     "@nivo/drizzle": "workspace:*",
     "@nivo/env": "workspace:*",
+    "drizzle-orm": "^0.29.3",
     "next-auth": "beta"
   },
   "devDependencies": {
-    "@nivo/tsconfig": "workspace:*",
+    "@nivo/eslint-config": "workspace:*",
     "@nivo/prettier": "workspace:*",
-    "@nivo/eslint-config": "workspace:*"
+    "@nivo/tsconfig": "workspace:*"
   },
   "eslintConfig": {
     "root": true,

@@ -1,6 +1,5 @@
+import { dayjs } from '@nivo/dayjs'
 import { SymbolIcon } from '@radix-ui/react-icons'
-import dayjs from 'dayjs'
-import relativeTime from 'dayjs/plugin/relativeTime'
 import { Cable, CopyIcon } from 'lucide-react'
 import { Metadata } from 'next'
 import { unstable_noStore } from 'next/cache'
@@ -29,8 +28,6 @@ import { formatBytes } from '@/utils/format-bytes'
 import { formatSecondsToMinutes } from '@/utils/format-seconds-to-minutes'
 
 import { UploadsPagination } from './uploads-pagination'
-
-dayjs.extend(relativeTime)
 
 export const metadata: Metadata = {
   title: 'Uploads',

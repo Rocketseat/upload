@@ -36,7 +36,7 @@ export default function ViewsCountChart({
           padding: {
             left: -9,
             right: -1,
-            bottom: -24,
+            bottom: -8,
             top: -20,
           },
         },

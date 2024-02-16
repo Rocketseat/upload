@@ -147,6 +147,14 @@ export function WebhooksList() {
               </TableRow>
             </TableHeader>
             <TableBody>
+              {data?.companyWebhooks.length === 0 && (
+                <TableRow>
+                  <TableCell colSpan={6} className="h-24 text-center">
+                    No webhooks created.
+                  </TableCell>
+                </TableRow>
+              )}
+
               {data?.companyWebhooks.map((webhook) => {
                 return (
                   <TableRow key={webhook.id}>
