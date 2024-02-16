@@ -15,6 +15,13 @@ const handler = async (req: NextRequest) => {
         session,
       }
     },
+    onError: ({ error }) => {
+      console.error('Error:', error)
+
+      if (error.code === 'INTERNAL_SERVER_ERROR') {
+        // TODO: send to bug reporting
+      }
+    },
   })
 
   return new NextResponse(response.body, {
