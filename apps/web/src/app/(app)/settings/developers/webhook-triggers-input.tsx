@@ -1,8 +1,12 @@
+'use client'
+
 import { Controller, useFormContext } from 'react-hook-form'
 
 import { Badge } from '@/components/ui/badge'
+import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Label } from '@/components/ui/label'
+import { Separator } from '@/components/ui/separator'
 import { Skeleton } from '@/components/ui/skeleton'
 import { trpc } from '@/lib/trpc/react'
 
@@ -14,7 +18,19 @@ export function WebhookTriggersInput() {
   const {
     control,
     formState: { errors },
+    setValue,
   } = useFormContext<CreateWebhookSchema>()
+
+  function handleSelectAllTriggers() {
+    if (!data) {
+      return
+    }
+
+    setValue(
+      'triggers',
+      data.triggers.map((item) => item.trigger),
+    )
+  }
 
   if (isLoading) {
     return (
@@ -35,7 +51,7 @@ export function WebhookTriggersInput() {
   }
 
   return (
-    <div className="space-y-2">
+    <div className="space-y-3">
       <div className="grid grid-cols-2 gap-x-3 gap-y-4">
         {data &&
           data.triggers.map(({ trigger, description }) => {
@@ -78,6 +94,18 @@ export function WebhookTriggersInput() {
           {errors.triggers.message}
         </p>
       )}
+      <Separator />
+      <p className="text-sm text-muted-foreground">
+        Do you want this webhook to{' '}
+        <button
+          type="button"
+          onClick={handleSelectAllTriggers}
+          className="bg-transparent underline"
+        >
+          listen to all events
+        </button>
+        ?
+      </p>
     </div>
   )
 }
