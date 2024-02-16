@@ -4,6 +4,8 @@ import { fetchRequestHandler } from '@trpc/server/adapters/fetch'
 import { NextRequest, NextResponse } from 'next/server'
 
 const handler = async (req: NextRequest) => {
+  console.log('resposta init')
+
   try {
     const response = await fetchRequestHandler({
       endpoint: '/api/trpc',
@@ -24,6 +26,8 @@ const handler = async (req: NextRequest) => {
         }
       },
     })
+
+    console.log('resposta ok')
 
     return new NextResponse(response.body, {
       headers: response.headers,
