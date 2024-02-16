@@ -18,12 +18,25 @@ export async function WebhookLogsList() {
             key={webhookLog.id}
             className="flex items-center gap-4 border-b border-l-4 border-l-zinc-100 px-4 py-2.5 hover:bg-accent/50 data-[current=true]:border-l-teal-400 data-[current=true]:bg-accent dark:border-l-zinc-900 dark:data-[current=true]:border-l-teal-400"
           >
+            {webhookLog.status === 'SUCCESS' && (
+              <span className="size-2 shrink-0 rounded-full bg-teal-400" />
+            )}
+
+            {webhookLog.status === 'ERROR' && (
+              <span className="size-2 shrink-0 rounded-full bg-red-400" />
+            )}
+
+            {webhookLog.status === 'PENDING' && (
+              <span className="size-2 shrink-0 rounded-full bg-amber-400" />
+            )}
+
             <Badge
               variant="secondary"
-              className="border border-zinc-400 dark:border-zinc-700"
+              className="w-12 justify-center border border-zinc-400 tabular-nums dark:border-zinc-700"
             >
               {webhookLog.httpCode ?? '-'}
             </Badge>
+
             <div className="flex items-baseline gap-2">
               <span className="font-mono text-sm font-semibold">
                 {webhookLog.httpMethod}
