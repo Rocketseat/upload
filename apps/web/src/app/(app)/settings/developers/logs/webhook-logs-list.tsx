@@ -48,8 +48,7 @@ export async function WebhookLogsList() {
                 {webhookLog.httpMethod}
               </span>
               <span className="text-xs text-muted-foreground">
-                {webhookUrl.hostname}
-                {webhookUrl.pathname}
+                {webhookUrl.hostname.concat(webhookUrl.pathname)}
               </span>
             </div>
             <time className="ml-auto whitespace-nowrap text-sm text-muted-foreground">
