@@ -38,7 +38,7 @@ export async function WebhookLogsList() {
             </Badge>
             <Badge
               variant="secondary"
-              className="w-12 justify-center border border-zinc-400 tabular-nums dark:border-zinc-700"
+              className="justify-center border border-zinc-400 tabular-nums dark:border-zinc-700"
             >
               {(webhookLog.trigger as string) ?? '-'}
             </Badge>
