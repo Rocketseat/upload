@@ -36,12 +36,19 @@ export async function WebhookLogsList() {
             >
               {webhookLog.httpCode ?? '-'}
             </Badge>
+            <Badge
+              variant="secondary"
+              className="w-12 justify-center border border-zinc-400 tabular-nums dark:border-zinc-700"
+            >
+              {(webhookLog.trigger as string) ?? '-'}
+            </Badge>
 
             <div className="flex items-baseline gap-2">
               <span className="font-mono text-sm font-semibold">
                 {webhookLog.httpMethod}
               </span>
               <span className="text-xs text-muted-foreground">
+                {webhookUrl.hostname}
                 {webhookUrl.pathname}
               </span>
             </div>
