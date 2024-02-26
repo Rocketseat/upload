@@ -1,6 +1,6 @@
 import { db } from '@nivo/drizzle'
 import { companyWebhook, companyWebhookLog } from '@nivo/drizzle/schema'
-import { and, desc, eq, getTableColumns } from 'drizzle-orm'
+import { and, desc, eq, getTableColumns, sql } from 'drizzle-orm'
 import { z } from 'zod'
 
 import { createTRPCRouter, protectedProcedure } from '../trpc'
@@ -17,6 +17,7 @@ export const companyWebhookLogsRouter = createTRPCRouter({
         httpCode: companyWebhookLog.httpCode,
         httpMethod: companyWebhookLog.httpMethod,
         url: companyWebhook.url,
+        trigger: sql`${companyWebhookLog.requestBody}::json->>'trigger'`,
       })
       .from(companyWebhookLog)
       .innerJoin(
