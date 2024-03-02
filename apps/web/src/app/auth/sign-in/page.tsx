@@ -4,8 +4,9 @@ import Image from 'next/image'
 
 import nivoIcon from '@/assets/nivo-icon.svg'
 
-import { SignInButton } from './sign-in-button'
-import { SignInForm } from './sign-in-form'
+import { signInWithGithub } from './actions'
+import { SignInForm } from './credentials/sign-in-form'
+import { SignInWithGoogleButton } from './sign-in-with-google-button'
 
 export const metadata: Metadata = {
   title: 'Sign In',
@@ -34,7 +35,13 @@ export default function SignInPage() {
           </div>
         </div>
         <div>
-          {env.VERCEL_ENV === 'preview' ? <SignInForm /> : <SignInButton />}
+          {env.VERCEL_ENV === 'preview' ? (
+            <SignInForm />
+          ) : (
+            <form action={signInWithGithub} method="POST">
+              <SignInWithGoogleButton />
+            </form>
+          )}
         </div>
         <p className="px-8 text-center text-sm leading-relaxed text-muted-foreground">
           By clicking continue, you agree to our{' '}

@@ -1,3 +1,4 @@
+import { db } from '@nivo/drizzle'
 import CredentialsProvider from 'next-auth/providers/credentials'
 
 export const credentialsProvider = CredentialsProvider({
@@ -20,12 +21,15 @@ export const credentialsProvider = CredentialsProvider({
       credentials?.email === 'admin@rocketseat.team' &&
       credentials.password === '123456'
     ) {
-      return {
-        id: crypto.randomUUID(),
-        email: credentials.email,
-        name: 'Rocketseat',
-        image: 'https://github.com/rocketseat.png',
-      }
+      console.log(credentials)
+
+      const user = await db.query.user.findFirst({
+        where(fields, { eq }) {
+          return eq(fields.email, 'admin@rocketseat.team')
+        },
+      })
+
+      return user ?? null
     }
 
     throw new Error('Unauthorized.')

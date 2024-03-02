@@ -1,15 +1,14 @@
 import { db } from '@nivo/drizzle'
-// import { env } from '@nivo/env'
 import type { NextAuthConfig, Session } from 'next-auth'
 import { GoogleProfile } from 'next-auth/providers/google'
 
-// import { credentialsProvider } from './credentials-provider'
+import { credentialsProvider } from './credentials-provider'
 import { drizzleAuthAdapter } from './drizzle-auth-adapter'
 import { googleProvider } from './google-provider'
 
 export const authConfig = {
   adapter: drizzleAuthAdapter,
-  providers: [googleProvider],
+  providers: [googleProvider, credentialsProvider],
   pages: {
     signIn: '/auth/sign-in',
     error: '/auth/error',
@@ -77,7 +76,7 @@ export const authConfig = {
       }
 
       if (isOnPublicPages && isLoggedIn) {
-        return Response.redirect(new URL('/', nextUrl))
+        return Response.redirect(new URL('/dashboard', nextUrl))
       }
 
       if (isOnAPIRoutes && !isLoggedIn) {
