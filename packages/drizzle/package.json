@@ -6,7 +6,7 @@
   "private": true,
   "scripts": {
     "db:generate": "pnpm env:load drizzle-kit generate:pg",
-    "db:migrate": "pnpm env:load bun migrate.ts",
+    "db:migrate": "pnpm env:load tsx migrate.ts",
     "db:studio": "pnpm env:load drizzle-kit studio",
     "db:seed": "pnpm env:load tsx ./seed.ts",
     "lint": "eslint .",
