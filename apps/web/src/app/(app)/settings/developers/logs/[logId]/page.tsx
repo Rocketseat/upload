@@ -38,6 +38,10 @@ export default async function WebhookLogsDetails({
     ? getParsedText(webhookLog.requestBody)
     : null
 
+  const parsedRequestHeaders = webhookLog.requestHeaders
+    ? getParsedText(webhookLog.requestHeaders)
+    : null
+
   const parsedResponseBody = webhookLog.responseBody
     ? getParsedText(webhookLog.responseBody)
     : null
@@ -45,6 +49,13 @@ export default async function WebhookLogsDetails({
   const highlightedRequestBody = parsedRequestBody
     ? highlighter.codeToHtml(parsedRequestBody.code, {
         lang: parsedRequestBody.lang,
+        themes: { light: 'rose-pine-dawn', dark: 'vesper' },
+      })
+    : null
+
+  const highlightedRequestHeaders = parsedRequestHeaders
+    ? highlighter.codeToHtml(parsedRequestHeaders.code, {
+        lang: parsedRequestHeaders.lang,
         themes: { light: 'rose-pine-dawn', dark: 'vesper' },
       })
     : null
@@ -137,6 +148,17 @@ export default async function WebhookLogsDetails({
         </Table>
       </div>
       <Separator />
+      {highlightedRequestHeaders && (
+        <div className="space-y-2">
+          <span className="text-sm font-semibold tracking-tight">
+            Request Headers
+          </span>
+          <div
+            className="max-h-72 overflow-y-scroll bg-muted p-6 text-sm"
+            dangerouslySetInnerHTML={{ __html: highlightedRequestHeaders }}
+          />
+        </div>
+      )}
       {highlightedRequestBody && (
         <div className="space-y-2">
           <span className="text-sm font-semibold tracking-tight">

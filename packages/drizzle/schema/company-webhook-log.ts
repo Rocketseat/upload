@@ -31,6 +31,7 @@ export const companyWebhookLog = pgTable(
     httpCode: text('http_code'),
     httpMethod: text('http_method'),
     requestBody: text('request_body'),
+    requestHeaders: text('request_headers'),
     responseBody: text('response_body'),
     createdAt: timestamp('created_at').defaultNow().notNull(),
     finishedAt: timestamp('finished_at'),
