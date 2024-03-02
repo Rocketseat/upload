@@ -1,0 +1,36 @@
+ame: Deploy Production
+
+on:
+  push:
+    branches:
+      - 'main'
+
+env:
+  VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+  DIRECT_DATABASE_URL: ${{ secrets.DIRECT_DATABASE_URL }}
+
+jobs:
+  deploy-production:
+    permissions: write-all
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v3
+        with:
+          version: 8
+
+      - name: Run Prisma Migrate
+        run: pnpm run db:migrate
+
+      - name: Install Vercel CLI
+        run: pnpm i -g vercel@latest
+
+      - name: Pull Vercel Environment Information
+        run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: Build Project Artifacts
+        run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: Deploy Project Artifacts to Vercel
+        run: vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}
