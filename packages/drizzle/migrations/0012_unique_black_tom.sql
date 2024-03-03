@@ -1,0 +1,1 @@
+ALTER TABLE "company_webhook_logs" ADD COLUMN "number_of_retries" integer DEFAULT 0;

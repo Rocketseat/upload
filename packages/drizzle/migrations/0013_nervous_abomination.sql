@@ -1,0 +1,1 @@
+ALTER TABLE "company_webhook_logs" ALTER COLUMN "number_of_retries" SET NOT NULL;

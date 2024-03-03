@@ -9,8 +9,14 @@ export const runtime = 'edge'
 
 async function handler(request: NextRequest) {
   const requestBody = await request.json()
+  const numberOfRetries = Number(request.headers.get('Upstash-Retried')) || 0
 
-  const webhookEvent = webhookEventSchema.parse(requestBody)
+  const webhookData = {
+    ...requestBody,
+    numberOfRetries,
+  }
+
+  const webhookEvent = webhookEventSchema.parse(webhookData)
 
   const { success } = await handleWebhookEvent(webhookEvent)
 

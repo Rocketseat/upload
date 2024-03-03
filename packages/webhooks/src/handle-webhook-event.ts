@@ -9,6 +9,7 @@ export async function handleWebhookEvent({
   deliverTo,
   companyWebhookId,
   trigger,
+  numberOfRetries,
   payload,
 }: WebhookEvent) {
   const webhookLogId = crypto.randomUUID()
@@ -56,6 +57,7 @@ export async function handleWebhookEvent({
       httpMethod: 'POST',
       requestBody,
       requestHeaders: JSON.stringify(requestHeaders),
+      numberOfRetries,
     })
 
     const response = await fetch(deliverTo, {
