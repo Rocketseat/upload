@@ -67,9 +67,9 @@ export default async function WebhookLogsDetails({
       })
     : null
 
-  const nextRetryDelay = webhookLog.numberOfRetries
-    ? Math.round(Math.min(86400, Math.exp(2.5 * webhookLog.numberOfRetries)))
-    : 0
+  const nextRetryDelay = Math.round(
+    Math.min(86400, Math.exp(2.5 * webhookLog.numberOfRetries)),
+  )
 
   const nextRetryDate = dayjs(webhookLog.finishedAt).add(
     nextRetryDelay,
