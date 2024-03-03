@@ -61,9 +61,9 @@ jobs:
 
       - name: Pull Vercel Environment Information
         run: |
-          vercel env pull --yes --environment=preview --token=${{ env.VERCEL_TOKEN }} .env
-          echo DATABASE_URL=${{ steps.create-branch.outputs.db_url_with_pooler }}?sslmode=require >> .env
-          echo DIRECT_DATABASE_URL=${{ steps.create-branch.outputs.db_url }}?sslmode=require >> .env
+          vercel env add DATABASE_URL "${{ steps.create-branch.outputs.db_url_with_pooler }}?sslmode=require" --git-branch=${{ steps.branch-name.outputs.current_branch }}
+          vercel env add DIRECT_DATABASE_URL "${{ steps.create-branch.outputs.db_url }}?sslmode=require" --git-branch=${{ steps.branch-name.outputs.current_branch }}
+          vercel env pull --yes --environment=preview --git-branch=${{ steps.branch-name.outputs.current_branch }} --token=${{ env.VERCEL_TOKEN }} .env
 
       - name: Run Migrations
         run: pnpm run db:migrate
@@ -73,10 +73,8 @@ jobs:
 
       - name: Build Project Artifacts
         run: |
-          vercel pull --yes --environment=preview --token=${{ env.VERCEL_TOKEN }}
-          echo DATABASE_URL=${{ steps.create-branch.outputs.db_url_with_pooler }}?sslmode=require >> .vercel/.env.preview.local
-          echo DIRECT_DATABASE_URL=${{ steps.create-branch.outputs.db_url }}?sslmode=require >> .vercel/.env.preview.local
-          vercel build --token=${{ env.VERCEL_TOKEN }}
+          vercel pull --yes --environment=preview --git-branch=${{ steps.branch-name.outputs.current_branch }} --token=${{ env.VERCEL_TOKEN }}
+          vercel build --token=${{ secrets.VERCEL_TOKEN }}
 
       - name: Deploy Preview to Vercel
         id: deploy
