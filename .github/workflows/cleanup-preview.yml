@@ -30,6 +30,6 @@ jobs:
 
       - name: Delete Vercel Environment Information
         run: |
-          vercel env rm DATABASE_URL preview ${{ steps.branch-name.outputs.current_branch }} --token=${{ secrets.VERCEL_TOKEN }}
-          vercel env rm DIRECT_DATABASE_URL preview ${{ steps.branch-name.outputs.current_branch }} --token=${{ secrets.VERCEL_TOKEN }}
+          vercel env rm DATABASE_URL preview ${{ steps.branch-name.outputs.current_branch }} --yes --token=${{ secrets.VERCEL_TOKEN }}
+          vercel env rm DIRECT_DATABASE_URL preview ${{ steps.branch-name.outputs.current_branch }} --yes --token=${{ secrets.VERCEL_TOKEN }}
 
