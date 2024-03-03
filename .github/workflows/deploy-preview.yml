@@ -61,8 +61,8 @@ jobs:
 
       - name: Pull Vercel Environment Information
         run: |
-          vercel env add DATABASE_URL "${{ steps.create-branch.outputs.db_url_with_pooler }}?sslmode=require" --git-branch=${{ steps.branch-name.outputs.current_branch }} --token=${{ secrets.VERCEL_TOKEN }}
-          vercel env add DIRECT_DATABASE_URL "${{ steps.create-branch.outputs.db_url }}?sslmode=require" --git-branch=${{ steps.branch-name.outputs.current_branch }} --token=${{ secrets.VERCEL_TOKEN }}
+          echo "${{ steps.create-branch.outputs.db_url_with_pooler }}?sslmode=require" | vercel env add DATABASE_URL preview --git-branch=${{ steps.branch-name.outputs.current_branch }} --token=${{ secrets.VERCEL_TOKEN }}
+          echo "${{ steps.create-branch.outputs.db_url }}?sslmode=require" | vercel env add DIRECT_DATABASE_URL preview --git-branch=${{ steps.branch-name.outputs.current_branch }} --token=${{ secrets.VERCEL_TOKEN }}
           vercel env pull --yes --environment=preview --git-branch=${{ steps.branch-name.outputs.current_branch }} --token=${{ env.VERCEL_TOKEN }} .env
 
       - name: Run Migrations
