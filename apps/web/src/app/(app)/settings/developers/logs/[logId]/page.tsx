@@ -67,6 +67,23 @@ export default async function WebhookLogsDetails({
       })
     : null
 
+  const nextRetryDelay = webhookLog.numberOfRetries
+    ? Math.round(Math.min(86400, Math.exp(2.5 * webhookLog.numberOfRetries)))
+    : 0
+
+  const nextRetryDate = dayjs(webhookLog.finishedAt).add(
+    nextRetryDelay,
+    'second',
+  )
+
+  const isNextRetryDateInFuture = nextRetryDate.isAfter(dayjs())
+
+  const formattedNextRetryDate = isNextRetryDateInFuture
+    ? dayjs().to(nextRetryDate, true)
+    : ''
+
+  const nextRetryDateFormatted = `(Next retry in ${formattedNextRetryDate.trim()})`
+
   return (
     <div className="space-y-4 p-6">
       <div className="flex items-center gap-2">
@@ -111,6 +128,16 @@ export default async function WebhookLogsDetails({
             <TableRow>
               <TableCell>Error reason</TableCell>
               <TableCell>{webhookLog.errorReason || '-'}</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>Number of retries</TableCell>
+              <TableCell>
+                {webhookLog.status === 'ERROR'
+                  ? `${webhookLog.numberOfRetries} ${
+                      isNextRetryDateInFuture ? nextRetryDateFormatted : ''
+                    }`
+                  : '-'}
+              </TableCell>
             </TableRow>
             <TableRow>
               <TableCell>HTTP Status</TableCell>

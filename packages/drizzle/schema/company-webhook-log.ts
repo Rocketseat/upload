@@ -1,6 +1,7 @@
 import { relations } from 'drizzle-orm'
 import {
   index,
+  integer,
   pgEnum,
   pgTable,
   text,
@@ -33,6 +34,7 @@ export const companyWebhookLog = pgTable(
     requestBody: text('request_body'),
     requestHeaders: text('request_headers'),
     responseBody: text('response_body'),
+    numberOfRetries: integer('number_of_retries').default(0).notNull(),
     createdAt: timestamp('created_at').defaultNow().notNull(),
     finishedAt: timestamp('finished_at'),
   },

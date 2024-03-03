@@ -31,6 +31,12 @@ export default async function WebhookLogsDetailsLoading() {
               </TableCell>
             </TableRow>
             <TableRow>
+              <TableCell>Number of retries</TableCell>
+              <TableCell>
+                <Skeleton className="h-5 w-20" />
+              </TableCell>
+            </TableRow>
+            <TableRow>
               <TableCell>HTTP Status</TableCell>
               <TableCell>
                 <Skeleton className="h-[22px] w-12" />
