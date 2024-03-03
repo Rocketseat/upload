@@ -6,7 +6,8 @@
     "lint": "turbo run lint --",
     "db:generate": "turbo run db:generate",
     "db:migrate": "turbo run db:migrate",
-    "db:studio": "turbo run db:studio"
+    "db:studio": "turbo run db:studio",
+    "db:seed": "turbo run db:seed"
   },
   "dependencies": {
     "turbo": "^1.12.4"
