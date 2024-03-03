@@ -74,6 +74,8 @@ jobs:
       - name: Build Project Artifacts
         run: |
           vercel pull --yes --environment=preview --token=${{ env.VERCEL_TOKEN }}
+          echo DATABASE_URL=${{ steps.create-branch.outputs.db_url_with_pooler }}?sslmode=require >> .vercel/.env.preview.local
+          echo DIRECT_DATABASE_URL=${{ steps.create-branch.outputs.db_url }}?sslmode=require >> .vercel/.env.preview.local
           vercel build --token=${{ env.VERCEL_TOKEN }}
 
       - name: Deploy Preview to Vercel
