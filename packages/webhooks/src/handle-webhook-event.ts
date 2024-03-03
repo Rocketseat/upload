@@ -32,14 +32,6 @@ export async function handleWebhookEvent({
       throw new Error('Company webhook does not exist anymore.')
     }
 
-    await db.insert(companyWebhookLog).values({
-      id: webhookLogId,
-      companyWebhookId,
-      status: 'PENDING',
-      httpMethod: 'POST',
-      requestBody,
-    })
-
     const encoder = new TextEncoder()
     const encodedSigningKey = encoder.encode(companyWebhook.signingKey)
 
@@ -52,13 +44,24 @@ export async function handleWebhookEvent({
 
     const jwt = await signJWT.sign(encodedSigningKey)
 
+    const requestHeaders = {
+      'Content-Type': 'application/json',
+      'Nivo-Signature': jwt,
+    }
+
+    await db.insert(companyWebhookLog).values({
+      id: webhookLogId,
+      companyWebhookId,
+      status: 'PENDING',
+      httpMethod: 'POST',
+      requestBody,
+      requestHeaders: JSON.stringify(requestHeaders),
+    })
+
     const response = await fetch(deliverTo, {
       method: 'POST',
       body: requestBody,
-      headers: {
-        'Content-Type': 'application/json',
-        'Nivo-Signature': jwt,
-      },
+      headers: requestHeaders,
     })
 
     const httpCode = response.status.toString()

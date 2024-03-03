@@ -1,0 +1,1 @@
+ALTER TABLE "company_webhook_logs" ADD COLUMN "request_headers" text;
