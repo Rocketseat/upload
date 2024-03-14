@@ -30,7 +30,7 @@ export async function POST(request: Request) {
   }
 
   const response = await openai.createChatCompletion({
-    model: 'gpt-3.5-turbo-16k',
+    model: 'gpt-3.5-turbo-0125',
     stream: true,
     messages: [
       {
