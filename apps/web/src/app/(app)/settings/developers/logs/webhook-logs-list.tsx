@@ -8,7 +8,7 @@ export async function WebhookLogsList() {
   const { companyWebhookLogs } = await serverClient.getCompanyWebhookLogs()
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col overflow-auto">
       {companyWebhookLogs.map((webhookLog) => {
         const webhookUrl = new URL(webhookLog.url)
 
@@ -16,7 +16,7 @@ export async function WebhookLogsList() {
           <NavLink
             href={`/settings/developers/logs/${webhookLog.id}`}
             key={webhookLog.id}
-            className="flex items-center gap-4 border-b border-l-4 border-l-zinc-100 px-4 py-2.5 hover:bg-accent/50 data-[current=true]:border-l-teal-400 data-[current=true]:bg-accent dark:border-l-zinc-900 dark:data-[current=true]:border-l-teal-400"
+            className="flex items-center gap-3 border-b border-l-4 border-l-zinc-100 px-4 py-2.5 hover:bg-accent/50 data-[current=true]:border-l-teal-400 data-[current=true]:bg-accent dark:border-l-zinc-900 dark:data-[current=true]:border-l-teal-400"
           >
             {webhookLog.status === 'SUCCESS' && (
               <span className="size-2 shrink-0 rounded-full bg-teal-400" />
@@ -30,20 +30,11 @@ export async function WebhookLogsList() {
               <span className="size-2 shrink-0 rounded-full bg-amber-400" />
             )}
 
-            <Badge
-              variant="secondary"
-              className="w-12 justify-center border border-zinc-400 tabular-nums dark:border-zinc-700"
-            >
+            <span className="w-10 text-center text-xs font-medium tabular-nums">
               {webhookLog.httpCode ?? '-'}
-            </Badge>
-            <Badge
-              variant="secondary"
-              className="justify-center border border-zinc-400 tabular-nums dark:border-zinc-700"
-            >
-              {(webhookLog.trigger as string) ?? '-'}
-            </Badge>
+            </span>
 
-            <div className="flex items-baseline gap-2">
+            <div className="flex flex-1 items-baseline gap-2">
               <span className="font-mono text-sm font-semibold">
                 {webhookLog.httpMethod}
               </span>
@@ -51,8 +42,12 @@ export async function WebhookLogsList() {
                 {webhookUrl.hostname.concat(webhookUrl.pathname)}
               </span>
             </div>
-            <time className="ml-auto whitespace-nowrap text-sm text-muted-foreground">
-              {dayjs(webhookLog.createdAt).fromNow()}
+
+            <Badge variant="outline">
+              {(webhookLog.trigger as string) ?? '-'}
+            </Badge>
+            <time className="ml-auto whitespace-nowrap text-xs text-muted-foreground">
+              {dayjs(webhookLog.createdAt).fromNow(true)}
             </time>
           </NavLink>
         )

@@ -31,12 +31,12 @@ export default async function WebhookLogsLayout({
         <h2 className="text-2xl font-bold tracking-tight">Webhook logs</h2>
       </div>
       <WebhookLogsFilters />
-      <div className="grid grid-cols-[minmax(0,_1fr)_1px_minmax(0,_1fr)] border-t">
+      <div className="grid grid-rows-[35vh_1fr] border-t">
         <Suspense fallback={<WebhookLogsListLoading />}>
           <WebhookLogsList />
         </Suspense>
-        <Separator orientation="vertical" className="h-full" />
-        <div className="min-h-[400px]">{children}</div>
+        <Separator orientation="horizontal" />
+        <div>{children}</div>
       </div>
     </div>
   )

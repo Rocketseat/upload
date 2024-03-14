@@ -85,7 +85,7 @@ export default async function WebhookLogsDetails({
   const nextRetryDateFormatted = `(Next retry in ${formattedNextRetryDate.trim()})`
 
   return (
-    <div className="space-y-4 p-6">
+    <div className="space-y-4 py-6">
       <div className="flex items-center gap-2">
         <span className="truncate whitespace-nowrap text-xl font-bold tracking-tight">
           {webhookLog.httpMethod} {new URL(webhookLog.url).pathname}
