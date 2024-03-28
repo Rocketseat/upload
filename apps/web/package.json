@@ -15,12 +15,12 @@
     "@nivo/auth": "workspace:*",
     "@nivo/bunny": "workspace:*",
     "@nivo/cloudflare": "workspace:*",
+    "@nivo/crypto": "workspace:*",
     "@nivo/dayjs": "workspace:*",
     "@nivo/drizzle": "workspace:*",
     "@nivo/env": "workspace:*",
     "@nivo/ffmpeg": "workspace:*",
     "@nivo/openai": "workspace:*",
-    "@nivo/crypto": "workspace:*",
     "@nivo/qstash": "workspace:*",
     "@nivo/trpc": "workspace:*",
     "@nivo/webhooks": "workspace:*",
@@ -45,10 +45,11 @@
     "@radix-ui/react-toggle": "^1.0.3",
     "@radix-ui/react-toggle-group": "^1.0.4",
     "@radix-ui/react-tooltip": "1.0.6",
-    "@tanstack/react-query": "5.18.0",
-    "@trpc/client": "next",
-    "@trpc/react-query": "next",
-    "@trpc/server": "next",
+    "@tanstack/react-query": "5.28.8",
+    "@trpc/client": "11.0.0-next.324",
+    "@trpc/next": "11.0.0-next.324",
+    "@trpc/react-query": "11.0.0-next.324",
+    "@trpc/server": "11.0.0-next.324",
     "ai": "2.1.17",
     "apexcharts": "^3.45.2",
     "axios": "1.4.0",
@@ -66,6 +67,7 @@
     "node-webvtt": "1.9.4",
     "react": "^18.2.0",
     "react-apexcharts": "^1.4.1",
+    "react-day-picker": "8.10.0",
     "react-dom": "^18.2.0",
     "react-dropzone": "14.2.3",
     "react-hook-form": "7.49.3",
@@ -94,7 +96,9 @@
   },
   "eslintConfig": {
     "root": true,
-    "extends": ["@nivo/eslint-config/next"]
+    "extends": [
+      "@nivo/eslint-config/next"
+    ]
   },
   "prettier": "@nivo/prettier"
 }

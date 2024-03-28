@@ -1,29 +1,54 @@
 import { Skeleton } from '@/components/ui/skeleton'
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table'
 
 export function WebhookLogsListLoading() {
   return (
-    <div className="flex flex-col">
-      {Array.from({ length: 12 }).map((_, i) => {
-        return (
-          <div
-            key={i}
-            className="flex items-center gap-4 border-b border-l-4 border-l-zinc-100 px-4 py-2.5 dark:border-l-zinc-900"
-          >
-            <Skeleton className="h-[22px] w-11" />
-            <span className="font-mono text-sm font-semibold">
-              <Skeleton className="h-5 w-8" />
-            </span>
-            <div className="flex flex-1 items-center justify-end gap-4 truncate font-mono text-sm">
-              <span className="text-xs text-muted-foreground">
-                <Skeleton className="h-4 w-60" />
-              </span>
-            </div>
-            <time className="whitespace-nowrap text-sm text-muted-foreground">
-              <Skeleton className="h-5 w-20" />
-            </time>
-          </div>
-        )
-      })}
+    <div className="rounded border">
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead style={{ width: 172 }}>Time</TableHead>
+            <TableHead style={{ width: 72 }}>Status</TableHead>
+            <TableHead style={{ width: 200 }}>Destination</TableHead>
+            <TableHead style={{ width: 200 }}>Trigger</TableHead>
+            <TableHead>Request</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {Array.from({ length: 15 }).map((_, i) => {
+            return (
+              <TableRow key={i}>
+                <TableCell className="py-1.5">
+                  <Skeleton className="h-4 w-36" />
+                </TableCell>
+
+                <TableCell className="py-1.5">
+                  <Skeleton className="h-[22px] w-8" />
+                </TableCell>
+
+                <TableCell className="py-1.5">
+                  <Skeleton className="h-4 w-40" />
+                </TableCell>
+
+                <TableCell className="py-1.5">
+                  <Skeleton className="h-4 w-40" />
+                </TableCell>
+
+                <TableCell className="py-1.5">
+                  <Skeleton className="h-4 w-full" />
+                </TableCell>
+              </TableRow>
+            )
+          })}
+        </TableBody>
+      </Table>
     </div>
   )
 }

@@ -1,13 +1,8 @@
-import { ArrowLeft } from 'lucide-react'
 import { Metadata } from 'next'
-import Link from 'next/link'
-import { ReactNode, Suspense } from 'react'
-
-import { Separator } from '@/components/ui/separator'
+import { ReactNode } from 'react'
 
 import { WebhookLogsFilters } from './webhook-logs-filters'
 import { WebhookLogsList } from './webhook-logs-list'
-import { WebhookLogsListLoading } from './webhook-logs-list-loading'
 
 export const metadata: Metadata = {
   title: 'Webhook logs',
@@ -20,24 +15,10 @@ export default async function WebhookLogsLayout({
 }) {
   return (
     <div className="space-y-4">
-      <div className="space-y-2">
-        <Link
-          href="/settings/developers"
-          className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-accent-foreground"
-        >
-          <ArrowLeft className="size-4" />
-          developer settings
-        </Link>
-        <h2 className="text-2xl font-bold tracking-tight">Webhook logs</h2>
-      </div>
+      <h2 className="text-2xl font-bold tracking-tight">Webhook logs</h2>
       <WebhookLogsFilters />
-      <div className="grid grid-rows-[35vh_1fr] border-t">
-        <Suspense fallback={<WebhookLogsListLoading />}>
-          <WebhookLogsList />
-        </Suspense>
-        <Separator orientation="horizontal" />
-        <div>{children}</div>
-      </div>
+      <WebhookLogsList />
+      <div>{children}</div>
     </div>
   )
 }
