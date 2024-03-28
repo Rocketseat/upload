@@ -52,7 +52,7 @@
     "@trpc/server": "11.0.0-next.324",
     "ai": "2.1.17",
     "apexcharts": "^3.45.2",
-    "axios": "1.4.0",
+    "axios": "1.6.0",
     "bunnycdn-stream": "^2.2.2",
     "cmdk": "0.2.0",
     "dotenv-cli": "7.3.0",
