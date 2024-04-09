@@ -65,7 +65,8 @@ export const authConfig = {
     authorized({ auth, request: { nextUrl } }) {
       const isLoggedIn = !!auth?.user
 
-      const isOnPublicPages = nextUrl.pathname.startsWith('/auth')
+      const isOnPublicPages =
+        nextUrl.pathname.startsWith('/auth') || nextUrl.pathname === '/'
       const isOnWebhooks = nextUrl.pathname.startsWith('/api/webhooks')
       const isOnPublicAPIRoutes = nextUrl.pathname.startsWith('/api/auth')
       const isOnAPIRoutes = nextUrl.pathname.startsWith('/api')
