@@ -66,7 +66,9 @@ export const authConfig = {
       const isLoggedIn = !!auth?.user
 
       const isOnPublicPages =
-        nextUrl.pathname.startsWith('/auth') || nextUrl.pathname === '/'
+        nextUrl.pathname.startsWith('/auth') ||
+        nextUrl.pathname === '/' ||
+        nextUrl.pathname === '/about'
       const isOnWebhooks = nextUrl.pathname.startsWith('/api/webhooks')
       const isOnPublicAPIRoutes = nextUrl.pathname.startsWith('/api/auth')
       const isOnAPIRoutes = nextUrl.pathname.startsWith('/api')

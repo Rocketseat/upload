@@ -1,6 +1,7 @@
 import { ArrowRight } from 'lucide-react'
 import { Merriweather } from 'next/font/google'
 import Image from 'next/image'
+import Link from 'next/link'
 import { twMerge } from 'tailwind-merge'
 
 import nivoIcon from '@/assets/nivo-icon.svg'
@@ -15,7 +16,7 @@ const merriWeather = Merriweather({
 
 export default function Homepage() {
   return (
-    <div className="relative flex min-h-screen w-full flex-col items-center justify-center overflow-hidden bg-zinc-950 selection:bg-teal-400/30 selection:text-white">
+    <div className="relative flex min-h-screen w-full flex-col items-center justify-center overflow-hidden bg-zinc-950">
       <div className="z-20 mx-auto max-w-[1280px] px-6">
         <div className="flex flex-col items-center gap-16">
           <Image
@@ -30,12 +31,12 @@ export default function Homepage() {
             <h1
               className={twMerge(
                 merriWeather.className,
-                'bg-gradient-to-br from-teal-400 to-sky-400 bg-clip-text text-6xl font-bold leading-snug text-transparent',
+                'text-balance bg-gradient-to-br from-teal-400 to-sky-400 bg-clip-text text-center text-5xl font-bold leading-snug text-transparent lg:text-6xl lg:leading-snug',
               )}
             >
               Redefining video content
             </h1>
-            <p className="max-w-2xl text-center text-xl leading-relaxed text-zinc-100">
+            <p className="max-w-2xl text-center text-lg leading-relaxed text-zinc-100 lg:text-xl lg:leading-relaxed">
               Nivo offers a{' '}
               <strong>
                 comprehensive video solution tailored for online content
@@ -47,6 +48,9 @@ export default function Homepage() {
           </div>
 
           <div className="flex items-center gap-4">
+            <Button asChild size="lg" variant="link" className="text-zinc-400">
+              <Link href="/about">What is Nivo?</Link>
+            </Button>
             <Button
               asChild
               className="bg-teal-400 text-teal-950 hover:bg-teal-500 dark:bg-teal-400 dark:text-teal-950 dark:hover:bg-teal-500"
