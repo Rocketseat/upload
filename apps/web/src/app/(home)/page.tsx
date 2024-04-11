@@ -47,7 +47,7 @@ export default function Homepage() {
             </p>
           </div>
 
-          <div className="flex items-center gap-4">
+          <div className="flex flex-col-reverse items-center gap-4 sm:flex-row">
             <Button asChild size="lg" variant="link" className="text-zinc-400">
               <Link href="/about">What is Nivo?</Link>
             </Button>
