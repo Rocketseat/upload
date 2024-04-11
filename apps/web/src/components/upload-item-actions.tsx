@@ -70,7 +70,7 @@ export function UploadItemActions({ videoId }: UploadItemActionsProps) {
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="w-[160px]">
           <DropdownMenuItem asChild>
-            <Link href={`/videos/${videoId}`} prefetch={false}>
+            <Link href={`/app/videos/${videoId}`} prefetch={false}>
               <Pencil2Icon className="mr-2 h-4 w-4" />
               <span>Edit</span>
             </Link>

@@ -27,8 +27,8 @@ export function Header() {
           <Separator orientation="vertical" className="h-6" />
 
           <nav className="flex items-center space-x-2 lg:space-x-3">
-            <MenuLink href="/dashboard">Dashboard</MenuLink>
-            <MenuLink href="/uploads">Uploads</MenuLink>
+            <MenuLink href="/app">Dashboard</MenuLink>
+            <MenuLink href="/app/uploads">Uploads</MenuLink>
           </nav>
         </div>
 
@@ -38,7 +38,7 @@ export function Header() {
           <Separator orientation="vertical" className="h-6" />
 
           <Button size="sm" asChild>
-            <Link href="/upload">
+            <Link href="/app/upload">
               <PlusCircle className="mr-2 size-4" />
               Upload video
             </Link>

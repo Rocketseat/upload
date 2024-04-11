@@ -59,7 +59,7 @@ export function WebhooksList() {
 
   function navigateToPage(pageIndex: number) {
     router.push(
-      `/settings/developers?${createQueryString('pageIndex', String(pageIndex))}`,
+      `/app/settings/developers?${createQueryString('pageIndex', String(pageIndex))}`,
     )
   }
 

@@ -14,12 +14,12 @@ export async function signInWithEmail(data: FormData) {
   await signIn('credentials', {
     email,
     password,
-    redirectTo: '/dashboard',
+    redirectTo: '/app',
   })
 }
 
 export async function signInWithGithub() {
   await signIn('google', {
-    redirectTo: '/dashboard',
+    redirectTo: '/app',
   })
 }

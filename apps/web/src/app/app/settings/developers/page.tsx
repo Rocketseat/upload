@@ -76,7 +76,7 @@ export default async function SettingsPage() {
 
           <div className="space-x-3">
             <Button size="default" variant="outline" asChild>
-              <Link href="/settings/developers/logs" prefetch={false}>
+              <Link href="/app/settings/developers/logs" prefetch={false}>
                 <Code2 className="mr-2 size-4" />
                 Webhook logs
               </Link>

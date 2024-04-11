@@ -93,7 +93,7 @@ export default async function UploadsPage({
                     <TableCell>
                       <div className="flex flex-col">
                         <Link
-                          href={`/videos/${video.id}`}
+                          href={`/app/videos/${video.id}`}
                           prefetch={false}
                           className="font-medium text-primary outline-none hover:underline"
                         >

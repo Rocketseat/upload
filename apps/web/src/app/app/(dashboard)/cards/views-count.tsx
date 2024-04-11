@@ -38,7 +38,7 @@ export async function ViewsCount() {
     return (
       <Card className="relative">
         <p className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-center text-sm leading-relaxed text-muted-foreground">
-          <Link href="/settings/organization" className="underline">
+          <Link href="/app/settings/organization" className="underline">
             Setup your Bunny account
           </Link>{' '}
           to see metrics

@@ -31,7 +31,7 @@ export function UploadsFilters() {
     tags.forEach((tag) => params.append('tagsFilter', tag))
 
     startTransition(() => {
-      router.push(`/uploads?${params.toString()}`)
+      router.push(`/app/uploads?${params.toString()}`)
     })
   }
 
@@ -44,7 +44,7 @@ export function UploadsFilters() {
     params.delete('titleFilter')
     params.delete('tagsFilter')
 
-    router.push(`/uploads?${params.toString()}`)
+    router.push(`/app/uploads?${params.toString()}`)
   }
 
   const hasFilters = title !== '' || tags.length > 0

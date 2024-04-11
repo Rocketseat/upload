@@ -79,7 +79,9 @@ export function WebhookLogsList() {
                     key={webhookLog.id}
                     className="cursor-pointer"
                     onClick={() =>
-                      router.push(`/settings/developers/logs/${webhookLog.id}`)
+                      router.push(
+                        `/app/settings/developers/logs/${webhookLog.id}`,
+                      )
                     }
                   >
                     <TableCell className="py-1.5">
