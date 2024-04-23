@@ -83,7 +83,7 @@ export function UploadItemActions({
             <DropdownMenuItem asChild>
               <Link href={`/app/batches/${uploadBatchId}`} prefetch={false}>
                 <GroupIcon className="mr-2 h-4 w-4" />
-                <span>View Batch</span>
+                <span>View batch</span>
               </Link>
             </DropdownMenuItem>
           )}
