@@ -162,7 +162,10 @@ export default async function UploadsPage({
                       </div>
                     </TableCell>
                     <TableCell>
-                      <UploadItemActions videoId={video.id} />
+                      <UploadItemActions
+                        videoId={video.id}
+                        uploadBatchId={video.uploadBatchId}
+                      />
                     </TableCell>
                   </TableRow>
                 )

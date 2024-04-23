@@ -1,7 +1,7 @@
 'use client'
 
 import { Pencil2Icon } from '@radix-ui/react-icons'
-import { Loader2, MoreHorizontal, Trash2 } from 'lucide-react'
+import { GroupIcon, Loader2, MoreHorizontal, Trash2 } from 'lucide-react'
 import Link from 'next/link'
 import { useState } from 'react'
 import { toast } from 'sonner'
@@ -28,9 +28,13 @@ import { trpc } from '@/lib/trpc/react'
 
 interface UploadItemActionsProps {
   videoId: string
+  uploadBatchId: string | null
 }
 
-export function UploadItemActions({ videoId }: UploadItemActionsProps) {
+export function UploadItemActions({
+  videoId,
+  uploadBatchId,
+}: UploadItemActionsProps) {
   const utils = trpc.useUtils()
 
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
@@ -75,6 +79,14 @@ export function UploadItemActions({ videoId }: UploadItemActionsProps) {
               <span>Edit</span>
             </Link>
           </DropdownMenuItem>
+          {uploadBatchId && (
+            <DropdownMenuItem asChild>
+              <Link href={`/app/batches/${uploadBatchId}`} prefetch={false}>
+                <GroupIcon className="mr-2 h-4 w-4" />
+                <span>View Batch</span>
+              </Link>
+            </DropdownMenuItem>
+          )}
           <DropdownMenuSeparator />
           <AlertDialogTrigger asChild>
             <DropdownMenuItem
