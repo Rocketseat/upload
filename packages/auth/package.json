@@ -11,8 +11,10 @@
     "@auth/core": "^0.25.0",
     "@nivo/drizzle": "workspace:*",
     "@nivo/env": "workspace:*",
+    "@nivo/i18n": "workspace:*",
     "drizzle-orm": "^0.29.3",
-    "next-auth": "beta"
+    "next-auth": "beta",
+    "next-i18n-router": "^5.4.2"
   },
   "devDependencies": {
     "@nivo/eslint-config": "workspace:*",

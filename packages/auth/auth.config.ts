@@ -1,10 +1,26 @@
 import { db } from '@nivo/drizzle'
+import { getLocaleFromPathOrHeaders, i18n } from '@nivo/i18n'
 import type { NextAuthConfig, Session } from 'next-auth'
 import { GoogleProfile } from 'next-auth/providers/google'
 
 import { credentialsProvider } from './credentials-provider'
 import { drizzleAuthAdapter } from './drizzle-auth-adapter'
 import { googleProvider } from './google-provider'
+import { i18nRouter } from 'next-i18n-router'
+
+const checkCurrentRoute = (pathname: string, locale?: string) => {
+  const checkPathnameRegex = (pattern: string | RegExp) => {
+    const rootRegex = new RegExp(pattern)
+    return Boolean(pathname.match(rootRegex))
+  }
+
+  return {
+    isOnWebhooks: checkPathnameRegex(`^/(${locale})?/webhooks.*`),
+    isOnPublicAPIRoutes: checkPathnameRegex(`^/(${locale})?/api/auth.*`),
+    isOnAPIRoutes: checkPathnameRegex(`^/(${locale})?/api.*`),
+    isOnPrivatePages: checkPathnameRegex(`^/(${locale})?/app.*`) || checkPathnameRegex(`^/app.*`),
+  }
+}
 
 export const authConfig = {
   adapter: drizzleAuthAdapter,
@@ -62,21 +78,26 @@ export const authConfig = {
 
       return session
     },
-    authorized({ auth, request: { nextUrl } }) {
+    authorized({ auth, request }) {
+      const { nextUrl } = request
       const isLoggedIn = !!auth?.user
 
-      const isOnWebhooks = nextUrl.pathname.startsWith('/api/webhooks')
-      const isOnPublicAPIRoutes = nextUrl.pathname.startsWith('/api/auth')
-      const isOnAPIRoutes = nextUrl.pathname.startsWith('/api')
-      const isOnPrivatePages = nextUrl.pathname.startsWith('/app')
-      const isOnPublicPages = !isOnPrivatePages
+      const { locale } = getLocaleFromPathOrHeaders(nextUrl.pathname, request.headers)
+
+      const {
+        isOnWebhooks,
+        isOnPublicAPIRoutes,
+        isOnAPIRoutes,
+        isOnPrivatePages,
+      } = checkCurrentRoute(nextUrl.pathname, locale)
 
       if (isOnWebhooks || isOnPublicAPIRoutes) {
         return true
       }
 
-      if (isOnPublicPages && !isOnAPIRoutes && isLoggedIn) {
-        return Response.redirect(new URL('/app', nextUrl))
+      if (!isOnPrivatePages && !isOnAPIRoutes && isLoggedIn) {
+        const prefixLocale = locale ? `/${locale}` : ''
+        return Response.redirect(new URL(`${prefixLocale}/app`, nextUrl))
       }
 
       if (isOnAPIRoutes && !isLoggedIn) {
@@ -87,7 +108,7 @@ export const authConfig = {
         return false
       }
 
-      return true
+      return i18nRouter(request, i18n)
     },
   },
 } satisfies NextAuthConfig
