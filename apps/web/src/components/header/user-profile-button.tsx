@@ -10,6 +10,9 @@ import {
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from '../ui/dropdown-menu'
 
@@ -53,6 +56,17 @@ export async function UserProfileButton() {
             Developers
           </Link>
         </DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <DropdownMenuLabel>Language</DropdownMenuLabel>
+        <DropdownMenuSub>
+          <DropdownMenuSubTrigger>🇺🇸 English</DropdownMenuSubTrigger>
+          <DropdownMenuSubContent>
+            <DropdownMenuItem className="space-x-2 bg-muted">
+              🇺🇸 English
+            </DropdownMenuItem>
+            <DropdownMenuItem>🇧🇷 Portuguese</DropdownMenuItem>
+          </DropdownMenuSubContent>
+        </DropdownMenuSub>
         <DropdownMenuSeparator />
         <form action={handleSignOut}>
           <DropdownMenuItem className="flex items-center gap-2" asChild>
