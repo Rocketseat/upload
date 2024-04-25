@@ -81,6 +81,7 @@
     "zod": "3.22.4"
   },
   "devDependencies": {
+    "@nivo/i18n": "workspace:*",
     "@nivo/eslint-config": "workspace:*",
     "@nivo/prettier": "workspace:*",
     "@nivo/tsconfig": "workspace:*",
