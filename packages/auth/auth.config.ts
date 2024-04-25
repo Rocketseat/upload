@@ -2,11 +2,11 @@ import { db } from '@nivo/drizzle'
 import { getLocaleFromPathOrHeaders, i18n } from '@nivo/i18n'
 import type { NextAuthConfig, Session } from 'next-auth'
 import { GoogleProfile } from 'next-auth/providers/google'
+import { i18nRouter } from 'next-i18n-router'
 
 import { credentialsProvider } from './credentials-provider'
 import { drizzleAuthAdapter } from './drizzle-auth-adapter'
 import { googleProvider } from './google-provider'
-import { i18nRouter } from 'next-i18n-router'
 
 const checkCurrentRoute = (pathname: string, locale?: string) => {
   const checkPathnameRegex = (pattern: string | RegExp) => {
@@ -18,7 +18,9 @@ const checkCurrentRoute = (pathname: string, locale?: string) => {
     isOnWebhooks: checkPathnameRegex(`^/(${locale})?/webhooks.*`),
     isOnPublicAPIRoutes: checkPathnameRegex(`^/(${locale})?/api/auth.*`),
     isOnAPIRoutes: checkPathnameRegex(`^/(${locale})?/api.*`),
-    isOnPrivatePages: checkPathnameRegex(`^/(${locale})?/app.*`) || checkPathnameRegex(`^/app.*`),
+    isOnPrivatePages:
+      checkPathnameRegex(`^/(${locale})?/app.*`) ||
+      checkPathnameRegex(`^/app.*`),
   }
 }
 
@@ -82,7 +84,10 @@ export const authConfig = {
       const { nextUrl } = request
       const isLoggedIn = !!auth?.user
 
-      const { locale } = getLocaleFromPathOrHeaders(nextUrl.pathname, request.headers)
+      const { locale } = getLocaleFromPathOrHeaders(
+        nextUrl.pathname,
+        request.headers,
+      )
 
       const {
         isOnWebhooks,

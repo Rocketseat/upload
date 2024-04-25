@@ -1,9 +1,6 @@
-import { Locale, config } from './config'
+import { config, Locale } from './config'
 import { getLocaleFromPathOrHeaders } from './get-locale'
 
-export {
-  getLocaleFromPathOrHeaders,
-  config as i18n,
-}
+export { getLocaleFromPathOrHeaders, config as i18n }
 
 export type { Locale }

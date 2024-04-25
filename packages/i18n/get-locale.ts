@@ -1,5 +1,5 @@
 import { i18n } from '.'
-import { Locale, config } from './config'
+import { config, Locale } from './config'
 
 function parseAcceptLanguageHeader(header: string | null): Locale[] {
   if (!header) {
@@ -14,9 +14,8 @@ function findBestMatchingLocale(requestedLocales: string[]): string {
   return (
     requestedLocales.find((locale) => mutableLocales.includes(locale)) ||
     config.defaultLocale
-  );
+  )
 }
-
 
 export function getLocaleFromPathOrHeaders(pathname: string, headers: Headers) {
   const acceptLanguageHeader = headers.get('accept-language')

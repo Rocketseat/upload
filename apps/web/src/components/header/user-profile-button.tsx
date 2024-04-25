@@ -10,11 +10,9 @@ import {
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from '../ui/dropdown-menu'
+import { LanguagePicker } from './language-picker'
 
 export async function UserProfileButton() {
   const session = await auth()
@@ -57,16 +55,7 @@ export async function UserProfileButton() {
           </Link>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuLabel>Language</DropdownMenuLabel>
-        <DropdownMenuSub>
-          <DropdownMenuSubTrigger>🇺🇸 English</DropdownMenuSubTrigger>
-          <DropdownMenuSubContent>
-            <DropdownMenuItem className="space-x-2 bg-muted">
-              🇺🇸 English
-            </DropdownMenuItem>
-            <DropdownMenuItem>🇧🇷 Portuguese</DropdownMenuItem>
-          </DropdownMenuSubContent>
-        </DropdownMenuSub>
+        <LanguagePicker />
         <DropdownMenuSeparator />
         <form action={handleSignOut}>
           <DropdownMenuItem className="flex items-center gap-2" asChild>
