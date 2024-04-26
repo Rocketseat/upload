@@ -1,8 +1,6 @@
 import { i18n, Locale } from '@nivo/i18n'
 import { cookies } from 'next/headers'
 
-import { useDictionary } from '@/state/dictionary'
-
 import {
   DropdownMenuLabel,
   DropdownMenuSub,
@@ -10,6 +8,7 @@ import {
   DropdownMenuSubTrigger,
 } from '../ui/dropdown-menu'
 import { LanguagePickerItem } from './language-picker-item'
+import { useDictionary } from '@/state/dictionary'
 
 export async function LanguagePicker() {
   const { dictionary, language } = useDictionary()

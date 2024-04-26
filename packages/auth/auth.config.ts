@@ -121,6 +121,7 @@ export const authConfig = {
       return i18nRouter(request, {
         ...i18n,
         prefixDefault: true,
+        // noPrefix: true,
       })
     },
   },

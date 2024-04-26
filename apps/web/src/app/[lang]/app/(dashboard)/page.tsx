@@ -5,9 +5,9 @@ import { Suspense } from 'react'
 import { Loading } from '@/components/summary/loading'
 import { Storage } from '@/components/summary/storage'
 import { TotalCount } from '@/components/summary/total-count'
-import { useDictionary } from '@/state/dictionary'
 
 import { ViewsCount } from './cards/views-count'
+import { useDictionary } from '@/state/dictionary'
 
 export const metadata: Metadata = {
   title: 'Dashboard',

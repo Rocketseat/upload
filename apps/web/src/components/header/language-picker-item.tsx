@@ -1,8 +1,8 @@
 'use client'
 
+import { Check } from 'lucide-react'
 import { Locale } from '@nivo/i18n'
 import { ReactNode } from 'react'
-import { twMerge } from 'tailwind-merge'
 
 import { DropdownMenuItem } from '../ui/dropdown-menu'
 
@@ -29,12 +29,10 @@ export function LanguagePickerItem({
   return (
     <DropdownMenuItem
       onClick={handleChangeLanguage}
-      className={twMerge(
-        'space-x-2',
-        isSelected ? 'bg-muted' : 'bg-transparent',
-      )}
+      className="space-x-2 gap-2 cursor-pointer dark:focus:bg-inherit focus:bg-inherit"
     >
       {children}
+      {isSelected && <Check className="mr-2 size-4" />}
     </DropdownMenuItem>
   )
 }
