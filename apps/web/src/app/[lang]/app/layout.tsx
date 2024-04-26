@@ -3,7 +3,7 @@ import { Header } from '@/components/header'
 export default async function AppLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode,
 }) {
   return (
     <div className="flex min-h-screen flex-col">

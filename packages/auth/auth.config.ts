@@ -1,5 +1,5 @@
 import { db } from '@nivo/drizzle'
-import { getLocaleFromPathOrHeaders, i18n } from '@nivo/i18n'
+import { getLocaleFromPath, i18n } from '@nivo/i18n'
 import type { NextAuthConfig, Session } from 'next-auth'
 import { GoogleProfile } from 'next-auth/providers/google'
 import { i18nRouter } from 'next-i18n-router'
@@ -82,12 +82,11 @@ export const authConfig = {
     },
     authorized({ auth, request }) {
       const { nextUrl } = request
-      const isLoggedIn = !!auth?.user
+      const cookieLocale = request.cookies.get('NEXT_LOCALE')
+      const localeFromPath = getLocaleFromPath(nextUrl.pathname)
+      const locale = cookieLocale?.value || localeFromPath.locale || i18n.defaultLocale;
 
-      const { locale } = getLocaleFromPathOrHeaders(
-        nextUrl.pathname,
-        request.headers,
-      )
+      const isLoggedIn = !!auth?.user
 
       const {
         isOnWebhooks,
@@ -113,7 +112,10 @@ export const authConfig = {
         return false
       }
 
-      return i18nRouter(request, i18n)
+      return i18nRouter(request, {
+        ...i18n,
+        prefixDefault: true
+      })
     },
   },
 } satisfies NextAuthConfig

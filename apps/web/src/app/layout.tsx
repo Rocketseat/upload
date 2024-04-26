@@ -24,7 +24,7 @@ export const metadata: Metadata = {
   description: 'The all-in-one video solution for online learning.',
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
   params,
 }: {

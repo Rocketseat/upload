@@ -11,7 +11,7 @@ import { Search } from './search'
 import { ThemeSwitcher } from './theme-switcher'
 import { UserProfileButton } from './user-profile-button'
 
-export function Header() {
+export async function Header() {
   return (
     <div className="border-b">
       <div className="flex items-center justify-between px-8">
