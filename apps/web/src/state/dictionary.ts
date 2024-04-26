@@ -1,21 +1,18 @@
 'server-only'
 
-import { cache } from 'react';
 import { type Dictionary, Locale } from '@nivo/i18n'
+import { cache } from 'react'
 
-const serverContext = cache(() => new Map());
+const serverContext = cache(() => new Map())
 
-export const useDictionary = (
-  defaultValue?: Dictionary,
-  language?: Locale,
-) => {
-  const global = serverContext();
+export const useDictionary = (defaultValue?: Dictionary, language?: Locale) => {
+  const global = serverContext()
 
   if (defaultValue !== undefined) {
-    global.set('dictionary', defaultValue);
+    global.set('dictionary', defaultValue)
   }
   if (language !== undefined) {
-    global.set('language', language);
+    global.set('language', language)
   }
 
   return {
@@ -26,8 +23,7 @@ export const useDictionary = (
       return global.get('dictionary')
     },
     set dictionary(value: Dictionary) {
-      global.set('dictionary', value);
-    }
+      global.set('dictionary', value)
+    },
   }
-};
-
+}

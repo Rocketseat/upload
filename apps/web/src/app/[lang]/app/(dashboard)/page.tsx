@@ -1,14 +1,13 @@
-import { getDictionary } from '@nivo/i18n'
+import { getDictionary, i18n, Locale } from '@nivo/i18n'
 import { Metadata } from 'next'
 import { Suspense } from 'react'
 
 import { Loading } from '@/components/summary/loading'
 import { Storage } from '@/components/summary/storage'
 import { TotalCount } from '@/components/summary/total-count'
+import { useDictionary } from '@/state/dictionary'
 
 import { ViewsCount } from './cards/views-count'
-import { Locale, i18n } from "@nivo/i18n"
-import { useDictionary } from '@/state/dictionary'
 
 export const metadata: Metadata = {
   title: 'Dashboard',

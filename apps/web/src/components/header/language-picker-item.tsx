@@ -1,14 +1,15 @@
 'use client'
 
-import { ReactNode } from "react";
-import { Locale } from "@nivo/i18n";
-import { DropdownMenuItem } from "../ui/dropdown-menu";
-import { twMerge } from "tailwind-merge";
+import { Locale } from '@nivo/i18n'
+import { ReactNode } from 'react'
+import { twMerge } from 'tailwind-merge'
+
+import { DropdownMenuItem } from '../ui/dropdown-menu'
 
 interface LanguagePickerItemProps {
   setLanguage(locale: Locale): void
-  isSelected: boolean,
-  locale: Locale,
+  isSelected: boolean
+  locale: Locale
   children: ReactNode
 }
 
@@ -16,7 +17,7 @@ export function LanguagePickerItem({
   setLanguage,
   isSelected,
   locale,
-  children
+  children,
 }: LanguagePickerItemProps) {
   function handleChangeLanguage() {
     setLanguage(locale)
@@ -29,14 +30,11 @@ export function LanguagePickerItem({
     <DropdownMenuItem
       onClick={handleChangeLanguage}
       className={twMerge(
-        "space-x-2",
-        isSelected
-          ? 'bg-muted'
-          : 'bg-transparent',
+        'space-x-2',
+        isSelected ? 'bg-muted' : 'bg-transparent',
       )}
     >
       {children}
     </DropdownMenuItem>
-
   )
 }

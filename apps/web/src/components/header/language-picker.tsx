@@ -1,31 +1,36 @@
-import { Locale, i18n } from '@nivo/i18n'
+import { i18n, Locale } from '@nivo/i18n'
+import { cookies } from 'next/headers'
+
+import { useDictionary } from '@/state/dictionary'
+
 import {
   DropdownMenuLabel,
   DropdownMenuSub,
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
 } from '../ui/dropdown-menu'
-import { useDictionary } from '@/state/dictionary'
 import { LanguagePickerItem } from './language-picker-item'
-import { cookies } from 'next/headers'
 
 export async function LanguagePicker() {
   const { dictionary, language } = useDictionary()
 
   async function setLanguage(locale: Locale) {
-    "use server"
+    'use server'
     const cookieStore = cookies()
     cookieStore.set('NEXT_LOCALE', locale)
   }
 
   return (
     <>
-      <DropdownMenuLabel>Language</DropdownMenuLabel>
+      <DropdownMenuLabel>{dictionary.languagePicker.title}</DropdownMenuLabel>
       <DropdownMenuSub>
-        <DropdownMenuSubTrigger>{dictionary.languages[language]}</DropdownMenuSubTrigger>
+        <DropdownMenuSubTrigger>
+          {dictionary.languages[language]}
+        </DropdownMenuSubTrigger>
         <DropdownMenuSubContent>
-          {i18n.locales.map(locale => (
+          {i18n.locales.map((locale) => (
             <LanguagePickerItem
+              key={locale}
               setLanguage={setLanguage}
               locale={locale}
               isSelected={language === locale}
@@ -34,7 +39,7 @@ export async function LanguagePicker() {
             </LanguagePickerItem>
           ))}
         </DropdownMenuSubContent>
-      </DropdownMenuSub >
+      </DropdownMenuSub>
     </>
   )
 }
