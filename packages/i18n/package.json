@@ -1,0 +1,25 @@
+{
+  "name": "@nivo/i18n",
+  "main": "./index.ts",
+  "types": "./index.ts",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "lint": "eslint ."
+  },
+  "devDependencies": {
+    "@nivo/eslint-config": "workspace:*",
+    "@nivo/prettier": "workspace:*",
+    "@nivo/tsconfig": "workspace:*",
+    "@types/react": "18.2.55",
+    "next": "14.1.0",
+    "react": "^18.2.0"
+  },
+  "eslintConfig": {
+    "root": true,
+    "extends": [
+      "@nivo/eslint-config/lib"
+    ]
+  },
+  "prettier": "@nivo/prettier"
+}

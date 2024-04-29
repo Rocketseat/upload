@@ -1,0 +1,12 @@
+{
+  "dashboard": {
+    "heading": "Resumo"
+  },
+  "languagePicker": {
+    "title": "Idioma"
+  },
+  "languages": {
+    "en": "🇺🇸 Inglês",
+    "pt": "🇧🇷 Português"
+  }
+}
