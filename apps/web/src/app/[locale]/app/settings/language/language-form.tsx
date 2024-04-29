@@ -29,18 +29,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover'
-
-const languages = [
-  { label: 'English', code: 'en' },
-  { label: 'French', code: 'fr' },
-  { label: 'German', code: 'de' },
-  { label: 'Spanish', code: 'es' },
-  { label: 'Portuguese', code: 'pt' },
-  { label: 'Russian', code: 'ru' },
-  { label: 'Japanese', code: 'ja' },
-  { label: 'Korean', code: 'ko' },
-  { label: 'Chinese', code: 'zh' },
-] as const
+import { Locale } from '@nivo/i18n'
 
 export const createLanguageSchema = z.object({
   language: z.object({
@@ -51,7 +40,12 @@ export const createLanguageSchema = z.object({
 
 export type UpdateLanguageSchema = z.infer<typeof createLanguageSchema>
 
-export function LanguageForm() {
+interface LanguageFormProps {
+  languages: { code: Locale, label: string }[]
+  currentLocale: string
+}
+
+export function LanguageForm({ languages, currentLocale }: LanguageFormProps) {
   const [open, setOpen] = useState(false)
 
   const languageForm = useForm<UpdateLanguageSchema>({
@@ -65,10 +59,12 @@ export function LanguageForm() {
 
   const { handleSubmit } = languageForm
 
+
   return (
     <FormProvider {...languageForm}>
       <form onSubmit={handleSubmit(handleSaveLanguage)} className="space-y-6">
         <FormField
+          defaultValue={languages.find(lang => lang.code === currentLocale)}
           control={languageForm.control}
           name="language"
           render={({ field }) => (
@@ -87,8 +83,8 @@ export function LanguageForm() {
                     >
                       {field.value
                         ? languages.find(
-                            (language) => language.code === field.value.code,
-                          )?.label
+                          (language) => language.code === field.value.code,
+                        )?.label
                         : 'Select Language'}
                       <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                     </Button>
