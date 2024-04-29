@@ -1,4 +1,10 @@
-import { Building, Code2, SquareDashedBottomCode, User2 } from 'lucide-react'
+import {
+  Building,
+  Code2,
+  Globe,
+  SquareDashedBottomCode,
+  User2,
+} from 'lucide-react'
 import { ReactNode } from 'react'
 
 import { AsideLink } from './aside-link'
@@ -35,6 +41,15 @@ export default async function Layout({ children }: { children: ReactNode }) {
               <AsideLink href="/app/settings/developers/logs">
                 <SquareDashedBottomCode className="mr-2 size-4" />
                 Webhook Logs
+              </AsideLink>
+            </div>
+            <div className="flex flex-col gap-1">
+              <span className="mb-2 px-4 text-xxs font-semibold uppercase text-muted-foreground">
+                Preferences
+              </span>
+              <AsideLink href="/app/settings/language">
+                <Globe className="mr-2 size-4" />
+                Language
               </AsideLink>
             </div>
           </nav>
