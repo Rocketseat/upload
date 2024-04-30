@@ -89,8 +89,8 @@ export function LanguageForm({
                     >
                       {field.value
                         ? languages.find(
-                          (language) => language.code === field.value.code,
-                        )?.label
+                            (language) => language.code === field.value.code,
+                          )?.label
                         : dictionary.language_form_search_placeholder}
                       <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                     </Button>

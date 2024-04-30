@@ -8,15 +8,13 @@
     "lint": "eslint ."
   },
   "dependencies": {
-    "next-i18n-router": "^5.4.2",
     "next": "14.1.0",
-    "react": "^18.2.0"
+    "next-i18n-router": "^5.4.2"
   },
   "devDependencies": {
     "@nivo/eslint-config": "workspace:*",
     "@nivo/prettier": "workspace:*",
-    "@nivo/tsconfig": "workspace:*",
-    "@types/react": "18.2.55"
+    "@nivo/tsconfig": "workspace:*"
   },
   "eslintConfig": {
     "root": true,

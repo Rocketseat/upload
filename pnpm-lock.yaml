@@ -487,9 +487,6 @@ importers:
       next-i18n-router:
         specifier: ^5.4.2
         version: 5.4.2
-      react:
-        specifier: ^18.2.0
-        version: 18.2.0
     devDependencies:
       '@nivo/eslint-config':
         specifier: workspace:*
@@ -500,9 +497,6 @@ importers:
       '@nivo/tsconfig':
         specifier: workspace:*
         version: link:../../config/tsconfig
-      '@types/react':
-        specifier: 18.2.55
-        version: 18.2.55
 
   packages/openai:
     dependencies:
