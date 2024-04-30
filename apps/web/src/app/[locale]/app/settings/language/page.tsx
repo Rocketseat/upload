@@ -10,6 +10,7 @@ import {
 
 import { LanguageForm } from './language-form'
 import { getDictionary, i18n, Locale } from '@nivo/i18n'
+import { cookies } from 'next/headers'
 
 export const metadata: Metadata = {
   title: 'Language settings',
@@ -24,6 +25,12 @@ export default async function LanguagePage({ params: { locale } }: {
     code: locale
   }))
 
+  async function updateLanguage(locale: Locale) {
+    'use server'
+    const cookieStore = cookies()
+    cookieStore.set('NEXT_LOCALE', locale)
+  }
+
   return (
     <Card>
       <CardHeader>
@@ -33,7 +40,11 @@ export default async function LanguagePage({ params: { locale } }: {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <LanguageForm languages={languages} currentLocale={locale} />
+        <LanguageForm
+          languages={languages}
+          currentLocale={locale}
+          updateLanguage={updateLanguage}
+        />
       </CardContent>
     </Card>
   )

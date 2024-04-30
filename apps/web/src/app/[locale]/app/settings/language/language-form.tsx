@@ -43,9 +43,10 @@ export type UpdateLanguageSchema = z.infer<typeof createLanguageSchema>
 interface LanguageFormProps {
   languages: { code: Locale, label: string }[]
   currentLocale: string
+  updateLanguage(locale: Locale): Promise<void>
 }
 
-export function LanguageForm({ languages, currentLocale }: LanguageFormProps) {
+export function LanguageForm({ languages, currentLocale, updateLanguage }: LanguageFormProps) {
   const [open, setOpen] = useState(false)
 
   const languageForm = useForm<UpdateLanguageSchema>({
@@ -53,12 +54,14 @@ export function LanguageForm({ languages, currentLocale }: LanguageFormProps) {
   })
 
   async function handleSaveLanguage({ language }: UpdateLanguageSchema) {
-    console.log({ language })
+    updateLanguage(language.code)
+    setTimeout(() => {
+      window.location.reload()
+    }, 200)
     toast.success('Your language preferences were updated!')
   }
 
   const { handleSubmit } = languageForm
-
 
   return (
     <FormProvider {...languageForm}>
