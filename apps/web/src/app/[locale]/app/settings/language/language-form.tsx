@@ -3,7 +3,6 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Locale } from '@nivo/i18n'
 import { CaretSortIcon, CheckIcon } from '@radix-ui/react-icons'
-import { useSetAtom } from 'jotai'
 import { useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { twMerge } from 'tailwind-merge'
@@ -30,7 +29,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover'
-import { localeAtom, useDictionary } from '@/state/dictionary'
+import { useDictionary } from '@/state/dictionary'
 
 export const createLanguageSchema = z.object({
   language: z.object({
@@ -55,7 +54,6 @@ export function LanguageForm({
   const [open, setOpen] = useState(false)
 
   const dictionary = useDictionary()
-  const setLocale = useSetAtom(localeAtom)
 
   const languageForm = useForm<UpdateLanguageSchema>({
     resolver: zodResolver(createLanguageSchema),
@@ -63,7 +61,6 @@ export function LanguageForm({
 
   async function handleSaveLanguage({ language }: UpdateLanguageSchema) {
     await updateLanguage(language.code)
-    setLocale(language.code)
     window.location.reload()
   }
 
@@ -92,8 +89,8 @@ export function LanguageForm({
                     >
                       {field.value
                         ? languages.find(
-                            (language) => language.code === field.value.code,
-                          )?.label
+                          (language) => language.code === field.value.code,
+                        )?.label
                         : dictionary.language_form_search_placeholder}
                       <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                     </Button>

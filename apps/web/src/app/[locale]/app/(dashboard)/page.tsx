@@ -19,7 +19,6 @@ export default async function DashboardPage({
 }: {
   params: { locale: Locale }
 }) {
-  // using dictionary server side
   const dictionary = await getDictionary(locale)
 
   return (
