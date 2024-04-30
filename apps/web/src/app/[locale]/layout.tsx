@@ -29,7 +29,7 @@ export default function RootLayout({
   params: { locale: Locale }
 }) {
   return (
-    <html lang="en" className={inter.variable} suppressHydrationWarning>
+    <html lang={locale} className={inter.variable} suppressHydrationWarning>
       <body className="antialiased">
         <Providers locale={locale}>
           {children}
