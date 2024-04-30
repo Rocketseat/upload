@@ -44,6 +44,9 @@ importers:
       '@nivo/ffmpeg':
         specifier: workspace:*
         version: link:../../packages/ffmpeg
+      '@nivo/i18n':
+        specifier: workspace:*
+        version: link:../../packages/i18n
       '@nivo/openai':
         specifier: workspace:*
         version: link:../../packages/openai
@@ -296,6 +299,9 @@ importers:
       '@nivo/env':
         specifier: workspace:*
         version: link:../env
+      '@nivo/i18n':
+        specifier: workspace:*
+        version: link:../i18n
       drizzle-orm:
         specifier: ^0.29.3
         version: 0.29.5(@types/react@18.2.55)(react@18.2.0)
@@ -472,6 +478,31 @@ importers:
       '@nivo/tsconfig':
         specifier: workspace:*
         version: link:../../config/tsconfig
+
+  packages/i18n:
+    dependencies:
+      next:
+        specifier: 14.1.0
+        version: 14.1.0(react-dom@18.2.0)(react@18.2.0)
+      next-i18n-router:
+        specifier: ^5.4.2
+        version: 5.4.2
+      react:
+        specifier: ^18.2.0
+        version: 18.2.0
+    devDependencies:
+      '@nivo/eslint-config':
+        specifier: workspace:*
+        version: link:../../config/eslint-config
+      '@nivo/prettier':
+        specifier: workspace:*
+        version: link:../../config/prettier
+      '@nivo/tsconfig':
+        specifier: workspace:*
+        version: link:../../config/tsconfig
+      '@types/react':
+        specifier: 18.2.55
+        version: 18.2.55
 
   packages/openai:
     dependencies:
@@ -1853,6 +1884,12 @@ packages:
 
   /@floating-ui/utils@0.2.1:
     resolution: {integrity: sha512-9TANp6GPoMtYzQdt54kfAyMmz1+osLlXdg2ENroU7zzrtflTLrrC/lgrIfaSe+Wu0b89GKccT7vxXA0MoAIO+Q==}
+    dev: false
+
+  /@formatjs/intl-localematcher@0.5.4:
+    resolution: {integrity: sha512-zTwEpWOzZ2CiKcB93BLngUX59hQkuZjT2+SAQEscSm52peDW/getsawMcWF1rGRpMCX6D7nSJA3CzJ8gn13N/g==}
+    dependencies:
+      tslib: 2.6.2
     dev: false
 
   /@hookform/resolvers@3.3.4(react-hook-form@7.49.3):
@@ -6720,6 +6757,11 @@ packages:
     resolution: {integrity: sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==}
     dev: true
 
+  /negotiator@0.6.3:
+    resolution: {integrity: sha512-+EUsqGPLsM+j/zdChZjsnX51g4XrHFOIXwfnCVPGlQk/k5giakcKsuxCObBRu6DSm9opw/O6slWbJdghQM4bBg==}
+    engines: {node: '>= 0.6'}
+    dev: false
+
   /next-auth@5.0.0-beta.16(next@14.1.0)(react@18.2.0):
     resolution: {integrity: sha512-dX2snB+ezN23tFzSes3n3uosT9iBf0eILPYWH/R2fd9n3ZzdMQlRzq7JIOPeS1aLc84IuRlyuyXyx9XmmZB6og==}
     peerDependencies:
@@ -6739,6 +6781,13 @@ packages:
       '@auth/core': 0.28.1
       next: 14.1.0(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
+    dev: false
+
+  /next-i18n-router@5.4.2:
+    resolution: {integrity: sha512-ixLQaA4TlQ7e107vZa0pxC3mxVxQ6wDq79V6DFj8L1S/yk8+RSnHDXKeEVgsXjkruZ4nINIkV8kgabHNXRFpBQ==}
+    dependencies:
+      '@formatjs/intl-localematcher': 0.5.4
+      negotiator: 0.6.3
     dev: false
 
   /next-themes@0.2.1(next@14.1.0)(react-dom@18.2.0)(react@18.2.0):

@@ -1,12 +1,5 @@
 {
-  "dashboard": {
-    "heading": "Dashboard"
-  },
-  "languagePicker": {
-    "title": "Language"
-  },
-  "languages": {
-    "en": "🇺🇸 English",
-    "pt": "🇧🇷 Portuguese"
-  }
+  "dashboard_heading": "Dashboard",
+  "languages_en": "English",
+  "languages_pt": "Portuguese"
 }

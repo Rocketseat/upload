@@ -1,4 +1,5 @@
 import { db } from '@nivo/drizzle'
+import { i18n, i18nRouter } from '@nivo/i18n'
 import type { NextAuthConfig, Session } from 'next-auth'
 import { GoogleProfile } from 'next-auth/providers/google'
 
@@ -62,7 +63,8 @@ export const authConfig = {
 
       return session
     },
-    authorized({ auth, request: { nextUrl } }) {
+    authorized({ auth, request }) {
+      const { nextUrl } = request
       const isLoggedIn = !!auth?.user
 
       const isOnWebhooks = nextUrl.pathname.startsWith('/api/webhooks')
@@ -87,7 +89,7 @@ export const authConfig = {
         return false
       }
 
-      return true
+      return i18nRouter(request, i18n)
     },
   },
 } satisfies NextAuthConfig

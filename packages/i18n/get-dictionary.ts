@@ -5,7 +5,9 @@ const dictionaries = {
   pt: () => import('./dictionaries/pt.json').then((module) => module.default),
 }
 
-export type Dictionary = Awaited<ReturnType<typeof dictionaries.en>>
+export type Dictionary = Awaited<ReturnType<typeof dictionaries.en>> & {
+  [key: `languages_${Locale}`]: string;
+}
 
 export const getDictionary = async (locale: Locale): Promise<Dictionary> =>
-  dictionaries[locale]?.() ?? dictionaries.en()
+  dictionaries[locale as keyof typeof dictionaries]();
