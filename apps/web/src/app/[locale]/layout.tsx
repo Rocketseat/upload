@@ -1,6 +1,7 @@
 import './globals.css'
 
 import { env } from '@nivo/env'
+import { Locale } from '@nivo/i18n'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { ReactNode } from 'react'
@@ -20,11 +21,17 @@ export const metadata: Metadata = {
   description: 'The all-in-one video solution for online learning.',
 }
 
-export default function RootLayout({ children }: { children: ReactNode }) {
+export default function RootLayout({
+  children,
+  params: { locale },
+}: {
+  children: ReactNode
+  params: { locale: Locale }
+}) {
   return (
     <html lang="en" className={inter.variable} suppressHydrationWarning>
       <body className="antialiased">
-        <Providers>
+        <Providers locale={locale}>
           {children}
 
           <Toaster />

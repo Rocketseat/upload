@@ -1,4 +1,6 @@
+import { getDictionary, i18n, Locale } from '@nivo/i18n'
 import { Metadata } from 'next'
+import { cookies } from 'next/headers'
 
 import {
   Card,
@@ -9,20 +11,20 @@ import {
 } from '@/components/ui/card'
 
 import { LanguageForm } from './language-form'
-import { getDictionary, i18n, Locale } from '@nivo/i18n'
-import { cookies } from 'next/headers'
 
 export const metadata: Metadata = {
   title: 'Language settings',
 }
 
-export default async function LanguagePage({ params: { locale } }: {
+export default async function LanguagePage({
+  params: { locale },
+}: {
   params: { locale: Locale }
 }) {
   const dictionary = await getDictionary(locale)
-  const languages = i18n.locales.map(locale => ({
+  const languages = i18n.locales.map((locale) => ({
     label: dictionary[`languages_${locale}`],
-    code: locale
+    code: locale,
   }))
 
   async function updateLanguage(locale: Locale) {

@@ -1,10 +1,11 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
+import { Locale } from '@nivo/i18n'
 import { CaretSortIcon, CheckIcon } from '@radix-ui/react-icons'
+import { useAtom } from 'jotai'
 import { useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
-import { toast } from 'sonner'
 import { twMerge } from 'tailwind-merge'
 import { z } from 'zod'
 
@@ -29,7 +30,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover'
-import { Locale } from '@nivo/i18n'
+import { localeAtom, useDictionary } from '@/state/dictionary'
 
 export const createLanguageSchema = z.object({
   language: z.object({
@@ -41,33 +42,41 @@ export const createLanguageSchema = z.object({
 export type UpdateLanguageSchema = z.infer<typeof createLanguageSchema>
 
 interface LanguageFormProps {
-  languages: { code: Locale, label: string }[]
+  languages: { code: Locale; label: string }[]
   currentLocale: string
   updateLanguage(locale: Locale): Promise<void>
 }
 
-export function LanguageForm({ languages, currentLocale, updateLanguage }: LanguageFormProps) {
+export function LanguageForm({
+  languages,
+  currentLocale,
+  updateLanguage,
+}: LanguageFormProps) {
   const [open, setOpen] = useState(false)
+  const [locale, setLocale] = useAtom(localeAtom)
+
+  // using dictionary client side
+  const dictionary = useDictionary()
 
   const languageForm = useForm<UpdateLanguageSchema>({
     resolver: zodResolver(createLanguageSchema),
   })
 
   async function handleSaveLanguage({ language }: UpdateLanguageSchema) {
-    updateLanguage(language.code)
-    setTimeout(() => {
-      window.location.reload()
-    }, 200)
-    toast.success('Your language preferences were updated!')
+    await updateLanguage(language.code)
+    setLocale(language.code)
+    window.location.reload()
   }
 
   const { handleSubmit } = languageForm
 
   return (
     <FormProvider {...languageForm}>
+      <h1>dictionary: {dictionary[`languages_${currentLocale}`]}</h1>
+      <h1>locale: {locale}</h1>
       <form onSubmit={handleSubmit(handleSaveLanguage)} className="space-y-6">
         <FormField
-          defaultValue={languages.find(lang => lang.code === currentLocale)}
+          defaultValue={languages.find((lang) => lang.code === currentLocale)}
           control={languageForm.control}
           name="language"
           render={({ field }) => (
@@ -86,8 +95,8 @@ export function LanguageForm({ languages, currentLocale, updateLanguage }: Langu
                     >
                       {field.value
                         ? languages.find(
-                          (language) => language.code === field.value.code,
-                        )?.label
+                            (language) => language.code === field.value.code,
+                          )?.label
                         : 'Select Language'}
                       <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                     </Button>
