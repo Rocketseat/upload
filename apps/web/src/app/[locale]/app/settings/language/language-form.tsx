@@ -3,7 +3,7 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Locale } from '@nivo/i18n'
 import { CaretSortIcon, CheckIcon } from '@radix-ui/react-icons'
-import { useAtom } from 'jotai'
+import { useSetAtom } from 'jotai'
 import { useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { twMerge } from 'tailwind-merge'
@@ -53,10 +53,9 @@ export function LanguageForm({
   updateLanguage,
 }: LanguageFormProps) {
   const [open, setOpen] = useState(false)
-  const [locale, setLocale] = useAtom(localeAtom)
 
-  // using dictionary client side
   const dictionary = useDictionary()
+  const setLocale = useSetAtom(localeAtom)
 
   const languageForm = useForm<UpdateLanguageSchema>({
     resolver: zodResolver(createLanguageSchema),
@@ -72,8 +71,6 @@ export function LanguageForm({
 
   return (
     <FormProvider {...languageForm}>
-      <h1>dictionary: {dictionary[`languages_${currentLocale}`]}</h1>
-      <h1>locale: {locale}</h1>
       <form onSubmit={handleSubmit(handleSaveLanguage)} className="space-y-6">
         <FormField
           defaultValue={languages.find((lang) => lang.code === currentLocale)}
@@ -81,7 +78,7 @@ export function LanguageForm({
           name="language"
           render={({ field }) => (
             <FormItem className="flex flex-col">
-              <FormLabel>Current Setting</FormLabel>
+              <FormLabel>{dictionary.language_form_label}</FormLabel>
               <Popover open={open} onOpenChange={setOpen}>
                 <PopoverTrigger asChild>
                   <FormControl>
@@ -97,7 +94,7 @@ export function LanguageForm({
                         ? languages.find(
                             (language) => language.code === field.value.code,
                           )?.label
-                        : 'Select Language'}
+                        : dictionary.language_form_search_placeholder}
                       <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                     </Button>
                   </FormControl>
@@ -105,10 +102,12 @@ export function LanguageForm({
                 <PopoverContent className="w-[200px] p-0">
                   <Command>
                     <CommandInput
-                      placeholder="Search language..."
+                      placeholder={dictionary.language_form_search_placeholder}
                       className="h-9"
                     />
-                    <CommandEmpty>No language found.</CommandEmpty>
+                    <CommandEmpty>
+                      {dictionary.language_form_no_language_found}
+                    </CommandEmpty>
                     <CommandGroup>
                       {languages.map((language) => (
                         <CommandItem
@@ -135,13 +134,13 @@ export function LanguageForm({
                 </PopoverContent>
               </Popover>
               <FormDescription>
-                This setting determines the language used throughout the app.
+                {dictionary.language_form_description}
               </FormDescription>
               <FormMessage />
             </FormItem>
           )}
         />
-        <Button type="submit">Save Changes</Button>
+        <Button type="submit">{dictionary.language_form_submit}</Button>
       </form>
     </FormProvider>
   )

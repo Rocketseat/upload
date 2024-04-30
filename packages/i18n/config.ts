@@ -4,6 +4,6 @@ export const config: Config = {
   defaultLocale: 'en',
   locales: ['en', 'pt'],
   noPrefix: true,
-} as const;
+} as const
 
-export type Locale = (typeof config)['locales'][number];
+export type Locale = (typeof config)['locales'][number]

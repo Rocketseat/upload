@@ -6,8 +6,8 @@ const dictionaries = {
 }
 
 export type Dictionary = Awaited<ReturnType<typeof dictionaries.en>> & {
-  [key: `languages_${Locale}`]: string;
+  [key: `languages_${Locale}`]: string
 }
 
 export const getDictionary = async (locale: Locale): Promise<Dictionary> =>
-  dictionaries[locale as keyof typeof dictionaries]();
+  dictionaries[locale as keyof typeof dictionaries]()

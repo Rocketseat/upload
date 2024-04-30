@@ -1,5 +1,14 @@
 {
   "dashboard_heading": "Dashboard",
   "languages_en": "English",
-  "languages_pt": "Portuguese"
+  "languages_pt": "Portuguese",
+  "language_form_heading": "Language Settings",
+  "language_form_description": "This setting determines the language used throughout the app.",
+  "language_form_label": "Current Setting",
+  "language_form_submit": "Save Changes",
+  "language_form_no_language_found": "No language found.",
+  "language_form_search_placeholder": "Search language...",
+  "language_page_title": "Language Settings",
+  "language_page_choose_language": "Choose Language",
+  "language_page_description": "Select your preferred language from the list below."
 }

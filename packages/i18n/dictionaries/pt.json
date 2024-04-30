@@ -1,5 +1,14 @@
 {
-  "dashboard_heading": "Resumo",
+  "dashboard_heading": "Painel de Controle",
   "languages_en": "Inglês",
-  "languages_pt": "Português"
+  "languages_pt": "Português",
+  "language_form_heading": "Configurações de Idioma",
+  "language_form_description": "Esta configuração determina o idioma usado em todo o aplicativo.",
+  "language_form_label": "Configuração Atual",
+  "language_form_submit": "Salvar Alterações",
+  "language_form_no_language_found": "Nenhum idioma encontrado.",
+  "language_form_search_placeholder": "Buscar idioma...",
+  "language_page_title": "Configurações de Idioma",
+  "language_page_choose_language": "Escolher Idioma",
+  "language_page_description": "Selecione o idioma de sua preferência na lista abaixo."
 }

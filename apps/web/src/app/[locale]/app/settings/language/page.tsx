@@ -36,9 +36,9 @@ export default async function LanguagePage({
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Choose Language</CardTitle>
+        <CardTitle>{dictionary.language_page_choose_language}</CardTitle>
         <CardDescription>
-          Select your preferred language from the list below.
+          {dictionary.language_page_description}
         </CardDescription>
       </CardHeader>
       <CardContent>
