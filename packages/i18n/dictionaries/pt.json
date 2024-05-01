@@ -10,5 +10,22 @@
   "language_form_search_placeholder": "Buscar idioma...",
   "language_page_title": "Configurações de Idioma",
   "language_page_choose_language": "Escolher Idioma",
-  "language_page_description": "Selecione o idioma de sua preferência na lista abaixo."
+  "language_page_description": "Selecione o idioma de sua preferência na lista abaixo.",
+  "profile_page_title": "Configurações de Perfil",
+  "profile_title": "Perfil",
+  "profile_description": "Atualize as informações do seu perfil.",
+  "profile_label_avatar": "Avatar",
+  "profile_label_name": "Nome",
+  "profile_label_email": "E-mail",
+  "profile_info_update_not_allowed": "Você ainda não pode atualizar seu perfil.",
+  "error_invalid_session_data": "Dados de sessão inválidos.",
+  "settings_aside_title": "Configurações",
+  "settings_aside_general": "Geral",
+  "settings_aside_profile": "Perfil",
+  "settings_aside_organization": "Organização",
+  "settings_aside_developers": "Desenvolvedores",
+  "settings_aside_api_webhooks": "API & Webhooks",
+  "settings_aside_webhook_logs": "Registros de Webhooks",
+  "settings_aside_preferences": "Preferências",
+  "settings_aside_language": "Idioma"
 }

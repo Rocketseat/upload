@@ -10,5 +10,22 @@
   "language_form_search_placeholder": "Search language...",
   "language_page_title": "Language Settings",
   "language_page_choose_language": "Choose Language",
-  "language_page_description": "Select your preferred language from the list below."
+  "language_page_description": "Select your preferred language from the list below.",
+  "profile_page_title": "Profile Settings",
+  "profile_title": "Profile",
+  "profile_description": "Update your profile information.",
+  "profile_label_avatar": "Avatar",
+  "profile_label_name": "Name",
+  "profile_label_email": "E-mail",
+  "profile_info_update_not_allowed": "You cannot update your profile yet.",
+  "error_invalid_session_data": "Invalid session data.",
+  "settings_aside_title": "Settings",
+  "settings_aside_general": "General",
+  "settings_aside_profile": "Profile",
+  "settings_aside_organization": "Organization",
+  "settings_aside_developers": "Developers",
+  "settings_aside_api_webhooks": "API & Webhooks",
+  "settings_aside_webhook_logs": "Webhook Logs",
+  "settings_aside_preferences": "Preferences",
+  "settings_aside_language": "Language"
 }
