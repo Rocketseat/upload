@@ -2,6 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { webhookEventTrigger } from '@nivo/drizzle/schema'
+import { Dictionary } from '@nivo/i18n'
 import { RouterOutput } from '@nivo/trpc'
 import { Loader2 } from 'lucide-react'
 import { FormProvider, useForm } from 'react-hook-form'
@@ -13,27 +14,32 @@ import { DialogTrigger } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { trpc } from '@/lib/trpc/react'
+import { useDictionary } from '@/state/dictionary'
 
 import { WebhookTriggersInput } from './webhook-triggers-input'
 
-export const createWebhookSchema = z.object({
-  url: z.string().url({ message: 'Enter a valid URL.' }),
-  triggers: z
-    .array(webhookEventTrigger)
-    .min(1, { message: 'Select at least one event trigger.' }),
-})
+export const createWebhookSchema = (dictionary: Dictionary) =>
+  z.object({
+    url: z.string().url({ message: dictionary.webhook_form_invalid_url }),
+    triggers: z
+      .array(webhookEventTrigger)
+      .min(1, { message: dictionary.webhook_form_select_trigger }),
+  })
 
-export type CreateWebhookSchema = z.infer<typeof createWebhookSchema>
+export type CreateWebhookSchema = z.infer<
+  ReturnType<typeof createWebhookSchema>
+>
 
 interface WebhookFormProps {
   webhookToEdit?: RouterOutput['getCompanyWebhooks']['companyWebhooks'][number]
 }
 
 export function WebhookForm({ webhookToEdit }: WebhookFormProps) {
+  const dictionary = useDictionary()
   const utils = trpc.useUtils()
 
   const webhookForm = useForm<CreateWebhookSchema>({
-    resolver: zodResolver(createWebhookSchema),
+    resolver: zodResolver(createWebhookSchema(dictionary)),
     defaultValues: {
       url: webhookToEdit?.url ?? '',
       triggers: webhookToEdit?.triggers ?? [],
@@ -69,12 +75,12 @@ export function WebhookForm({ webhookToEdit }: WebhookFormProps) {
 
       utils.getCompanyWebhooks.invalidate()
 
-      toast.success('Webhook successfully saved!', {
-        description: 'Now your endpoint is listening to Nivo events!',
+      toast.success(dictionary.webhook_form_save_success, {
+        description: dictionary.webhook_form_save_success_description,
       })
     } catch {
-      toast.error('Uh oh! Something went wrong.', {
-        description: `An error ocurred while trying to save the webhook.`,
+      toast.success(dictionary.webhook_form_save_error, {
+        description: dictionary.webhook_form_save_error_description,
       })
     }
   }
@@ -89,7 +95,7 @@ export function WebhookForm({ webhookToEdit }: WebhookFormProps) {
     <FormProvider {...webhookForm}>
       <form onSubmit={handleSubmit(handleSaveWebhook)} className="space-y-6">
         <div className="space-y-2">
-          <Label htmlFor="url">Endpoint URL</Label>
+          <Label htmlFor="url">{dictionary.webhook_form_label_url}</Label>
           <Input id="url" placeholder="https://" {...register('url')} />
           {errors.url && (
             <p className="text-sm font-medium text-red-500 dark:text-red-400">
@@ -102,10 +108,16 @@ export function WebhookForm({ webhookToEdit }: WebhookFormProps) {
 
         <div className="flex items-center justify-end gap-2">
           <DialogTrigger asChild>
-            <Button variant="ghost">Cancel</Button>
+            <Button variant="ghost">
+              {dictionary.webhook_form_button_cancel}
+            </Button>
           </DialogTrigger>
           <Button disabled={isSubmitting} className="w-20">
-            {isSubmitting ? <Loader2 className="animate-spin" /> : 'Save'}
+            {isSubmitting ? (
+              <Loader2 className="animate-spin" />
+            ) : (
+              dictionary.webhook_form_button_save
+            )}
           </Button>
         </div>
       </form>

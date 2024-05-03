@@ -33,6 +33,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { trpc } from '@/lib/trpc/react'
+import { useDictionary } from '@/state/dictionary'
 
 import { WebhookForm } from './webhook-form'
 
@@ -43,6 +44,7 @@ interface WebhookListItemActionsProps {
 export function WebhookListItemActions({
   webhook,
 }: WebhookListItemActionsProps) {
+  const dictionary = useDictionary()
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
   const utils = trpc.useUtils()
 
@@ -61,8 +63,8 @@ export function WebhookListItemActions({
 
       setIsDeleteDialogOpen(false)
     } catch {
-      toast('Uh oh! Something went wrong.', {
-        description: `An error ocurred while trying to delete the webhook.`,
+      toast.error(dictionary.error_deleting_webhook, {
+        description: dictionary.error_deleting_webhook_desc,
       })
     }
   }
@@ -80,15 +82,15 @@ export function WebhookListItemActions({
           <DialogTrigger asChild>
             <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
               <Pencil2Icon className="mr-2 size-4" />
-              Edit
+              {dictionary.webhook_list_actions_edit}
             </DropdownMenuItem>
           </DialogTrigger>
 
           <DialogContent>
             <DialogHeader>
-              <DialogTitle>Listen to Nivo events</DialogTitle>
+              <DialogTitle>{dictionary.webhook_dialog_title}</DialogTitle>
               <DialogDescription>
-                Set up your webhook endpoint to receive live events from Nivo.
+                {dictionary.webhook_dialog_description}
               </DialogDescription>
             </DialogHeader>
 
@@ -106,19 +108,18 @@ export function WebhookListItemActions({
               onSelect={(e) => e.preventDefault()}
             >
               <X className="mr-2 size-4" />
-              Delete
+              {dictionary.webhook_list_actions_delete}
             </DropdownMenuItem>
           </AlertDialogTrigger>
 
           <AlertDialogContent>
             <AlertDialogHeader>
-              <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+              <AlertDialogTitle>
+                {dictionary.webhook_list_delete_confirmation}
+              </AlertDialogTitle>
               <AlertDialogDescription className="space-y-3">
-                <p>
-                  This action can&apos;t be undone and the webhook will be
-                  permanently deleted from the server.
-                </p>
-                <p>This webhook is listening to the following events:</p>
+                <p>{dictionary.webhook_list_delete_detail}</p>
+                <p>{dictionary.webhook_list_delete_events}</p>
                 <ol className="list-disc space-y-2 pl-4">
                   {webhook.triggers.map((trigger) => {
                     return (
@@ -133,7 +134,9 @@ export function WebhookListItemActions({
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
-              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <AlertDialogCancel>
+                {dictionary.webhook_list_delete_cancel}
+              </AlertDialogCancel>
               <Button
                 disabled={isDeletingWebhook}
                 variant="destructive"
@@ -143,7 +146,7 @@ export function WebhookListItemActions({
                 {isDeletingWebhook ? (
                   <Loader2 className="size-4 animate-spin" />
                 ) : (
-                  'Delete'
+                  dictionary.webhook_list_actions_delete
                 )}
               </Button>
             </AlertDialogFooter>

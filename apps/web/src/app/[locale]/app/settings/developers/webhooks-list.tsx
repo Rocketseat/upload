@@ -26,6 +26,7 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip'
 import { trpc } from '@/lib/trpc/react'
+import { useDictionary } from '@/state/dictionary'
 
 import { CreateWebhook } from './create-webhook'
 import { WebhookListItemActions } from './webhook-list-item-actions'
@@ -36,6 +37,7 @@ const WebhookEventsChart = dynamic(() => import('./webhook-events-chart'), {
 })
 
 export function WebhooksList() {
+  const dictionary = useDictionary()
   const router = useRouter()
   const searchParams = useSearchParams()
   const pageIndex = z.coerce
@@ -65,12 +67,10 @@ export function WebhooksList() {
 
   function handleCopySigningKey(signingKey: string) {
     navigator.clipboard.writeText(signingKey)
-
-    toast.info('Signing key copied to clipboard!')
+    toast.info(dictionary.webhooks_signing_key_copied)
   }
 
   const page = pageIndex + 1
-
   const hasPreviousPage = data ? page > 1 : false
   const hasNextPage = data ? page < data.pageCount : false
 
@@ -79,16 +79,18 @@ export function WebhooksList() {
       <div className="flex items-center justify-between">
         <div>
           <Label asChild>
-            <span>Webhooks</span>
+            <span>{dictionary.webhooks_label}</span>
           </Label>
           <p className="text-[0.8rem] text-muted-foreground">
-            Listen to Nivo events in your application.
+            {dictionary.webhooks_description}
           </p>
         </div>
         <div className="flex items-center space-x-2">
           {data ? (
             <span className="text-sm text-muted-foreground">
-              Page {page} of {data.pageCount}
+              {dictionary.webhooks_page_info
+                .replace('{page}', page.toString())
+                .replace('{pageCount}', data.pageCount.toString())}
             </span>
           ) : (
             <Skeleton className="h-5 w-20" />
@@ -100,7 +102,7 @@ export function WebhooksList() {
             onClick={() => navigateToPage(pageIndex - 1)}
             disabled={!hasPreviousPage}
           >
-            <span className="sr-only">Go to previous page</span>
+            <span className="sr-only">{dictionary.webhooks_previous_page}</span>
             <ChevronLeftIcon className="h-4 w-4" />
           </Button>
           <Button
@@ -109,7 +111,7 @@ export function WebhooksList() {
             onClick={() => navigateToPage(pageIndex + 1)}
             disabled={!hasNextPage}
           >
-            <span className="sr-only">Go to next page</span>
+            <span className="sr-only">{dictionary.webhooks_next_page}</span>
             <ChevronRightIcon className="h-4 w-4" />
           </Button>
           <Separator orientation="vertical" className="h-4" />
@@ -124,25 +126,31 @@ export function WebhooksList() {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>URL</TableHead>
-                <TableHead style={{ width: 120 }}>Triggers</TableHead>
+                <TableHead>{dictionary.webhooks_list_loading_url}</TableHead>
+                <TableHead style={{ width: 120 }}>
+                  {dictionary.webhooks_list_loading_triggers}
+                </TableHead>
                 <TableHead style={{ width: 164 }}>
                   <div className="flex flex-col">
-                    <span>Events</span>
+                    <span>{dictionary.webhooks_list_loading_events}</span>
                     <span className="text-xxs text-muted-foreground">
-                      (last 7 days)
+                      {dictionary.webhooks_list_loading_events_last_7_days}
                     </span>
                   </div>
                 </TableHead>
                 <TableHead style={{ width: 120 }} className="text-right">
                   <div className="flex flex-col">
-                    <span>Success rate</span>
+                    <span>{dictionary.webhooks_list_loading_success_rate}</span>
                     <span className="text-xxs text-muted-foreground">
-                      (last 7 days)
+                      {
+                        dictionary.webhooks_list_loading_success_rate_last_7_days
+                      }
                     </span>
                   </div>
                 </TableHead>
-                <TableHead style={{ width: 64 }}>Status</TableHead>
+                <TableHead style={{ width: 64 }}>
+                  {dictionary.webhooks_list_loading_status}
+                </TableHead>
                 <TableHead style={{ width: 220 }}></TableHead>
               </TableRow>
             </TableHeader>
@@ -150,7 +158,7 @@ export function WebhooksList() {
               {data?.companyWebhooks.length === 0 && (
                 <TableRow>
                   <TableCell colSpan={6} className="h-24 text-center">
-                    No webhooks created.
+                    {dictionary.webhooks_no_created}
                   </TableCell>
                 </TableRow>
               )}
@@ -169,7 +177,8 @@ export function WebhooksList() {
                     <TableCell className="py-1.5">
                       <Tooltip>
                         <TooltipTrigger className="underline">
-                          {webhook.triggers.length} event(s)
+                          {webhook.triggers.length}{' '}
+                          {dictionary.webhook_list_events}{' '}
                         </TooltipTrigger>
                         <TooltipContent className="max-w-96 text-center font-mono text-xs leading-relaxed">
                           {webhook.triggers.join(', ')}
@@ -187,7 +196,9 @@ export function WebhooksList() {
                     <TableCell className="py-1.5">
                       <div className="flex items-center gap-2">
                         <span className="size-2 shrink-0 rounded-full bg-teal-400" />
-                        <span className="text-xs font-semibold">ACTIVE</span>
+                        <span className="text-xs font-semibold">
+                          {dictionary.webhook_list_event_active}
+                        </span>
                       </div>
                     </TableCell>
                     <TableCell className="py-1.5">
@@ -200,7 +211,7 @@ export function WebhooksList() {
                           size="sm"
                         >
                           <ClipboardCopy className="mr-2 size-3" />
-                          Signing key
+                          {dictionary.webhooks_signing_key}
                         </Button>
 
                         <WebhookListItemActions webhook={webhook} />

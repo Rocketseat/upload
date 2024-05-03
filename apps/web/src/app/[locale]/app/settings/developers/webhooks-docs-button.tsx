@@ -1,3 +1,4 @@
+import { Dictionary } from '@nivo/i18n'
 import { BookText } from 'lucide-react'
 
 import {
@@ -17,7 +18,11 @@ import {
 } from '@/components/ui/dialog'
 import { serverClient } from '@/lib/trpc/server'
 
-export async function WebhookDocsButton() {
+export async function WebhookDocsButton({
+  dictionary,
+}: {
+  dictionary: Dictionary
+}) {
   const { triggers } = await serverClient.getAvailableTriggers()
 
   return (
@@ -25,15 +30,15 @@ export async function WebhookDocsButton() {
       <DialogTrigger asChild>
         <Button size="default" variant="outline">
           <BookText className="mr-2 size-4" />
-          Documentation
+          {dictionary.webhook_docs_button_label}
         </Button>
       </DialogTrigger>
 
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Webhook events</DialogTitle>
+          <DialogTitle>{dictionary.webhook_docs_title}</DialogTitle>
           <DialogDescription>
-            Listen to events that happen inside Nivo in your application.
+            {dictionary.webhook_docs_description}
           </DialogDescription>
         </DialogHeader>
 
@@ -43,7 +48,7 @@ export async function WebhookDocsButton() {
               return (
                 <AccordionItem value={trigger} key={trigger}>
                   <AccordionTrigger>{trigger}</AccordionTrigger>
-                  <AccordionContent>{description}</AccordionContent>
+                  <AccordionContent>{dictionary[description]}</AccordionContent>
                 </AccordionItem>
               )
             })}

@@ -6,6 +6,7 @@ const dictionaries = {
 }
 
 export type Dictionary = Awaited<ReturnType<typeof dictionaries.en>> & {
+  [key: string]: string
   [key: `languages_${Locale}`]: string
 }
 

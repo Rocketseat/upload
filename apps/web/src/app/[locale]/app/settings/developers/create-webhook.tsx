@@ -11,24 +11,27 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
+import { useDictionary } from '@/state/dictionary'
 
 import { WebhookForm } from './webhook-form'
 
 export function CreateWebhook() {
+  const dictionary = useDictionary()
+
   return (
     <Dialog>
       <DialogTrigger asChild>
         <Button variant="secondary" size="sm">
           <Plus className="mr-2 size-3" />
-          Add webhook
+          {dictionary.create_webhook_button}
         </Button>
       </DialogTrigger>
 
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Listen to Nivo events</DialogTitle>
+          <DialogTitle>{dictionary.create_webhook_title}</DialogTitle>
           <DialogDescription>
-            Set up your webhook endpoint to receive live events from Nivo.
+            {dictionary.create_webhook_description}
           </DialogDescription>
         </DialogHeader>
 
