@@ -1,3 +1,4 @@
+import { getDictionary } from '@nivo/i18n'
 import {
   Building,
   Code2,
@@ -6,7 +7,6 @@ import {
   User2,
 } from 'lucide-react'
 import { ReactNode } from 'react'
-import { getDictionary } from '@nivo/i18n'
 
 import { AsideLink } from './aside-link'
 

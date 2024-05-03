@@ -1,27 +1,35 @@
-import { auth } from '@nivo/auth';
-import Head from 'next/head';
-import Image from 'next/image';
+import { auth } from '@nivo/auth'
+import { getDictionary, Locale } from '@nivo/i18n'
+import Head from 'next/head'
+import Image from 'next/image'
 
-import { Avatar } from '@/components/ui/avatar';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Separator } from '@/components/ui/separator';
-import { Locale, getDictionary } from '@nivo/i18n';
+import { Avatar } from '@/components/ui/avatar'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { Separator } from '@/components/ui/separator'
 
 export default async function ProfilePage({
   params: { locale },
 }: {
   params: { locale: Locale }
 }) {
-  const dictionary = await getDictionary(locale);
-  const session = await auth();
+  const dictionary = await getDictionary(locale)
+  const session = await auth()
 
   if (!session || !session.user) {
-    throw new Error(dictionary.error_invalid_session_data || 'Invalid session data.');
+    throw new Error(
+      dictionary.error_invalid_session_data || 'Invalid session data.',
+    )
   }
 
-  const { user } = session;
+  const { user } = session
 
   return (
     <>
@@ -79,5 +87,5 @@ export default async function ProfilePage({
         </CardContent>
       </Card>
     </>
-  );
+  )
 }

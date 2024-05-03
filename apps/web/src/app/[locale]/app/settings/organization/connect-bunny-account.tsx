@@ -16,6 +16,7 @@ import {
 } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import { trpc } from '@/lib/trpc/react'
+import { useDictionary } from '@/state/dictionary'
 
 import { onBunnyAccountConnected } from './actions'
 import { APIKeySchema, BunnyApiKeyForm } from './bunny-api-key-form'
@@ -29,6 +30,7 @@ interface ConnectBunnyAccountProps {
 }
 
 export function ConnectBunnyAccount({ externalId }: ConnectBunnyAccountProps) {
+  const dictionary = useDictionary()
   const [isDialogOpen, setIsDialogOpen] = useState(false)
   const [bunnyVideoLibraries, setBunnyVideoLibraries] =
     useState<VideoLibraries>([])
@@ -39,12 +41,9 @@ export function ConnectBunnyAccount({ externalId }: ConnectBunnyAccountProps) {
   async function handleApiKey({ apiKey }: APIKeySchema) {
     try {
       const { videoLibraries } = await getBunnyVideoLibraries(apiKey)
-
       setBunnyVideoLibraries(videoLibraries)
     } catch (err) {
-      toast.error(
-        'Failed to fetch Bunny video library, please check the API key provided.',
-      )
+      toast.error(dictionary.connect_bunny_account_fetch_error)
     }
   }
 
@@ -55,7 +54,6 @@ export function ConnectBunnyAccount({ externalId }: ConnectBunnyAccountProps) {
       const videoLibrary = bunnyVideoLibraries.find(
         (item) => item.Id === videoLibraryId,
       )
-
       if (!videoLibrary) {
         throw new Error()
       }
@@ -66,15 +64,15 @@ export function ConnectBunnyAccount({ externalId }: ConnectBunnyAccountProps) {
         apiKey: videoLibrary.ApiKey,
       })
 
-      toast.success('Connected to Bunny!', {
-        description: 'You can now start uploading videos.',
+      toast.success(dictionary.connect_bunny_account_connection_success, {
+        description:
+          dictionary.connect_bunny_account_connection_success_description,
       })
 
       await onBunnyAccountConnected()
-
       setIsDialogOpen(false)
     } catch (err) {
-      toast.error('Failed to set Bunny Video Library, please try again.')
+      toast.error(dictionary.connect_bunny_account_set_error)
     }
   }
 
@@ -92,12 +90,12 @@ export function ConnectBunnyAccount({ externalId }: ConnectBunnyAccountProps) {
             {externalId ? (
               <>
                 <Check className="mr-2 size-4" />
-                Account connected
+                {dictionary.connect_bunny_account_button_connected}
               </>
             ) : (
               <>
                 <Plug className="mr-2 size-4" />
-                Connect account
+                {dictionary.connect_bunny_account_button_connect}
               </>
             )}
           </Button>
@@ -105,9 +103,11 @@ export function ConnectBunnyAccount({ externalId }: ConnectBunnyAccountProps) {
 
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Connect Bunny account</DialogTitle>
+            <DialogTitle>
+              {dictionary.connect_bunny_account_dialog_title}
+            </DialogTitle>
             <DialogDescription>
-              This will allow you to upload new videos on Nivo.
+              {dictionary.connect_bunny_account_dialog_description}
             </DialogDescription>
           </DialogHeader>
 
@@ -117,6 +117,7 @@ export function ConnectBunnyAccount({ externalId }: ConnectBunnyAccountProps) {
             <BunnyVideoLibraryForm
               videoLibraries={bunnyVideoLibraries}
               onVideoLibraryChosen={handleVideoLibraryChosen}
+              dictionary={dictionary}
             />
           )}
         </DialogContent>
@@ -127,7 +128,7 @@ export function ConnectBunnyAccount({ externalId }: ConnectBunnyAccountProps) {
         id="bunnyLibraryId"
         disabled
         readOnly
-        placeholder="Connect your Bunny account to upload on Nivo"
+        placeholder={dictionary.connect_bunny_account_input_placeholder}
         value={externalId ?? ''}
       />
     </div>

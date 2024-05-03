@@ -1,5 +1,5 @@
 import { getDictionary, Locale } from '@nivo/i18n'
-import { Metadata } from 'next'
+import Head from 'next/head'
 import { Suspense } from 'react'
 
 import { Loading } from '@/components/summary/loading'
@@ -7,10 +7,6 @@ import { Storage } from '@/components/summary/storage'
 import { TotalCount } from '@/components/summary/total-count'
 
 import { ViewsCount } from './cards/views-count'
-
-export const metadata: Metadata = {
-  title: 'Dashboard',
-}
 
 export const revalidate = 900
 
@@ -23,6 +19,9 @@ export default async function DashboardPage({
 
   return (
     <>
+      <Head>
+        <title>{dictionary.dashboard_page_title}</title>
+      </Head>
       <h2 className="text-3xl font-bold tracking-tight">
         {dictionary.dashboard_heading}
       </h2>
