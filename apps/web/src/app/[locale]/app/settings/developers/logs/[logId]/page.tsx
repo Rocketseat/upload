@@ -1,4 +1,6 @@
 import { dayjs } from '@nivo/dayjs'
+import { getDictionary } from '@nivo/i18n'
+import { Locale } from 'next/dist/compiled/@vercel/og/satori'
 import { getHighlighter } from 'shiki'
 
 import { InterceptedSheetContent } from '@/components/intercepted-sheet-content'
@@ -11,6 +13,7 @@ import { serverClient } from '@/lib/trpc/server'
 interface WebhookLogsDetails {
   params: {
     logId: string
+    locale: Locale
   }
 }
 
@@ -25,10 +28,11 @@ function getParsedText(text: string) {
 }
 
 export default async function WebhookLogsDetails({
-  params,
+  params: { logId, locale },
 }: WebhookLogsDetails) {
+  const dictionary = await getDictionary(locale)
   const { webhookLog } = await serverClient.getCompanyWebhookLog({
-    companyWebhookLogId: params.logId,
+    companyWebhookLogId: logId,
   })
 
   const highlighter = await getHighlighter({
@@ -99,42 +103,54 @@ export default async function WebhookLogsDetails({
           <Table>
             <TableBody>
               <TableRow>
-                <TableCell style={{ width: 140 }}>Execution ID</TableCell>
+                <TableCell style={{ width: 140 }}>
+                  {dictionary.webhook_logs_details_execution_id}
+                </TableCell>
                 <TableCell className="text-xs text-muted-foreground">
                   {webhookLog.id}
                 </TableCell>
               </TableRow>
               <TableRow>
-                <TableCell>Status</TableCell>
+                <TableCell>{dictionary.webhook_logs_details_status}</TableCell>
                 <TableCell>
                   {webhookLog.status === 'SUCCESS' && (
                     <div className="flex items-center gap-2">
                       <span className="size-2 shrink-0 rounded-full bg-teal-400" />
-                      <span className="font-semibold">Success</span>
+                      <span className="font-semibold">
+                        {dictionary.webhook_logs_details_success}
+                      </span>
                     </div>
                   )}
 
                   {webhookLog.status === 'ERROR' && (
                     <div className="flex items-center gap-2">
                       <span className="size-2 shrink-0 rounded-full bg-red-400" />
-                      <span className="font-semibold">Error</span>
+                      <span className="font-semibold">
+                        {dictionary.webhook_logs_details_error}
+                      </span>
                     </div>
                   )}
 
                   {webhookLog.status === 'PENDING' && (
                     <div className="flex items-center gap-2">
                       <span className="size-2 shrink-0 rounded-full bg-amber-400" />
-                      <span className="font-semibold">Pending</span>
+                      <span className="font-semibold">
+                        {dictionary.webhook_logs_details_pending}
+                      </span>
                     </div>
                   )}
                 </TableCell>
               </TableRow>
               <TableRow>
-                <TableCell>Error reason</TableCell>
+                <TableCell>
+                  {dictionary.webhook_logs_details_error_reason}
+                </TableCell>
                 <TableCell>{webhookLog.errorReason || '-'}</TableCell>
               </TableRow>
               <TableRow>
-                <TableCell>Number of retries</TableCell>
+                <TableCell>
+                  {dictionary.webhook_logs_details_number_of_retries}
+                </TableCell>
                 <TableCell>
                   {webhookLog.status === 'ERROR'
                     ? `${webhookLog.numberOfRetries} ${
@@ -144,7 +160,9 @@ export default async function WebhookLogsDetails({
                 </TableCell>
               </TableRow>
               <TableRow>
-                <TableCell>HTTP Status</TableCell>
+                <TableCell>
+                  {dictionary.webhook_logs_details_http_status}
+                </TableCell>
                 <TableCell>
                   <Badge variant="secondary">
                     {webhookLog.httpCode ?? '-'}
@@ -152,13 +170,17 @@ export default async function WebhookLogsDetails({
                 </TableCell>
               </TableRow>
               <TableRow>
-                <TableCell>Started at</TableCell>
+                <TableCell>
+                  {dictionary.webhook_logs_details_started_at}
+                </TableCell>
                 <TableCell>
                   {dayjs(webhookLog.createdAt).format('MMMM D h:mm A')}
                 </TableCell>
               </TableRow>
               <TableRow>
-                <TableCell>Finished at</TableCell>
+                <TableCell>
+                  {dictionary.webhook_logs_details_finished_at}
+                </TableCell>
                 {webhookLog.finishedAt ? (
                   <TableCell>
                     <div className="flex items-baseline gap-2">
@@ -183,7 +205,7 @@ export default async function WebhookLogsDetails({
           {highlightedRequestHeaders && (
             <div className="space-y-2">
               <span className="text-sm font-semibold tracking-tight">
-                Request Headers
+                {dictionary.webhook_logs_details_request_headers}
               </span>
               <div
                 className="max-h-72 overflow-y-scroll bg-muted p-6 text-sm"
@@ -194,7 +216,7 @@ export default async function WebhookLogsDetails({
           {highlightedRequestBody && (
             <div className="space-y-2">
               <span className="text-sm font-semibold tracking-tight">
-                Request Body
+                {dictionary.webhook_logs_details_request_body}
               </span>
               <div
                 className="max-h-72 overflow-y-scroll bg-muted p-6 text-sm"
@@ -205,7 +227,7 @@ export default async function WebhookLogsDetails({
           {highlightedResponseBody && (
             <div className="space-y-2">
               <span className="text-sm font-semibold tracking-tight">
-                Response Body
+                {dictionary.webhook_logs_details_response_body}
               </span>
               <div
                 className="max-h-72 overflow-y-scroll bg-muted p-6 text-sm"

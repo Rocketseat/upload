@@ -7,18 +7,29 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
+import { useDictionary } from '@/state/dictionary'
 
 export function WebhookLogsListLoading() {
+  const dictionary = useDictionary()
+
   return (
     <div className="rounded border">
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead style={{ width: 172 }}>Time</TableHead>
-            <TableHead style={{ width: 72 }}>Status</TableHead>
-            <TableHead style={{ width: 200 }}>Destination</TableHead>
-            <TableHead style={{ width: 200 }}>Trigger</TableHead>
-            <TableHead>Request</TableHead>
+            <TableHead style={{ width: 172 }}>
+              {dictionary.webhook_logs_list_time}
+            </TableHead>
+            <TableHead style={{ width: 72 }}>
+              {dictionary.webhook_logs_list_status}
+            </TableHead>
+            <TableHead style={{ width: 200 }}>
+              {dictionary.webhook_logs_list_destination}
+            </TableHead>
+            <TableHead style={{ width: 200 }}>
+              {dictionary.webhook_logs_list_trigger}
+            </TableHead>
+            <TableHead>{dictionary.webhook_logs_list_request}</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -28,19 +39,15 @@ export function WebhookLogsListLoading() {
                 <TableCell className="py-1.5">
                   <Skeleton className="h-4 w-36" />
                 </TableCell>
-
                 <TableCell className="py-1.5">
                   <Skeleton className="h-[22px] w-8" />
                 </TableCell>
-
                 <TableCell className="py-1.5">
                   <Skeleton className="h-4 w-40" />
                 </TableCell>
-
                 <TableCell className="py-1.5">
                   <Skeleton className="h-4 w-40" />
                 </TableCell>
-
                 <TableCell className="py-1.5">
                   <Skeleton className="h-4 w-full" />
                 </TableCell>

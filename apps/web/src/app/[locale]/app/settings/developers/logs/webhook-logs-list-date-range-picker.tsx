@@ -20,8 +20,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
+import { useDictionary } from '@/state/dictionary'
 
 export function WebhookLogsListDateRangePicker() {
+  const dictionary = useDictionary()
   const [date, setDate] = React.useState<DateRange | undefined>({
     from: dayjs(new Date()).subtract(7, 'days').toDate(),
     to: new Date(),
@@ -58,20 +60,30 @@ export function WebhookLogsListDateRangePicker() {
               dayjs(date.from).format('ll')
             )
           ) : (
-            <span>Pick a date</span>
+            dictionary.webhook_logs_date_picker_placeholder
           )}
         </Button>
       </PopoverTrigger>
       <PopoverContent className="flex w-auto flex-col space-y-2 p-2">
         <Select>
           <SelectTrigger>
-            <SelectValue placeholder="Select" />
+            <SelectValue
+              placeholder={dictionary.webhook_logs_date_picker_select}
+            />
           </SelectTrigger>
           <SelectContent position="popper">
-            <SelectItem value="0">Today</SelectItem>
-            <SelectItem value="1">Tomorrow</SelectItem>
-            <SelectItem value="3">In 3 days</SelectItem>
-            <SelectItem value="7">In a week</SelectItem>
+            <SelectItem value="0">
+              {dictionary.webhook_logs_date_picker_today}
+            </SelectItem>
+            <SelectItem value="1">
+              {dictionary.webhook_logs_date_picker_tomorrow}
+            </SelectItem>
+            <SelectItem value="3">
+              {dictionary.webhook_logs_date_picker_in_3_days}
+            </SelectItem>
+            <SelectItem value="7">
+              {dictionary.webhook_logs_date_picker_in_a_week}
+            </SelectItem>
           </SelectContent>
         </Select>
         <div className="rounded-md border">

@@ -17,10 +17,12 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { trpc } from '@/lib/trpc/react'
+import { useDictionary } from '@/state/dictionary'
 
 import { WebhookLogsListLoading } from './webhook-logs-list-loading'
 
 export function WebhookLogsList() {
+  const dictionary = useDictionary()
   const router = useRouter()
   const searchParams = useSearchParams()
 
@@ -57,16 +59,22 @@ export function WebhookLogsList() {
             <TableRow>
               <TableHead style={{ width: 172 }}>
                 <div className="flex items-center gap-2">
-                  Time{' '}
+                  {dictionary.webhook_logs_list_time}
                   {isFetching && (
                     <Loader2 className="size-4 animate-spin text-muted-foreground" />
                   )}
                 </div>
               </TableHead>
-              <TableHead style={{ width: 72 }}>Status</TableHead>
-              <TableHead style={{ width: 200 }}>Destination</TableHead>
-              <TableHead style={{ width: 200 }}>Trigger</TableHead>
-              <TableHead>Request</TableHead>
+              <TableHead style={{ width: 72 }}>
+                {dictionary.webhook_logs_list_status}
+              </TableHead>
+              <TableHead style={{ width: 200 }}>
+                {dictionary.webhook_logs_list_destination}
+              </TableHead>
+              <TableHead style={{ width: 200 }}>
+                {dictionary.webhook_logs_list_trigger}
+              </TableHead>
+              <TableHead>{dictionary.webhook_logs_list_request}</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -142,7 +150,7 @@ export function WebhookLogsList() {
             {isFetchingNextPage ? (
               <Loader2 className="size-3 animate-spin" />
             ) : (
-              'Load more logs'
+              dictionary.webhook_logs_list_load_more
             )}
           </Button>
         </div>

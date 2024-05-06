@@ -15,8 +15,10 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { Separator } from '@/components/ui/separator'
+import { useDictionary } from '@/state/dictionary'
 
 export function WebhookLogsFilters() {
+  const dictionary = useDictionary()
   const router = useRouter()
   const searchParams = useSearchParams()
   const [isPendingFilterTransition, startTransition] = useTransition()
@@ -68,7 +70,9 @@ export function WebhookLogsFilters() {
       <Input
         value={query}
         onChange={(e) => setQuery(e.target.value)}
-        placeholder="Filter webhooks..."
+        placeholder={
+          dictionary.webhook_logs_filters_placeholder_filter_webhooks
+        }
         className="h-8 w-auto flex-1"
       />
 
@@ -78,8 +82,10 @@ export function WebhookLogsFilters() {
         onValueChange={setTrigger}
         name="trigger"
       >
-        <SelectTrigger className="h-8 w-[164px]">
-          <SelectValue placeholder="Trigger" />
+        <SelectTrigger className="h-8 w-[164px] min-w-fit gap-2">
+          <SelectValue
+            placeholder={dictionary.webhook_logs_filters_placeholder_trigger}
+          />
         </SelectTrigger>
         <SelectContent>
           {Object.keys(webhookEventTrigger.Values).map((trigger) => {
@@ -92,8 +98,6 @@ export function WebhookLogsFilters() {
         </SelectContent>
       </Select>
 
-      {/* <WebhookLogsListDateRangePicker /> */}
-
       <Separator orientation="vertical" className="h-6" />
 
       <Button type="submit" size="sm" variant="secondary">
@@ -102,7 +106,7 @@ export function WebhookLogsFilters() {
         ) : (
           <Filter className="mr-2 size-3" />
         )}
-        Filter
+        {dictionary.webhook_logs_filters_button_filter}
       </Button>
 
       <Button
@@ -113,7 +117,7 @@ export function WebhookLogsFilters() {
         variant="outline"
       >
         <X className="mr-2 size-3" />
-        Reset
+        {dictionary.webhook_logs_filters_button_reset}
       </Button>
     </form>
   )
