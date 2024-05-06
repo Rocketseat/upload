@@ -7,6 +7,7 @@ import { useEffect, useRef, useTransition } from 'react'
 
 import { CommandItem } from '../ui/command'
 import { Tooltip, TooltipContent, TooltipTrigger } from '../ui/tooltip'
+import { useDictionary } from '@/state/dictionary'
 
 interface SearchItemProps {
   video: RouterOutput['getUploads']['videos'][number]
@@ -14,6 +15,7 @@ interface SearchItemProps {
 }
 
 export function SearchItem({ video, onRequestClose }: SearchItemProps) {
+  const dictionary = useDictionary()
   const router = useRouter()
   const [isPendingNavigation, startTransition] = useTransition()
   const lastIsPendingNavigation = useRef<boolean>(false)
@@ -54,14 +56,14 @@ export function SearchItem({ video, onRequestClose }: SearchItemProps) {
         {video.author?.image && (
           <Tooltip>
             <div className="flex items-center gap-2">
-              <span>by</span>
+              <span>{dictionary.search_item_by}</span>
               <TooltipTrigger asChild>
                 <Image
                   src={video.author?.image}
                   className="size-5 rounded-full"
                   width={20}
                   height={20}
-                  alt=""
+                  alt={dictionary.search_item_author_alt}
                 />
               </TooltipTrigger>
               {video.author?.name && (

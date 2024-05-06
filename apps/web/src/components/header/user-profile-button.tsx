@@ -7,13 +7,14 @@ import { Avatar } from '../ui/avatar'
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
   DropdownMenuLabel,
+  DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '../ui/dropdown-menu'
+import { Dictionary } from '@nivo/i18n'
 
-export async function UserProfileButton() {
+export async function UserProfileButton({ dictionary }: { dictionary: Dictionary }) {
   const session = await auth()
 
   async function handleSignOut() {
@@ -40,17 +41,17 @@ export async function UserProfileButton() {
         </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-48">
-        <DropdownMenuLabel>My Account</DropdownMenuLabel>
+        <DropdownMenuLabel>{dictionary.user_profile_button_my_account}</DropdownMenuLabel>
         <DropdownMenuItem className="flex items-center gap-2" asChild>
           <Link href="/app/settings/profile" className="w-full">
             <Cog className="size-4" />
-            Settings
+            {dictionary.user_profile_button_settings}
           </Link>
         </DropdownMenuItem>
         <DropdownMenuItem className="flex items-center gap-2" asChild>
           <Link href="/app/settings/developers" className="w-full">
             <Code className="size-4" />
-            Developers
+            {dictionary.user_profile_button_developers}
           </Link>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
@@ -58,7 +59,7 @@ export async function UserProfileButton() {
           <DropdownMenuItem className="flex items-center gap-2" asChild>
             <button type="submit" className="w-full">
               <LogOut className="size-4" />
-              Sign out
+              {dictionary.user_profile_button_sign_out}
             </button>
           </DropdownMenuItem>
         </form>
