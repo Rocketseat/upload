@@ -179,5 +179,13 @@
   "user_profile_button_my_account": "Minha Conta",
   "user_profile_button_settings": "Configurações",
   "user_profile_button_developers": "Desenvolvedores",
-  "user_profile_button_sign_out": "Sair"
+  "user_profile_button_sign_out": "Sair",
+  "views_count_title": "Visualizações",
+  "views_count_subtitle": "(últimos 7 dias)",
+  "views_count_setup_message": "Configure sua conta Bunny",
+  "views_count_instruction": "para ver métricas",
+  "storage_title": "Armazenamento",
+  "storage_increase_last_month": "nos últimos 30 dias",
+  "total_count_title": "Vídeos",
+  "total_count_last_month": "nos últimos 30 dias"
 }

@@ -28,17 +28,17 @@ export default async function DashboardPage({
       <div className="grid grid-cols-6 gap-4">
         <div className="col-span-2">
           <Suspense fallback={<Loading />}>
-            <TotalCount />
+            <TotalCount dictionary={dictionary} />
           </Suspense>
         </div>
         <div className="col-span-2">
           <Suspense fallback={<Loading />}>
-            <Storage />
+            <Storage dictionary={dictionary} />
           </Suspense>
         </div>
         <div className="col-span-2">
           <Suspense fallback={<Loading />}>
-            <ViewsCount />
+            <ViewsCount dictionary={dictionary} />
           </Suspense>
         </div>
       </div>

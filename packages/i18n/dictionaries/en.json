@@ -185,5 +185,13 @@
   "user_profile_button_my_account": "My Account",
   "user_profile_button_settings": "Settings",
   "user_profile_button_developers": "Developers",
-  "user_profile_button_sign_out": "Sign out"
+  "user_profile_button_sign_out": "Sign out",
+  "views_count_title": "Views",
+  "views_count_subtitle": "(last 7 days)",
+  "views_count_setup_message": "Setup your Bunny account",
+  "views_count_instruction": "to see metrics",
+  "storage_title": "Storage",
+  "storage_increase_last_month": "in last 30 days",
+  "total_count_title": "Videos",
+  "total_count_last_month": "in last 30 days"
 }

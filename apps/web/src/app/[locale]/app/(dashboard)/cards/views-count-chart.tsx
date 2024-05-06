@@ -61,13 +61,13 @@ export default function ViewsCountChart({
           gradient:
             resolvedTheme === 'light'
               ? {
-                  opacityFrom: 0.8,
-                  opacityTo: 0.4,
-                }
+                opacityFrom: 0.8,
+                opacityTo: 0.4,
+              }
               : {
-                  opacityFrom: 0.4,
-                  opacityTo: 0.1,
-                },
+                opacityFrom: 0.4,
+                opacityTo: 0.1,
+              },
         },
         dataLabels: {
           enabled: false,
