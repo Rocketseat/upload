@@ -252,5 +252,17 @@
   "uploads_pagination_go_to_first_page": "Ir para a primeira página",
   "uploads_pagination_go_to_previous_page": "Ir para a página anterior",
   "uploads_pagination_go_to_next_page": "Ir para a próxima página",
-  "uploads_pagination_go_to_last_page": "Ir para a última página"
+  "uploads_pagination_go_to_last_page": "Ir para a última página",
+  "batch_upload_list_video_column": "Vídeo",
+  "batch_upload_list_duration_column": "Duração",
+  "batch_upload_list_size_column": "Tamanho",
+  "batch_upload_list_transcription_column": "Transcrição",
+  "batch_upload_list_external_id_column": "ID Externo",
+  "batch_upload_list_processing_status": "Processando",
+  "batch_upload_list_copy_button": "Copiar",
+  "batch_upload_list_by": "por",
+  "batch_upload_list_no_results": "Sem resultados.",
+  "batch_page_header_title": "Detalhes do Lote",
+  "batch_page_refresh_notice": "Esta página é atualizada a cada 15s",
+  "batch_page_generate_metadata_title": "Lote"
 }

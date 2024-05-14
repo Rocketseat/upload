@@ -5,6 +5,7 @@ import { SymbolIcon } from '@radix-ui/react-icons'
 import { Cable, CopyIcon, Loader2, ReceiptText } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useDictionary } from '@/state/dictionary'
 
 import { CopyButton } from '@/components/copy-button'
 import { TranscriptionPreview } from '@/components/transcription-preview'
@@ -33,6 +34,7 @@ export interface BatchUploadListProps {
 }
 
 export function BatchUploadList({ batchId }: BatchUploadListProps) {
+  const dictionary = useDictionary()
   const {
     data,
     isLoading: isLoadingBatch,
@@ -57,24 +59,24 @@ export function BatchUploadList({ batchId }: BatchUploadListProps) {
               <TableHead style={{ width: 54 }}></TableHead>
               <TableHead style={{ width: 400 }}>
                 <div className="flex items-center gap-2">
-                  <span>Video</span>
+                  {dictionary.batch_upload_list_video_column}
                   {isRefetchingBatch && (
                     <Loader2 className="h-3 w-3 animate-spin text-muted-foreground" />
                   )}
                 </div>
               </TableHead>
-              <TableHead style={{ width: 120 }}>Duration</TableHead>
-              <TableHead style={{ width: 140 }}>Size</TableHead>
+              <TableHead style={{ width: 120 }}>{dictionary.batch_upload_list_duration_column}</TableHead>
+              <TableHead style={{ width: 140 }}>{dictionary.batch_upload_list_size_column}</TableHead>
               <TableHead style={{ width: 200 }}>
                 <div className="flex items-center gap-2">
                   <ReceiptText className="size-4" />
-                  Transcription
+                  {dictionary.batch_upload_list_transcription_column}
                 </div>
               </TableHead>
               <TableHead style={{ width: 200 }}>
                 <div className="flex items-center gap-2">
                   <Cable className="size-4" />
-                  External ID
+                  {dictionary.batch_upload_list_external_id_column}
                 </div>
               </TableHead>
               <TableHead style={{ width: 200 }}></TableHead>
@@ -121,9 +123,7 @@ export function BatchUploadList({ batchId }: BatchUploadListProps) {
                       ) : (
                         <div className="flex items-center font-medium">
                           <SymbolIcon className="mr-2 h-3 w-3 animate-spin" />
-                          <span className="text-muted-foreground">
-                            Processing
-                          </span>
+                          {dictionary.batch_upload_list_processing_status}
                         </div>
                       )}
                     </TableCell>
@@ -139,15 +139,13 @@ export function BatchUploadList({ batchId }: BatchUploadListProps) {
                             textToCopy={video.externalProviderId}
                           >
                             <CopyIcon className="mr-1 h-3 w-3" />
-                            Copy
+                            {dictionary.batch_upload_list_copy_button}
                           </CopyButton>
                         </div>
                       ) : (
                         <div className="flex items-center font-medium">
                           <SymbolIcon className="mr-2 h-3 w-3 animate-spin" />
-                          <span className="text-muted-foreground">
-                            Processing
-                          </span>
+                          {dictionary.batch_upload_list_processing_status}
                         </div>
                       )}
                     </TableCell>
@@ -159,7 +157,7 @@ export function BatchUploadList({ batchId }: BatchUploadListProps) {
                         {video.author?.image && (
                           <Tooltip>
                             <div className="flex items-center gap-2">
-                              <span>by</span>
+                              <span>{dictionary.batch_upload_list_by}</span>
                               <TooltipTrigger asChild>
                                 <Image
                                   src={video.author?.image}
@@ -180,14 +178,14 @@ export function BatchUploadList({ batchId }: BatchUploadListProps) {
                       </div>
                     </TableCell>
                     <TableCell>
-                      <UploadItemActions videoId={video.id} />
+                      <UploadItemActions videoId={video.id} uploadBatchId={null} />
                     </TableCell>
                   </TableRow>
                 ))
               ) : (
                 <TableRow>
                   <TableCell colSpan={99} className="h-24 text-center">
-                    No results.
+                    {dictionary.batch_upload_list_no_results}
                   </TableCell>
                 </TableRow>
               )}

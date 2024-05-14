@@ -258,5 +258,17 @@
   "uploads_pagination_go_to_first_page": "Go to first page",
   "uploads_pagination_go_to_previous_page": "Go to previous page",
   "uploads_pagination_go_to_next_page": "Go to next page",
-  "uploads_pagination_go_to_last_page": "Go to last page"
+  "uploads_pagination_go_to_last_page": "Go to last page",
+  "batch_upload_list_video_column": "Video",
+  "batch_upload_list_duration_column": "Duration",
+  "batch_upload_list_size_column": "Size",
+  "batch_upload_list_transcription_column": "Transcription",
+  "batch_upload_list_external_id_column": "External ID",
+  "batch_upload_list_processing_status": "Processing",
+  "batch_upload_list_copy_button": "Copy",
+  "batch_upload_list_by": "by",
+  "batch_upload_list_no_results": "No results.",
+  "batch_page_header_title": "Batch details",
+  "batch_page_refresh_notice": "This page refreshes every 15s",
+  "batch_page_generate_metadata_title": "Batch"
 }
