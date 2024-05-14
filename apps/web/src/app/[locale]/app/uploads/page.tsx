@@ -1,8 +1,7 @@
-import { dayjs } from '@nivo/dayjs'
-import { SymbolIcon } from '@radix-ui/react-icons'
 import { Cable, CopyIcon } from 'lucide-react'
+import { useDictionary } from '@/state/dictionary'
+import { dayjs } from '@nivo/dayjs'
 import { Metadata } from 'next'
-import { unstable_noStore } from 'next/cache'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Suspense } from 'react'
@@ -28,6 +27,8 @@ import { formatBytes } from '@/utils/format-bytes'
 import { formatSecondsToMinutes } from '@/utils/format-seconds-to-minutes'
 
 import { UploadsPagination } from './uploads-pagination'
+import { unstable_noStore } from 'next/cache'
+import { Locale, getDictionary } from '@nivo/i18n'
 
 export const metadata: Metadata = {
   title: 'Uploads',
@@ -47,9 +48,13 @@ type UploadsPageSearchParams = z.infer<typeof uploadsPageSearchParams>
 
 export default async function UploadsPage({
   searchParams,
+  params: { locale }
 }: {
-  searchParams: UploadsPageSearchParams
+  searchParams: UploadsPageSearchParams,
+  params: { locale: Locale }
 }) {
+  const dictionary = await getDictionary(locale)
+
   unstable_noStore()
 
   const { pageIndex, pageSize, titleFilter, tagsFilter } =
@@ -68,13 +73,13 @@ export default async function UploadsPage({
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>Video</TableHead>
-              <TableHead style={{ width: 100 }}>Duration</TableHead>
-              <TableHead style={{ width: 120 }}>Size</TableHead>
+              <TableHead>{dictionary.uploads_video}</TableHead>
+              <TableHead style={{ width: 100 }}>{dictionary.uploads_duration}</TableHead>
+              <TableHead style={{ width: 120 }}>{dictionary.uploads_size}</TableHead>
               <TableHead style={{ width: 200 }}>
                 <div className="flex items-center gap-2">
                   <Cable className="size-4" />
-                  External
+                  {dictionary.uploads_external}
                 </div>
               </TableHead>
               <TableHead style={{ width: 200 }} />
@@ -123,13 +128,12 @@ export default async function UploadsPage({
                             textToCopy={video.externalProviderId}
                           >
                             <CopyIcon className="mr-1 h-3 w-3" />
-                            Copy
+                            {dictionary.uploads_copy}
                           </CopyButton>
                         </div>
                       ) : (
                         <div className="flex items-center font-medium text-muted-foreground/80">
-                          <SymbolIcon className="mr-2 h-3 w-3 animate-spin" />
-                          <span>Processing</span>
+                          <span>{dictionary.uploads_processing}</span>
                         </div>
                       )}
                     </TableCell>
@@ -141,7 +145,7 @@ export default async function UploadsPage({
                         {video.author?.image && (
                           <Tooltip>
                             <div className="flex items-center gap-2">
-                              <span>by</span>
+                              <span>{dictionary.uploads_by}</span>
                               <TooltipTrigger asChild>
                                 <Image
                                   src={video.author?.image}
@@ -173,7 +177,7 @@ export default async function UploadsPage({
             ) : (
               <TableRow>
                 <TableCell colSpan={7} className="h-24 text-center">
-                  No results.
+                  {dictionary.uploads_no_results}
                 </TableCell>
               </TableRow>
             )}

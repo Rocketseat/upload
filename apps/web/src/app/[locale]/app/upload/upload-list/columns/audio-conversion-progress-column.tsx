@@ -22,6 +22,7 @@ import {
   addToAudioConversionQueueAtom,
   audioConversionAtom,
 } from '@/state/uploads'
+import { useDictionary } from '@/state/dictionary'
 
 export interface AudioConversionProgressColumnProps {
   uploadId: string
@@ -30,6 +31,7 @@ export interface AudioConversionProgressColumnProps {
 export function AudioConversionProgressColumn({
   uploadId,
 }: AudioConversionProgressColumnProps) {
+  const dictionary = useDictionary()
   const audioConversion = useAtomValue(
     selectAtom(
       audioConversionAtom,
@@ -53,25 +55,25 @@ export function AudioConversionProgressColumn({
         <>
           <CrossCircledIcon className="mr-2 h-4 w-4 text-red-500 dark:text-red-400" />
           <span className="text-red-500 dark:text-red-400">
-            Error{' '}
+            {dictionary.audio_conversion_error}
             <Button
               variant="link"
               className="inline p-0 text-inherit dark:text-inherit"
               onClick={() => addToAudioConversionQueue(uploadId)}
             >
-              (Retry)
+              ({dictionary.audio_conversion_retry})
             </Button>
           </span>
         </>
       ) : progress === 100 ? (
         <>
           <CheckCircledIcon className="h-4 w-4 text-emerald-500" />
-          <span className="text-emerald-500">Complete</span>
+          <span className="text-emerald-500">{dictionary.audio_conversion_complete}</span>
         </>
       ) : (
         <>
           <DotsHorizontalIcon className="h-4 w-4" />
-          <span className="text-muted-foreground">Waiting...</span>
+          <span className="text-muted-foreground">{dictionary.audio_conversion_waiting}</span>
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
@@ -79,8 +81,7 @@ export function AudioConversionProgressColumn({
               </TooltipTrigger>
               <TooltipContent className="max-w-[280px]">
                 <p className="text-center text-xs text-zinc-600 dark:text-zinc-400">
-                  As we perform the audio conversion in the browser, each video
-                  is converted individually through a queue.
+                  {dictionary.audio_conversion_tooltip}
                 </p>
               </TooltipContent>
             </Tooltip>

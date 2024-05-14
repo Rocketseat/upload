@@ -32,8 +32,10 @@ import { AudioUploadProgressColumn } from './columns/audio-upload-progress-colum
 import { VideoUploadProgressColumn } from './columns/video-upload-progress-column'
 import { UploadLanguageInput } from './upload-language-input'
 import { UploadTagInput } from './upload-tag-input'
+import { useDictionary } from '@/state/dictionary'
 
 export function UploadTable() {
+  const dictionary = useDictionary()
   const {
     register,
     formState: { errors },
@@ -52,13 +54,13 @@ export function UploadTable() {
    */
   useEffect(() => {
     if (isThereAnyPendingUpload) {
-      window.onbeforeunload = function () {
-        return 'You have pending uploads. Do you really want to exit and cancel ALL uploads?'
+      window.onbeforeunload = function() {
+        return dictionary.uploads_warning_on_close
       }
     } else {
       window.onbeforeunload = null
     }
-  }, [isThereAnyPendingUpload])
+  }, [isThereAnyPendingUpload, dictionary.uploads_warning_on_close])
 
   function handleLoadedMetadata(
     event: SyntheticEvent<HTMLVideoElement>,
@@ -73,27 +75,27 @@ export function UploadTable() {
         <TableHeader>
           <TableRow>
             <TableHead style={{ width: 148 }}></TableHead>
-            <TableHead>Information</TableHead>
-            <TableHead style={{ width: 240 }}>Metadata</TableHead>
+            <TableHead>{dictionary.uploads_table_head_info}</TableHead>
+            <TableHead style={{ width: 240 }}>{dictionary.uploads_table_head_metadata}</TableHead>
             <TableHead style={{ width: 160 }}>
               <div className="flex items-center gap-2">
                 <Videotape className="size-4" />
-                Upload
+                {dictionary.uploads_table_head_upload_video}
               </div>
             </TableHead>
             <TableHead style={{ width: 160 }}>
               <div className="flex items-center gap-2">
                 <AudioWaveform className="size-4" />
-                Conversion
+                {dictionary.uploads_table_head_conversion}
               </div>
             </TableHead>
             <TableHead style={{ width: 160 }}>
               <div className="flex items-center gap-2">
                 <AudioWaveform className="size-4" />
-                Upload
+                {dictionary.uploads_table_head_upload_audio}
               </div>
             </TableHead>
-            <TableHead style={{ width: 140 }}></TableHead>
+            <TableHead style={{ width: 140 }}>{dictionary.uploads_table_head_actions}</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -177,7 +179,7 @@ export function UploadTable() {
                     ) : (
                       <TrashIcon className="mr-2 h-4 w-4" />
                     )}
-                    Delete
+                    {dictionary.uploads_table_action_delete}
                   </Button>
                 </TableCell>
               </TableRow>
@@ -187,7 +189,7 @@ export function UploadTable() {
           {areUploadsEmpty && (
             <TableRow>
               <TableCell colSpan={7} className="h-24 text-center">
-                No videos selected.
+                {dictionary.uploads_table_no_videos}
               </TableCell>
             </TableRow>
           )}

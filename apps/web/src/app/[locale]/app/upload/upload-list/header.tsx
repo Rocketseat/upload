@@ -5,6 +5,7 @@ import axios from 'axios'
 import { useAtom, useAtomValue, useSetAtom } from 'jotai'
 import { ChevronDownIcon, Loader2 } from 'lucide-react'
 import { useFormContext } from 'react-hook-form'
+import { useDictionary } from '@/state/dictionary'
 
 import {
   AlertDialog,
@@ -21,8 +22,8 @@ import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
   DropdownMenuTrigger,
+  DropdownMenuItem,
 } from '@/components/ui/dropdown-menu'
 import { Separator } from '@/components/ui/separator'
 import {
@@ -39,6 +40,7 @@ interface HeaderProps {
 }
 
 export function Header({ onSubmit }: HeaderProps) {
+  const dictionary = useDictionary()
   const {
     formState: { isSubmitting },
     setValue,
@@ -79,7 +81,7 @@ export function Header({ onSubmit }: HeaderProps) {
   return (
     <div className="flex items-center justify-between">
       <h2 className="flex items-center gap-2 text-3xl font-bold tracking-tight">
-        Upload
+        {dictionary.header_upload_title}
         {isThereAnyPendingUpload && (
           <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" />
         )}
@@ -100,7 +102,7 @@ export function Header({ onSubmit }: HeaderProps) {
               ) : (
                 <MagicWandIcon className="h-3 w-3" />
               )}
-              AI Tools
+              {dictionary.header_ai_tools}
               <ChevronDownIcon className="h-3 w-3" />
             </Button>
           </DropdownMenuTrigger>
@@ -110,7 +112,7 @@ export function Header({ onSubmit }: HeaderProps) {
               onSelect={generateAITitles}
             >
               <TextIcon className="mr-2 h-4 w-4" />
-              <span>Generate titles</span>
+              {dictionary.header_generate_titles}
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
@@ -124,21 +126,20 @@ export function Header({ onSubmit }: HeaderProps) {
               variant="ghost"
               disabled={areUploadsEmpty || isSubmitting}
             >
-              Clear all
+              {dictionary.header_clear_all}
             </Button>
           </AlertDialogTrigger>
           <AlertDialogContent>
             <AlertDialogHeader>
-              <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+              <AlertDialogTitle>{dictionary.alert_dialog_title}</AlertDialogTitle>
               <AlertDialogDescription>
-                This action can&apos;t be undone and all uploads will be deleted
-                from the server.
+                {dictionary.alert_dialog_description}
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
-              <AlertDialogCancel>Cancelar</AlertDialogCancel>
+              <AlertDialogCancel>{dictionary.alert_dialog_cancel}</AlertDialogCancel>
               <AlertDialogAction onClick={clearUploads}>
-                Prosseguir
+                {dictionary.alert_dialog_proceed}
               </AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>
@@ -154,7 +155,7 @@ export function Header({ onSubmit }: HeaderProps) {
           {isSubmitting ? (
             <Loader2 className="h-3 w-3 animate-spin" />
           ) : (
-            <>Create all ({amountOfUploads})</>
+            `${dictionary.header_create_all} (${amountOfUploads})`
           )}
         </Button>
       </div>

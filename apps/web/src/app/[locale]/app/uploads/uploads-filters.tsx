@@ -3,6 +3,7 @@
 import { Filter, Loader2, X } from 'lucide-react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { FormEvent, useState, useTransition } from 'react'
+import { useDictionary } from '@/state/dictionary'
 
 import { TagInput } from '@/components/tag-input'
 import { Button } from '@/components/ui/button'
@@ -10,6 +11,7 @@ import { Input } from '@/components/ui/input'
 import { Separator } from '@/components/ui/separator'
 
 export function UploadsFilters() {
+  const dictionary = useDictionary()
   const router = useRouter()
   const searchParams = useSearchParams()
   const [isPendingFilterTransition, startTransition] = useTransition()
@@ -54,7 +56,7 @@ export function UploadsFilters() {
       <Input
         value={title}
         onChange={(e) => setTitle(e.target.value)}
-        placeholder="Filter videos..."
+        placeholder={dictionary.uploads_filters_placeholder_title}
         className="h-8 w-auto"
       />
 
@@ -68,7 +70,7 @@ export function UploadsFilters() {
         ) : (
           <Filter className="mr-2 size-3" />
         )}
-        Filter
+        {dictionary.uploads_filters_button_filter}
       </Button>
 
       <Button
@@ -79,7 +81,7 @@ export function UploadsFilters() {
         variant="outline"
       >
         <X className="mr-2 size-3" />
-        Reset
+        {dictionary.uploads_filters_button_reset}
       </Button>
     </form>
   )

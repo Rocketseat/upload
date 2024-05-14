@@ -12,6 +12,7 @@ import { useCallback } from 'react'
 import { Button } from '@/components/ui/button'
 import { Progress } from '@/components/ui/progress'
 import { audioUploadAtom, startAudioUploadAtom } from '@/state/uploads'
+import { useDictionary } from '@/state/dictionary'
 
 export interface AudioUploadProgressColumnProps {
   uploadId: string
@@ -20,6 +21,7 @@ export interface AudioUploadProgressColumnProps {
 export function AudioUploadProgressColumn({
   uploadId,
 }: AudioUploadProgressColumnProps) {
+  const dictionary = useDictionary()
   const audioUpload = useAtomValue(
     selectAtom(
       audioUploadAtom,
@@ -44,26 +46,26 @@ export function AudioUploadProgressColumn({
           {progress === 0 && !error ? (
             <>
               <DotsHorizontalIcon className="mr-2 h-4 w-4" />
-              <span className="text-muted-foreground">Waiting...</span>
+              <span className="text-muted-foreground">{dictionary.audio_upload_waiting}</span>
             </>
           ) : error ? (
             <>
               <CrossCircledIcon className="mr-2 h-4 w-4 text-red-500" />
               <span className="text-red-500">
-                Error{' '}
+                {dictionary.audio_upload_error}
                 <Button
                   variant="link"
                   className="inline p-0 text-inherit"
                   onClick={() => startAudioUpload(uploadId)}
                 >
-                  (Retry)
+                  ({dictionary.audio_upload_retry})
                 </Button>
               </span>
             </>
           ) : (
             <>
               <CheckCircledIcon className="mr-2 h-4 w-4 text-emerald-500" />
-              <span className="text-emerald-500">Complete</span>
+              <span className="text-emerald-500">{dictionary.audio_upload_complete}</span>
             </>
           )}
         </div>

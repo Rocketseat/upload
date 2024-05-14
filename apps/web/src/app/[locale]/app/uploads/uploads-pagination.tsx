@@ -8,6 +8,7 @@ import {
 } from '@radix-ui/react-icons'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useCallback } from 'react'
+import { useDictionary } from '@/state/dictionary'
 
 import { Button } from '@/components/ui/button'
 import {
@@ -29,6 +30,7 @@ export function UploadsPagination({
   pageSize,
   pageIndex,
 }: UploadsPaginationProps) {
+  const dictionary = useDictionary()
   const router = useRouter()
   const searchParams = useSearchParams()
 
@@ -60,7 +62,7 @@ export function UploadsPagination({
     <div className="flex items-center justify-end">
       <div className="flex items-center space-x-6 lg:space-x-8">
         <div className="flex items-center space-x-2">
-          <p className="text-sm font-medium">Rows per page</p>
+          <p className="text-sm font-medium">{dictionary.uploads_pagination_rows_per_page}</p>
           <Select value={`${pageSize}`} onValueChange={setPageSize}>
             <SelectTrigger className="h-8 w-[70px]">
               <SelectValue placeholder="10" />
@@ -75,7 +77,7 @@ export function UploadsPagination({
           </Select>
         </div>
         <div className="flex w-[100px] items-center justify-center text-sm font-medium">
-          Page {page} of {pageCount}
+          {`${dictionary.uploads_pagination_page_info} ${page} ${dictionary.uploads_pagination_page_info_separator} ${pageCount}`}
         </div>
         <div className="flex items-center space-x-2">
           <Button
@@ -84,7 +86,7 @@ export function UploadsPagination({
             onClick={() => navigateToPage(0)}
             disabled={!hasPreviousPage}
           >
-            <span className="sr-only">Go to first page</span>
+            <span className="sr-only">{dictionary.uploads_pagination_go_to_first_page}</span>
             <DoubleArrowLeftIcon className="h-4 w-4" />
           </Button>
           <Button
@@ -93,7 +95,7 @@ export function UploadsPagination({
             onClick={() => navigateToPage(pageIndex - 1)}
             disabled={!hasPreviousPage}
           >
-            <span className="sr-only">Go to previous page</span>
+            <span className="sr-only">{dictionary.uploads_pagination_go_to_previous_page}</span>
             <ChevronLeftIcon className="h-4 w-4" />
           </Button>
           <Button
@@ -102,7 +104,7 @@ export function UploadsPagination({
             onClick={() => navigateToPage(pageIndex + 1)}
             disabled={!hasNextPage}
           >
-            <span className="sr-only">Go to next page</span>
+            <span className="sr-only">{dictionary.uploads_pagination_go_to_next_page}</span>
             <ChevronRightIcon className="h-4 w-4" />
           </Button>
           <Button
@@ -111,7 +113,7 @@ export function UploadsPagination({
             onClick={() => navigateToPage(pageCount - 1)}
             disabled={!hasNextPage}
           >
-            <span className="sr-only">Go to last page</span>
+            <span className="sr-only">{dictionary.uploads_pagination_go_to_last_page}</span>
             <DoubleArrowRightIcon className="h-4 w-4" />
           </Button>
         </div>
