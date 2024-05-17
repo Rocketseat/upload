@@ -1,4 +1,5 @@
 import { auth, signOut } from '@nivo/auth'
+import { Dictionary } from '@nivo/i18n'
 import { Code, Cog, LogOut } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -7,14 +8,17 @@ import { Avatar } from '../ui/avatar'
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuLabel,
   DropdownMenuItem,
+  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '../ui/dropdown-menu'
-import { Dictionary } from '@nivo/i18n'
 
-export async function UserProfileButton({ dictionary }: { dictionary: Dictionary }) {
+export async function UserProfileButton({
+  dictionary,
+}: {
+  dictionary: Dictionary
+}) {
   const session = await auth()
 
   async function handleSignOut() {
@@ -41,7 +45,9 @@ export async function UserProfileButton({ dictionary }: { dictionary: Dictionary
         </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-48">
-        <DropdownMenuLabel>{dictionary.user_profile_button_my_account}</DropdownMenuLabel>
+        <DropdownMenuLabel>
+          {dictionary.user_profile_button_my_account}
+        </DropdownMenuLabel>
         <DropdownMenuItem className="flex items-center gap-2" asChild>
           <Link href="/app/settings/profile" className="w-full">
             <Cog className="size-4" />

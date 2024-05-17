@@ -12,10 +12,10 @@ import { Label } from '@/components/ui/label'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Switch } from '@/components/ui/switch'
 import { trpc } from '@/lib/trpc/react'
+import { useDictionary } from '@/state/dictionary'
 
 import { Segment } from './segment'
 import { TranscriptionSkeleton } from './transcription-skeleton'
-import { useDictionary } from '@/state/dictionary'
 
 interface TranscriptionCardProps {
   videoId: string
@@ -31,7 +31,9 @@ const transcriptionSegmentsFormSchema = z.object({
   ),
 })
 
-type TranscriptionSegmentsFormSchema = z.infer<typeof transcriptionSegmentsFormSchema>
+type TranscriptionSegmentsFormSchema = z.infer<
+  typeof transcriptionSegmentsFormSchema
+>
 
 export function TranscriptionCard({
   videoId,
@@ -148,7 +150,9 @@ export function TranscriptionCard({
                 checked={shouldFollowUserFocus}
                 onCheckedChange={setShouldFollowUserFocus}
               />
-              <Label htmlFor="airplane-mode">{dictionary.transcription_card_sync_video_clicks}</Label>
+              <Label htmlFor="airplane-mode">
+                {dictionary.transcription_card_sync_video_clicks}
+              </Label>
             </div>
           ) : (
             <div />

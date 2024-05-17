@@ -8,10 +8,10 @@ import {
 import { useAtomValue, useSetAtom } from 'jotai'
 import { selectAtom } from 'jotai/utils'
 import { useCallback } from 'react'
-import { useDictionary } from '@/state/dictionary'
 
 import { Button } from '@/components/ui/button'
 import { Progress } from '@/components/ui/progress'
+import { useDictionary } from '@/state/dictionary'
 import { startVideoUploadAtom, videoUploadAtom } from '@/state/uploads'
 
 export interface VideoUploadProgressColumnProps {
@@ -46,7 +46,9 @@ export function VideoUploadProgressColumn({
           {progress === 0 && !error ? (
             <>
               <DotsHorizontalIcon className="mr-2 h-4 w-4" />
-              <span className="text-muted-foreground">{dictionary.video_upload_waiting}</span>
+              <span className="text-muted-foreground">
+                {dictionary.video_upload_waiting}
+              </span>
             </>
           ) : error ? (
             <>
@@ -65,7 +67,9 @@ export function VideoUploadProgressColumn({
           ) : (
             <>
               <CheckCircledIcon className="mr-2 h-4 w-4 text-emerald-500" />
-              <span className="text-emerald-500">{dictionary.video_upload_complete}</span>
+              <span className="text-emerald-500">
+                {dictionary.video_upload_complete}
+              </span>
             </>
           )}
         </div>

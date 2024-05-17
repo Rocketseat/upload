@@ -1,11 +1,11 @@
 import { dayjs } from '@nivo/dayjs'
+import { Dictionary } from '@nivo/i18n'
 import { Eye } from 'lucide-react'
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { serverClient } from '@/lib/trpc/server'
-import { Dictionary } from '@nivo/i18n'
 
 const ViewsCountChart = dynamic(() => import('./views-count-chart'), {
   ssr: false,
@@ -26,7 +26,9 @@ export async function ViewsCount({ dictionary }: { dictionary: Dictionary }) {
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="text-base font-medium">
             {dictionary.views_count_title}{' '}
-            <span className="text-xs text-muted-foreground">{dictionary.views_count_subtitle}</span>
+            <span className="text-xs text-muted-foreground">
+              {dictionary.views_count_subtitle}
+            </span>
           </CardTitle>
           <Eye className="h-4 w-4 text-muted-foreground" />
         </CardHeader>

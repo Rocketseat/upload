@@ -17,7 +17,9 @@ export async function Storage({ dictionary }: { dictionary: Dictionary }) {
   return (
     <Card>
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-        <CardTitle className="text-base font-medium">{dictionary.storage_title}</CardTitle>
+        <CardTitle className="text-base font-medium">
+          {dictionary.storage_title}
+        </CardTitle>
         <HardDrive className="h-4 w-4 text-muted-foreground" />
       </CardHeader>
       <CardContent className="space-y-1">

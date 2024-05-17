@@ -1,4 +1,5 @@
-import { unstable_noStore } from 'next/cache';
+import { Dictionary } from '@nivo/i18n'
+import { unstable_noStore } from 'next/cache'
 
 import {
   Card,
@@ -6,31 +7,32 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card';
-import { serverClient } from '@/lib/trpc/server';
+} from '@/components/ui/card'
+import { serverClient } from '@/lib/trpc/server'
 
-import { TranscriptionCard } from '../../transcription-card';
-import { VideoForm } from './video-form';
-import { Dictionary } from '@nivo/i18n';
+import { TranscriptionCard } from '../../transcription-card'
+import { VideoForm } from './video-form'
 
 export interface OverviewProps {
-  videoId: string;
-  dictionary: Dictionary;
+  videoId: string
+  dictionary: Dictionary
 }
 
 export async function Overview({ videoId, dictionary }: OverviewProps) {
-  unstable_noStore();
+  unstable_noStore()
 
   const { video } = await serverClient.getUpload({
     videoId,
-  });
+  })
 
   return (
     <div className="grid flex-1 grid-cols-[1fr_minmax(320px,480px)] gap-4">
       <Card className="self-start">
         <CardHeader>
           <CardTitle>{dictionary.overview_edit_video_title}</CardTitle>
-          <CardDescription>{dictionary.overview_update_video_details}</CardDescription>
+          <CardDescription>
+            {dictionary.overview_update_video_details}
+          </CardDescription>
         </CardHeader>
         <CardContent>
           <VideoForm video={video} />
@@ -41,5 +43,5 @@ export async function Overview({ videoId, dictionary }: OverviewProps) {
         shouldDisplayVideo={!!video.storageKey}
       />
     </div>
-  );
+  )
 }

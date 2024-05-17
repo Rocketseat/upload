@@ -15,6 +15,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
+import { useDictionary } from '@/state/dictionary'
 import {
   areUploadsEmptyAtom,
   deleteUploadAtom,
@@ -32,7 +33,6 @@ import { AudioUploadProgressColumn } from './columns/audio-upload-progress-colum
 import { VideoUploadProgressColumn } from './columns/video-upload-progress-column'
 import { UploadLanguageInput } from './upload-language-input'
 import { UploadTagInput } from './upload-tag-input'
-import { useDictionary } from '@/state/dictionary'
 
 export function UploadTable() {
   const dictionary = useDictionary()
@@ -54,7 +54,7 @@ export function UploadTable() {
    */
   useEffect(() => {
     if (isThereAnyPendingUpload) {
-      window.onbeforeunload = function() {
+      window.onbeforeunload = function () {
         return dictionary.uploads_warning_on_close
       }
     } else {
@@ -76,7 +76,9 @@ export function UploadTable() {
           <TableRow>
             <TableHead style={{ width: 148 }}></TableHead>
             <TableHead>{dictionary.uploads_table_head_info}</TableHead>
-            <TableHead style={{ width: 240 }}>{dictionary.uploads_table_head_metadata}</TableHead>
+            <TableHead style={{ width: 240 }}>
+              {dictionary.uploads_table_head_metadata}
+            </TableHead>
             <TableHead style={{ width: 160 }}>
               <div className="flex items-center gap-2">
                 <Videotape className="size-4" />
@@ -95,7 +97,9 @@ export function UploadTable() {
                 {dictionary.uploads_table_head_upload_audio}
               </div>
             </TableHead>
-            <TableHead style={{ width: 140 }}>{dictionary.uploads_table_head_actions}</TableHead>
+            <TableHead style={{ width: 140 }}>
+              {dictionary.uploads_table_head_actions}
+            </TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>

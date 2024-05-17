@@ -25,6 +25,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { trpc } from '@/lib/trpc/react'
+import { useDictionary } from '@/state/dictionary'
 
 interface UploadItemActionsProps {
   videoId: string
@@ -35,6 +36,7 @@ export function UploadItemActions({
   videoId,
   uploadBatchId,
 }: UploadItemActionsProps) {
+  const dictionary = useDictionary()
   const utils = trpc.useUtils()
 
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
@@ -52,9 +54,8 @@ export function UploadItemActions({
 
       setIsDeleteDialogOpen(false)
     } catch {
-      toast.error('Uh oh! Something went wrong.', {
-        description:
-          'An error ocurred while trying to delete the video. If the error persists, please contact an administrator.',
+      toast.error(dictionary.upload_item_actions_toast_error, {
+        description: dictionary.upload_item_actions_toast_error_description,
       })
     }
   }
@@ -69,21 +70,23 @@ export function UploadItemActions({
             className="data-[state=open]:bg-muted"
           >
             <MoreHorizontal className="size-3" />
-            <span className="sr-only">Open menu</span>
+            <span className="sr-only">
+              {dictionary.upload_item_actions_open_menu}
+            </span>
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="w-[160px]">
           <DropdownMenuItem asChild>
             <Link href={`/app/videos/${videoId}`} prefetch={false}>
               <Pencil2Icon className="mr-2 h-4 w-4" />
-              <span>Edit</span>
+              <span>{dictionary.upload_item_actions_edit}</span>
             </Link>
           </DropdownMenuItem>
           {uploadBatchId && (
             <DropdownMenuItem asChild>
               <Link href={`/app/batches/${uploadBatchId}`} prefetch={false}>
                 <GroupIcon className="mr-2 h-4 w-4" />
-                <span>View batch</span>
+                <span>{dictionary.upload_item_actions_view_batch}</span>
               </Link>
             </DropdownMenuItem>
           )}
@@ -94,7 +97,7 @@ export function UploadItemActions({
               disabled={isDeletingVideo}
             >
               <Trash2 className="mr-2 h-4 w-4" />
-              Delete
+              {dictionary.upload_item_actions_delete}
             </DropdownMenuItem>
           </AlertDialogTrigger>
         </DropdownMenuContent>
@@ -102,28 +105,29 @@ export function UploadItemActions({
 
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+          <AlertDialogTitle>
+            {dictionary.upload_item_actions_confirm_title}
+          </AlertDialogTitle>
           <AlertDialogDescription className="space-y-3">
+            <p>{dictionary.upload_item_actions_confirm_description}</p>
             <p>
-              This action can&apos;t be undone and the video will be permanently
-              deleted from the server.
-            </p>
-            <p>
-              This will{' '}
+              {dictionary.upload_item_actions_confirm_note_1}
               <span className="font-semibold text-accent-foreground">
-                permanently
+                {dictionary.upload_item_actions_confirm_note_2}
               </span>
               :
             </p>
             <ol className="list-disc space-y-2 pl-4">
-              <li>Delete the MP4, MP3 and subtitles from storage;</li>
-              <li>Delete the video on external provider;</li>
-              <li>Delete the videos on any outside integration;</li>
+              <li>{dictionary.upload_item_actions_confirm_step_1}</li>
+              <li>{dictionary.upload_item_actions_confirm_step_2}</li>
+              <li>{dictionary.upload_item_actions_confirm_step_3}</li>
             </ol>
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
+          <AlertDialogCancel>
+            {dictionary.upload_item_actions_cancel}
+          </AlertDialogCancel>
           <Button
             disabled={isDeletingVideo}
             variant="destructive"
@@ -133,7 +137,7 @@ export function UploadItemActions({
             {isDeletingVideo ? (
               <Loader2 className="h-4 w-4 animate-spin" />
             ) : (
-              'Delete'
+              dictionary.upload_item_actions_delete
             )}
           </Button>
         </AlertDialogFooter>

@@ -1,12 +1,14 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
+import { Dictionary } from '@nivo/i18n'
 import { AlertCircle, Loader2 } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { z } from 'zod'
 
 import { trpc } from '@/lib/trpc/react'
+import { useDictionary } from '@/state/dictionary'
 
 import { Badge } from './ui/badge'
 import { Button } from './ui/button'
@@ -20,18 +22,17 @@ import {
 } from './ui/dialog'
 import { Input } from './ui/input'
 import { Label } from './ui/label'
-import { useDictionary } from '@/state/dictionary'
-import { Dictionary } from '@nivo/i18n'
 
-const newTagFormSchema = (dictionary: Dictionary) => z.object({
-  tag: z
-    .string({
-      required_error: dictionary.new_tag_form_error_required,
-    })
-    .regex(/^[a-zA-Z]+(-[a-zA-Z]+)*$/, {
-      message: dictionary.new_tag_form_error_format,
-    }),
-})
+const newTagFormSchema = (dictionary: Dictionary) =>
+  z.object({
+    tag: z
+      .string({
+        required_error: dictionary.new_tag_form_error_required,
+      })
+      .regex(/^[a-zA-Z]+(-[a-zA-Z]+)*$/, {
+        message: dictionary.new_tag_form_error_format,
+      }),
+  })
 
 type NewTagFormSchema = z.infer<ReturnType<typeof newTagFormSchema>>
 
@@ -100,13 +101,16 @@ export function CreateNewTagDialog({
           </p>
           <ol className="space-y-2">
             <li>
-              <Badge variant="outline">ignite</Badge> - {dictionary.example_tag_product}
+              <Badge variant="outline">ignite</Badge> -{' '}
+              {dictionary.example_tag_product}
             </li>
             <li>
-              <Badge variant="outline">react</Badge> - {dictionary.example_tag_technology}
+              <Badge variant="outline">react</Badge> -{' '}
+              {dictionary.example_tag_technology}
             </li>
             <li>
-              <Badge variant="outline">fundamentos-do-react</Badge> - {dictionary.example_tag_course}
+              <Badge variant="outline">fundamentos-do-react</Badge> -{' '}
+              {dictionary.example_tag_course}
             </li>
           </ol>
         </DialogDescription>

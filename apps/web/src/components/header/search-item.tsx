@@ -5,9 +5,10 @@ import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { useEffect, useRef, useTransition } from 'react'
 
+import { useDictionary } from '@/state/dictionary'
+
 import { CommandItem } from '../ui/command'
 import { Tooltip, TooltipContent, TooltipTrigger } from '../ui/tooltip'
-import { useDictionary } from '@/state/dictionary'
 
 interface SearchItemProps {
   video: RouterOutput['getUploads']['videos'][number]

@@ -22,8 +22,12 @@ export default function Loading() {
         <TableHeader>
           <TableRow>
             <TableHead>{dictionary.loading_video}</TableHead>
-            <TableHead style={{ width: 120 }}>{dictionary.loading_duration}</TableHead>
-            <TableHead style={{ width: 140 }}>{dictionary.loading_size}</TableHead>
+            <TableHead style={{ width: 120 }}>
+              {dictionary.loading_duration}
+            </TableHead>
+            <TableHead style={{ width: 140 }}>
+              {dictionary.loading_size}
+            </TableHead>
             <TableHead style={{ width: 200 }}>
               <div className="flex items-center gap-2">
                 <ReceiptText className="size-4" />
@@ -36,7 +40,9 @@ export default function Loading() {
                 {dictionary.loading_external_id}
               </div>
             </TableHead>
-            <TableHead style={{ width: 150 }}>{dictionary.loading_uploaded_at}</TableHead>
+            <TableHead style={{ width: 150 }}>
+              {dictionary.loading_uploaded_at}
+            </TableHead>
             <TableHead style={{ width: 64 }} />
           </TableRow>
         </TableHeader>

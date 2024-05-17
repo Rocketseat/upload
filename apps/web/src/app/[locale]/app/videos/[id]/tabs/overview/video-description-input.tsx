@@ -8,9 +8,9 @@ import { useFormContext } from 'react-hook-form'
 
 import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
+import { useDictionary } from '@/state/dictionary'
 
 import { EditVideoFormSchema } from './video-form'
-import { useDictionary } from '@/state/dictionary'
 
 export interface VideoDescriptionInputProps
   extends TextareaHTMLAttributes<HTMLTextAreaElement> {

@@ -1,11 +1,12 @@
+import { getDictionary, Locale } from '@nivo/i18n'
+
 import { Header } from '@/components/header'
-import { Locale, getDictionary } from '@nivo/i18n'
 
 export default async function AppLayout({
   children,
-  params: { locale }
+  params: { locale },
 }: {
-  children: React.ReactNode,
+  children: React.ReactNode
   params: {
     locale: Locale
   }

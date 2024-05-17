@@ -1,3 +1,4 @@
+import { getDictionary, Locale } from '@nivo/i18n'
 import { VideoIcon } from '@radix-ui/react-icons'
 import { Music2 } from 'lucide-react'
 import { Metadata } from 'next'
@@ -7,10 +8,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
 import { Overview } from './tabs/overview'
 import { Webhooks } from './tabs/webhooks'
-import { Locale, getDictionary } from '@nivo/i18n'
 
 interface VideoPageProps {
-  params: { id: string, locale: Locale }
+  params: { id: string; locale: Locale }
 }
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -56,8 +56,12 @@ export default async function VideoPage({ params }: VideoPageProps) {
 
       <Tabs defaultValue="overview" className="space-y-4">
         <TabsList>
-          <TabsTrigger value="overview">{dictionary.video_page_overview_tab}</TabsTrigger>
-          <TabsTrigger value="webhooks">{dictionary.video_page_webhooks_tab}</TabsTrigger>
+          <TabsTrigger value="overview">
+            {dictionary.video_page_overview_tab}
+          </TabsTrigger>
+          <TabsTrigger value="webhooks">
+            {dictionary.video_page_webhooks_tab}
+          </TabsTrigger>
         </TabsList>
 
         <TabsContent value="overview">

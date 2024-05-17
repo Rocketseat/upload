@@ -15,6 +15,7 @@ import {
 import { Skeleton } from '@/components/ui/skeleton'
 import { Textarea } from '@/components/ui/textarea'
 import { trpc } from '@/lib/trpc/react'
+import { useDictionary } from '@/state/dictionary'
 
 import { Button } from './ui/button'
 
@@ -23,6 +24,7 @@ export interface TranscriptionPreviewProps {
 }
 
 export function TranscriptionPreview({ videoId }: TranscriptionPreviewProps) {
+  const dictionary = useDictionary()
   const [isDialogOpen, setIsDialogOpen] = useState(false)
 
   const {
@@ -51,12 +53,12 @@ export function TranscriptionPreview({ videoId }: TranscriptionPreviewProps) {
       <DialogTrigger asChild>
         <button className="flex items-center font-medium text-primary hover:underline">
           <Link1Icon className="mr-2 h-4 w-4" />
-          <span>View transcription</span>
+          <span>{dictionary.transcription_preview_view_transcription}</span>
         </button>
       </DialogTrigger>
       <DialogContent className="w-full max-w-[480px]">
         <DialogHeader>
-          <DialogTitle>Transcrição</DialogTitle>
+          <DialogTitle>{dictionary.transcription_preview_title}</DialogTitle>
         </DialogHeader>
         {isLoadingTranscription || isPendingTranscription ? (
           <div className="space-y-2">
@@ -76,7 +78,7 @@ export function TranscriptionPreview({ videoId }: TranscriptionPreviewProps) {
             <Button variant="secondary" asChild>
               <Link href={`/app/videos/${data?.transcription?.uploadId}`}>
                 <Edit2 className="mr-2 h-3 w-3" />
-                Review
+                {dictionary.transcription_preview_button_review}
               </Link>
             </Button>
           </>

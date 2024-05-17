@@ -7,6 +7,7 @@ import { twMerge } from 'tailwind-merge'
 
 import useDebounceValue from '@/hooks/useDebounceValue'
 import { trpc } from '@/lib/trpc/react'
+import { useDictionary } from '@/state/dictionary'
 
 import { CreateNewTagDialog } from './create-new-tag-dialog'
 import { Badge } from './ui/badge'
@@ -22,7 +23,6 @@ import { Dialog } from './ui/dialog'
 import { Popover, PopoverContent, PopoverTrigger } from './ui/popover'
 import { ScrollArea } from './ui/scroll-area'
 import { Separator } from './ui/separator'
-import { useDictionary } from '@/state/dictionary'
 
 export interface TagInputProps {
   value: string[]

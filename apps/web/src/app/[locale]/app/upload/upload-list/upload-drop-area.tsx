@@ -4,8 +4,8 @@ import { UploadIcon } from '@radix-ui/react-icons'
 import { useSetAtom } from 'jotai'
 import { useDropzone } from 'react-dropzone'
 
-import { addUploadsAtom } from '@/state/uploads'
 import { useDictionary } from '@/state/dictionary'
+import { addUploadsAtom } from '@/state/uploads'
 
 export function UploadDropArea() {
   const dictionary = useDictionary()
@@ -30,8 +30,12 @@ export function UploadDropArea() {
       >
         <UploadIcon className="h-4 w-4" />
         <div className="flex flex-col gap-1 text-center">
-          <span className="font-medium">{dictionary.upload_drop_area_drop_here}</span>
-          <span className="text-xs text-zinc-400">{dictionary.upload_drop_area_accept_mp4}</span>
+          <span className="font-medium">
+            {dictionary.upload_drop_area_drop_here}
+          </span>
+          <span className="text-xs text-zinc-400">
+            {dictionary.upload_drop_area_accept_mp4}
+          </span>
         </div>
       </label>
 

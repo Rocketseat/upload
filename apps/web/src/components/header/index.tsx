@@ -1,3 +1,4 @@
+import { Dictionary } from '@nivo/i18n'
 import { PlusCircle } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -10,11 +11,8 @@ import { MenuLink } from './menu-link'
 import { Search } from './search'
 import { ThemeSwitcher } from './theme-switcher'
 import { UserProfileButton } from './user-profile-button'
-import { Dictionary } from '@nivo/i18n'
 
-export async function Header({ dictionary }: {
-  dictionary: Dictionary
-}) {
+export async function Header({ dictionary }: { dictionary: Dictionary }) {
   return (
     <div className="border-b">
       <div className="flex items-center justify-between px-8">
@@ -31,7 +29,9 @@ export async function Header({ dictionary }: {
 
           <nav className="flex items-center space-x-2 lg:space-x-3">
             <MenuLink href="/app">{dictionary.header_nav_dashboard}</MenuLink>
-            <MenuLink href="/app/uploads">{dictionary.header_nav_uploads}</MenuLink>
+            <MenuLink href="/app/uploads">
+              {dictionary.header_nav_uploads}
+            </MenuLink>
           </nav>
         </div>
 

@@ -1,10 +1,10 @@
+import { getDictionary, Locale } from '@nivo/i18n'
 import { Metadata } from 'next'
 
 import { BatchUploadList } from './batch-upload-list'
-import { Locale, getDictionary } from '@nivo/i18n'
 
 interface BatchPageProps {
-  params: { id: string, locale: Locale }
+  params: { id: string; locale: Locale }
 }
 
 export async function generateMetadata({
@@ -24,7 +24,9 @@ export default async function BatchPage({ params }: BatchPageProps) {
   return (
     <>
       <div className="flex items-center justify-between">
-        <h2 className="text-3xl font-bold tracking-tight">{dictionary.batch_page_header_title}</h2>
+        <h2 className="text-3xl font-bold tracking-tight">
+          {dictionary.batch_page_header_title}
+        </h2>
 
         <div className="flex items-center gap-4">
           <span className="text-sm text-muted-foreground">

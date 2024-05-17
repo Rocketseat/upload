@@ -3,12 +3,12 @@
 import { Filter, Loader2, X } from 'lucide-react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { FormEvent, useState, useTransition } from 'react'
-import { useDictionary } from '@/state/dictionary'
 
 import { TagInput } from '@/components/tag-input'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Separator } from '@/components/ui/separator'
+import { useDictionary } from '@/state/dictionary'
 
 export function UploadsFilters() {
   const dictionary = useDictionary()

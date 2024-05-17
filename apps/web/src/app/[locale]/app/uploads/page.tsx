@@ -1,7 +1,8 @@
-import { Cable, CopyIcon } from 'lucide-react'
-import { useDictionary } from '@/state/dictionary'
 import { dayjs } from '@nivo/dayjs'
+import { getDictionary, Locale } from '@nivo/i18n'
+import { Cable, CopyIcon } from 'lucide-react'
 import { Metadata } from 'next'
+import { unstable_noStore } from 'next/cache'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Suspense } from 'react'
@@ -27,8 +28,6 @@ import { formatBytes } from '@/utils/format-bytes'
 import { formatSecondsToMinutes } from '@/utils/format-seconds-to-minutes'
 
 import { UploadsPagination } from './uploads-pagination'
-import { unstable_noStore } from 'next/cache'
-import { Locale, getDictionary } from '@nivo/i18n'
 
 export const metadata: Metadata = {
   title: 'Uploads',
@@ -48,9 +47,9 @@ type UploadsPageSearchParams = z.infer<typeof uploadsPageSearchParams>
 
 export default async function UploadsPage({
   searchParams,
-  params: { locale }
+  params: { locale },
 }: {
-  searchParams: UploadsPageSearchParams,
+  searchParams: UploadsPageSearchParams
   params: { locale: Locale }
 }) {
   const dictionary = await getDictionary(locale)
@@ -74,8 +73,12 @@ export default async function UploadsPage({
           <TableHeader>
             <TableRow>
               <TableHead>{dictionary.uploads_video}</TableHead>
-              <TableHead style={{ width: 100 }}>{dictionary.uploads_duration}</TableHead>
-              <TableHead style={{ width: 120 }}>{dictionary.uploads_size}</TableHead>
+              <TableHead style={{ width: 100 }}>
+                {dictionary.uploads_duration}
+              </TableHead>
+              <TableHead style={{ width: 120 }}>
+                {dictionary.uploads_size}
+              </TableHead>
               <TableHead style={{ width: 200 }}>
                 <div className="flex items-center gap-2">
                   <Cable className="size-4" />

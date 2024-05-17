@@ -1,11 +1,11 @@
+import { getDictionary, Locale } from '@nivo/i18n'
 import { AlertCircle } from 'lucide-react'
+import Head from 'next/head'
 import Link from 'next/link'
 
 import { serverClient } from '@/lib/trpc/server'
 
 import { UploadList } from './upload-list'
-import { Locale, getDictionary } from '@nivo/i18n'
-import Head from 'next/head'
 
 export default async function Upload({
   params: { locale },

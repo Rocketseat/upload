@@ -1,33 +1,36 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
+import { Dictionary } from '@nivo/i18n'
 import { useRouter } from 'next/navigation'
 import { FormProvider, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { z } from 'zod'
-import { useDictionary } from '@/state/dictionary'
 
 import { trpc } from '@/lib/trpc/react'
+import { useDictionary } from '@/state/dictionary'
 
 import { Header } from './header'
 import { UploadDropArea } from './upload-drop-area'
 import { UploadTable } from './upload-table'
-import { Dictionary } from '@nivo/i18n'
 
-const uploadsFormSchema = (dictionary: Dictionary) => z.object({
-  files: z
-    .array(
-      z.object({
-        id: z.string(),
-        title: z.string().min(1),
-        duration: z.coerce.number().transform(Math.round),
-        language: z.enum(['pt', 'es']),
-        sizeInBytes: z.coerce.number(),
-        tags: z.array(z.string()).min(1, { message: dictionary.upload_list_at_least_one_tag }),
-      }),
-    )
-    .min(0),
-})
+const uploadsFormSchema = (dictionary: Dictionary) =>
+  z.object({
+    files: z
+      .array(
+        z.object({
+          id: z.string(),
+          title: z.string().min(1),
+          duration: z.coerce.number().transform(Math.round),
+          language: z.enum(['pt', 'es']),
+          sizeInBytes: z.coerce.number(),
+          tags: z
+            .array(z.string())
+            .min(1, { message: dictionary.upload_list_at_least_one_tag }),
+        }),
+      )
+      .min(0),
+  })
 
 export type UploadsFormSchema = z.infer<ReturnType<typeof uploadsFormSchema>>
 

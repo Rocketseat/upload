@@ -18,11 +18,11 @@ import {
 } from '@/components/ui/table'
 import { Textarea } from '@/components/ui/textarea'
 import { trpc } from '@/lib/trpc/react'
+import { useDictionary } from '@/state/dictionary'
 import { formatSecondsToMinutes } from '@/utils/format-seconds-to-minutes'
 
 import { MetadataTooltip } from './metadata-tooltip'
 import { WebhooksSkeletonTable } from './webhooks-skeleton-table'
-import { useDictionary } from '@/state/dictionary'
 
 export interface WebhooksProps {
   videoId: string
@@ -60,9 +60,15 @@ export function Webhooks({ videoId }: WebhooksProps) {
                   )}
                 </div>
               </TableHead>
-              <TableHead style={{ width: 140 }}>{dictionary.webhook_table_head_status}</TableHead>
-              <TableHead style={{ width: 120 }}>{dictionary.webhook_table_head_executed_at}</TableHead>
-              <TableHead style={{ width: 120 }}>{dictionary.webhook_table_head_duration}</TableHead>
+              <TableHead style={{ width: 140 }}>
+                {dictionary.webhook_table_head_status}
+              </TableHead>
+              <TableHead style={{ width: 120 }}>
+                {dictionary.webhook_table_head_executed_at}
+              </TableHead>
+              <TableHead style={{ width: 120 }}>
+                {dictionary.webhook_table_head_duration}
+              </TableHead>
               <TableHead style={{ width: 240 }}>
                 <div className="flex items-center gap-2">
                   <span>{dictionary.webhook_table_head_metadata}</span>

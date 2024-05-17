@@ -5,7 +5,6 @@ import { SymbolIcon } from '@radix-ui/react-icons'
 import { Cable, CopyIcon, Loader2, ReceiptText } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useDictionary } from '@/state/dictionary'
 
 import { CopyButton } from '@/components/copy-button'
 import { TranscriptionPreview } from '@/components/transcription-preview'
@@ -24,6 +23,7 @@ import {
 } from '@/components/ui/tooltip'
 import { UploadItemActions } from '@/components/upload-item-actions'
 import { trpc } from '@/lib/trpc/react'
+import { useDictionary } from '@/state/dictionary'
 import { formatBytes } from '@/utils/format-bytes'
 import { formatSecondsToMinutes } from '@/utils/format-seconds-to-minutes'
 
@@ -65,8 +65,12 @@ export function BatchUploadList({ batchId }: BatchUploadListProps) {
                   )}
                 </div>
               </TableHead>
-              <TableHead style={{ width: 120 }}>{dictionary.batch_upload_list_duration_column}</TableHead>
-              <TableHead style={{ width: 140 }}>{dictionary.batch_upload_list_size_column}</TableHead>
+              <TableHead style={{ width: 120 }}>
+                {dictionary.batch_upload_list_duration_column}
+              </TableHead>
+              <TableHead style={{ width: 140 }}>
+                {dictionary.batch_upload_list_size_column}
+              </TableHead>
               <TableHead style={{ width: 200 }}>
                 <div className="flex items-center gap-2">
                   <ReceiptText className="size-4" />
@@ -178,7 +182,10 @@ export function BatchUploadList({ batchId }: BatchUploadListProps) {
                       </div>
                     </TableCell>
                     <TableCell>
-                      <UploadItemActions videoId={video.id} uploadBatchId={null} />
+                      <UploadItemActions
+                        videoId={video.id}
+                        uploadBatchId={null}
+                      />
                     </TableCell>
                   </TableRow>
                 ))

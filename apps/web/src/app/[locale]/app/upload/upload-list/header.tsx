@@ -5,7 +5,6 @@ import axios from 'axios'
 import { useAtom, useAtomValue, useSetAtom } from 'jotai'
 import { ChevronDownIcon, Loader2 } from 'lucide-react'
 import { useFormContext } from 'react-hook-form'
-import { useDictionary } from '@/state/dictionary'
 
 import {
   AlertDialog,
@@ -22,10 +21,11 @@ import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuTrigger,
   DropdownMenuItem,
+  DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { Separator } from '@/components/ui/separator'
+import { useDictionary } from '@/state/dictionary'
 import {
   amountOfUploadsAtom,
   areUploadsEmptyAtom,
@@ -131,13 +131,17 @@ export function Header({ onSubmit }: HeaderProps) {
           </AlertDialogTrigger>
           <AlertDialogContent>
             <AlertDialogHeader>
-              <AlertDialogTitle>{dictionary.alert_dialog_title}</AlertDialogTitle>
+              <AlertDialogTitle>
+                {dictionary.alert_dialog_title}
+              </AlertDialogTitle>
               <AlertDialogDescription>
                 {dictionary.alert_dialog_description}
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
-              <AlertDialogCancel>{dictionary.alert_dialog_cancel}</AlertDialogCancel>
+              <AlertDialogCancel>
+                {dictionary.alert_dialog_cancel}
+              </AlertDialogCancel>
               <AlertDialogAction onClick={clearUploads}>
                 {dictionary.alert_dialog_proceed}
               </AlertDialogAction>

@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react'
 
 import useDebounceValue from '@/hooks/useDebounceValue'
 import { trpc } from '@/lib/trpc/react'
+import { useDictionary } from '@/state/dictionary'
 
 import { Button } from '../ui/button'
 import {
@@ -14,10 +15,9 @@ import {
   CommandList,
 } from '../ui/command'
 import { SearchItem } from './search-item'
-import { useDictionary } from '@/state/dictionary'
 
 export function Search() {
-  const dictionary = useDictionary();
+  const dictionary = useDictionary()
   const [open, setOpen] = useState(false)
   const [search, setSearch] = useState('')
 

@@ -18,11 +18,11 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip'
+import { useDictionary } from '@/state/dictionary'
 import {
   addToAudioConversionQueueAtom,
   audioConversionAtom,
 } from '@/state/uploads'
-import { useDictionary } from '@/state/dictionary'
 
 export interface AudioConversionProgressColumnProps {
   uploadId: string
@@ -68,12 +68,16 @@ export function AudioConversionProgressColumn({
       ) : progress === 100 ? (
         <>
           <CheckCircledIcon className="h-4 w-4 text-emerald-500" />
-          <span className="text-emerald-500">{dictionary.audio_conversion_complete}</span>
+          <span className="text-emerald-500">
+            {dictionary.audio_conversion_complete}
+          </span>
         </>
       ) : (
         <>
           <DotsHorizontalIcon className="h-4 w-4" />
-          <span className="text-muted-foreground">{dictionary.audio_conversion_waiting}</span>
+          <span className="text-muted-foreground">
+            {dictionary.audio_conversion_waiting}
+          </span>
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
