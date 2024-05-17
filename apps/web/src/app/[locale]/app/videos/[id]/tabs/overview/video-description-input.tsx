@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
 
 import { EditVideoFormSchema } from './video-form'
+import { useDictionary } from '@/state/dictionary'
 
 export interface VideoDescriptionInputProps
   extends TextareaHTMLAttributes<HTMLTextAreaElement> {
@@ -20,6 +21,7 @@ export function VideoDescriptionInput({
   videoId,
   ...props
 }: VideoDescriptionInputProps) {
+  const dictionary = useDictionary()
   const { setValue, register } = useFormContext<EditVideoFormSchema>()
 
   const { completion, complete, isLoading } = useCompletion({
@@ -40,6 +42,7 @@ export function VideoDescriptionInput({
         className="min-h-[132px] leading-relaxed"
         {...register('description')}
         {...props}
+        placeholder={dictionary.video_description_placeholder}
       />
       <div>
         <Button
@@ -53,7 +56,7 @@ export function VideoDescriptionInput({
           ) : (
             <MagicWandIcon className="mr-2 h-3 w-3" />
           )}
-          Generate with AI
+          {dictionary.generate_with_ai_button}
         </Button>
       </div>
     </>

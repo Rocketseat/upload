@@ -15,6 +15,7 @@ import { trpc } from '@/lib/trpc/react'
 
 import { Segment } from './segment'
 import { TranscriptionSkeleton } from './transcription-skeleton'
+import { useDictionary } from '@/state/dictionary'
 
 interface TranscriptionCardProps {
   videoId: string
@@ -30,14 +31,13 @@ const transcriptionSegmentsFormSchema = z.object({
   ),
 })
 
-type TranscriptionSegmentsFormSchema = z.infer<
-  typeof transcriptionSegmentsFormSchema
->
+type TranscriptionSegmentsFormSchema = z.infer<typeof transcriptionSegmentsFormSchema>
 
 export function TranscriptionCard({
   videoId,
   shouldDisplayVideo,
 }: TranscriptionCardProps) {
+  const dictionary = useDictionary()
   const [shouldFollowUserFocus, setShouldFollowUserFocus] = useState(true)
 
   const { data: videoDownloadData } = trpc.requestMediaDownloadUrl.useQuery({
@@ -148,7 +148,7 @@ export function TranscriptionCard({
                 checked={shouldFollowUserFocus}
                 onCheckedChange={setShouldFollowUserFocus}
               />
-              <Label htmlFor="airplane-mode">Sync video & clicks</Label>
+              <Label htmlFor="airplane-mode">{dictionary.transcription_card_sync_video_clicks}</Label>
             </div>
           ) : (
             <div />
@@ -158,7 +158,7 @@ export function TranscriptionCard({
             {isSubmitting ? (
               <Loader2 className="h-3 w-3 animate-spin" />
             ) : (
-              <span>Save</span>
+              <span>{dictionary.transcription_card_button_save}</span>
             )}
           </Button>
         </CardFooter>

@@ -1,3 +1,5 @@
+'use client'
+
 import { CheckIcon, PlusIcon } from '@radix-ui/react-icons'
 import { Loader2, Tag } from 'lucide-react'
 import { useState } from 'react'
@@ -20,6 +22,7 @@ import { Dialog } from './ui/dialog'
 import { Popover, PopoverContent, PopoverTrigger } from './ui/popover'
 import { ScrollArea } from './ui/scroll-area'
 import { Separator } from './ui/separator'
+import { useDictionary } from '@/state/dictionary'
 
 export interface TagInputProps {
   value: string[]
@@ -38,6 +41,7 @@ export function TagInput({
   allowTagCreation = true,
   onApplyToAll,
 }: TagInputProps) {
+  const dictionary = useDictionary()
   const [createTagDialogOpen, setCreateTagDialogOpen] = useState(false)
   const [open, setOpen] = useState(false)
   const [search, setSearch] = useState('')
@@ -73,7 +77,7 @@ export function TagInput({
             className="flex h-8 items-center border-dashed px-2 data-[error=true]:border-red-400 data-[error=true]:bg-red-50"
           >
             <Tag className="mr-2 h-3 w-3" />
-            <span className="text-xs">Tags</span>
+            <span className="text-xs">{dictionary.tags_label}</span>
 
             {!!error && (
               <span className="ml-2 text-xs font-normal">{error}</span>
@@ -88,7 +92,7 @@ export function TagInput({
                       variant="secondary"
                       className="pointer-events-none text-nowrap rounded-sm px-1 font-normal"
                     >
-                      {value.length} selected
+                      {value.length} {dictionary.selected_label}
                     </Badge>
                   ) : (
                     value.map((tag) => (
@@ -109,7 +113,7 @@ export function TagInput({
         <PopoverContent className="w-[320px] p-0" align="start">
           <Command shouldFilter={false}>
             <CommandInput
-              placeholder="Tags"
+              placeholder={dictionary.tags_placeholder}
               onValueChange={setSearch}
               value={search}
             />
@@ -125,18 +129,18 @@ export function TagInput({
                       className="flex items-center gap-2"
                     >
                       <PlusIcon className="h-3 w-3" />
-                      Create new
+                      {dictionary.create_new_label}
                     </CommandItem>
                   )}
 
                   {isLoadingTagOptions || isPendingTagOptions ? (
                     <div className="flex cursor-default select-none items-center justify-center gap-2 rounded-sm p-2 text-sm text-muted-foreground">
                       <Loader2 className="h-3 w-3 animate-spin" />
-                      <span>Loading tags...</span>
+                      <span>{dictionary.loading_tags_label}</span>
                     </div>
                   ) : data?.tags && data.tags.length === 0 ? (
                     <div className="flex cursor-default select-none items-center justify-center gap-2 rounded-sm p-2 text-sm text-muted-foreground">
-                      No tags found.
+                      {dictionary.no_tags_found_label}
                     </div>
                   ) : (
                     data?.tags &&
@@ -181,7 +185,7 @@ export function TagInput({
                   onSelect={onApplyToAll}
                   className="m-1 justify-center text-center text-sm font-normal"
                 >
-                  Apply to all
+                  {dictionary.apply_to_all_label}
                 </CommandItem>
               </div>
             )}

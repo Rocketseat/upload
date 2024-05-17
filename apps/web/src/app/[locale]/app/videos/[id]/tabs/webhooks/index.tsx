@@ -22,12 +22,15 @@ import { formatSecondsToMinutes } from '@/utils/format-seconds-to-minutes'
 
 import { MetadataTooltip } from './metadata-tooltip'
 import { WebhooksSkeletonTable } from './webhooks-skeleton-table'
+import { useDictionary } from '@/state/dictionary'
 
 export interface WebhooksProps {
   videoId: string
 }
 
 export function Webhooks({ videoId }: WebhooksProps) {
+  const dictionary = useDictionary()
+
   const {
     data,
     isLoading: isLoadingWebhooks,
@@ -51,18 +54,18 @@ export function Webhooks({ videoId }: WebhooksProps) {
             <TableRow>
               <TableHead style={{ width: 300 }}>
                 <div className="flex items-center gap-2">
-                  <span>Webhook</span>
+                  <span>{dictionary.webhook_table_head_webhook}</span>
                   {isRefetchingWebhooks && (
                     <Loader2 className="h-3 w-3 animate-spin text-muted-foreground" />
                   )}
                 </div>
               </TableHead>
-              <TableHead style={{ width: 140 }}>Status</TableHead>
-              <TableHead style={{ width: 120 }}>Executed At</TableHead>
-              <TableHead style={{ width: 120 }}>Duration</TableHead>
+              <TableHead style={{ width: 140 }}>{dictionary.webhook_table_head_status}</TableHead>
+              <TableHead style={{ width: 120 }}>{dictionary.webhook_table_head_executed_at}</TableHead>
+              <TableHead style={{ width: 120 }}>{dictionary.webhook_table_head_duration}</TableHead>
               <TableHead style={{ width: 240 }}>
                 <div className="flex items-center gap-2">
-                  <span>Metadata</span>
+                  <span>{dictionary.webhook_table_head_metadata}</span>
                   <MetadataTooltip />
                 </div>
               </TableHead>
@@ -85,21 +88,21 @@ export function Webhooks({ videoId }: WebhooksProps) {
                       {webhook.status === 'RUNNING' && (
                         <div className="flex items-center gap-2 font-medium text-muted-foreground">
                           <DotsHorizontalIcon className="h-4 w-4" />
-                          <span>Running</span>
+                          <span>{dictionary.webhook_status_running}</span>
                         </div>
                       )}
 
                       {webhook.status === 'SUCCESS' && (
                         <div className="flex items-center gap-2 font-medium text-emerald-500 dark:text-emerald-400">
                           <CheckCircledIcon className="h-4 w-4" />
-                          <span>Success</span>
+                          <span>{dictionary.webhook_status_success}</span>
                         </div>
                       )}
 
                       {webhook.status === 'ERROR' && (
                         <div className="flex items-center gap-2 font-medium text-red-500 dark:text-red-400">
                           <CrossCircledIcon className="h-4 w-4" />
-                          <span>Error</span>
+                          <span>{dictionary.webhook_status_error}</span>
                         </div>
                       )}
                     </TableCell>
@@ -137,7 +140,7 @@ export function Webhooks({ videoId }: WebhooksProps) {
               ) : (
                 <TableRow>
                   <TableCell colSpan={5} className="h-24 text-center">
-                    No results.
+                    {dictionary.webhook_no_results}
                   </TableCell>
                 </TableRow>
               )}

@@ -17,28 +17,32 @@ import { trpc } from '@/lib/trpc/react'
 
 import { VideoDescriptionInput } from './video-description-input'
 import { VideoTagInput } from './video-tag-input'
+import { useDictionary } from '@/state/dictionary'
+import { Dictionary } from '@nivo/i18n'
 
 interface VideoFormProps {
   video: RouterOutput['getUpload']['video']
 }
 
-const editVideoFormSchema = z.object({
-  title: z.string().min(1, { message: 'Please provide a valid title.' }),
+const editVideoFormSchema = (dictionary: Dictionary) => z.object({
+  title: z.string().min(1, { message: dictionary.edit_video_form_error_valid_title }),
   description: z.string().nullable(),
   commitUrl: z
     .string()
-    .url({ message: 'Please provide a valid Github URL.' })
+    .url({ message: dictionary.edit_video_form_error_valid_github_url })
     .nullable(),
   tags: z.array(z.string()).min(1, {
-    message: 'At least one tag is required.',
+    message: dictionary.edit_video_form_error_tag_required,
   }),
 })
 
-export type EditVideoFormSchema = z.infer<typeof editVideoFormSchema>
+export type EditVideoFormSchema = z.infer<ReturnType<typeof editVideoFormSchema>>
 
 export function VideoForm({ video }: VideoFormProps) {
+  const dictionary = useDictionary()
+
   const editVideoForm = useForm<EditVideoFormSchema>({
-    resolver: zodResolver(editVideoFormSchema),
+    resolver: zodResolver(editVideoFormSchema(dictionary)),
     defaultValues: {
       title: video.title,
       description: video.description,
@@ -64,8 +68,8 @@ export function VideoForm({ video }: VideoFormProps) {
         commitUrl,
       })
     } catch {
-      toast.error('Uh oh! Something went wrong.', {
-        description: `An error ocurred while trying to save the video.`,
+      toast.error(dictionary.video_form_toast_error, {
+        description: dictionary.video_form_toast_error_description,
       })
     }
   }
@@ -81,8 +85,8 @@ export function VideoForm({ video }: VideoFormProps) {
       <form onSubmit={handleSubmit(handleSaveVideo)} className="space-y-4">
         <div className="space-y-2">
           <Label htmlFor="title">
-            Title{' '}
-            <span className="text-muted-foreground">(synced with Skylab)</span>
+            {dictionary.video_form_title_label}{' '}
+            <span className="text-muted-foreground">{dictionary.video_form_title_synced}</span>
           </Label>
           <Input id="title" {...register('title')} defaultValue={video.title} />
           {errors.title && (
@@ -93,14 +97,14 @@ export function VideoForm({ video }: VideoFormProps) {
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="commit">Tags</Label>
+          <Label htmlFor="commit">{dictionary.video_form_tags_label}</Label>
           <VideoTagInput />
         </div>
 
         <div className="space-y-2">
           <Label htmlFor="description">
-            Description{' '}
-            <span className="text-muted-foreground">(synced with Skylab)</span>
+            {dictionary.video_form_description_label}{' '}
+            <span className="text-muted-foreground">{dictionary.video_form_description_synced}</span>
           </Label>
           <VideoDescriptionInput
             videoId={video.id}
@@ -109,15 +113,15 @@ export function VideoForm({ video }: VideoFormProps) {
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="externalProviderId">External Status/ID</Label>
+          <Label htmlFor="externalProviderId">{dictionary.video_form_external_status_id_label}</Label>
           <div className="flex items-center gap-2 rounded-lg border border-zinc-200 px-3 has-[input:focus-visible]:ring-2 has-[input:focus-visible]:ring-zinc-400 has-[input:focus-visible]:ring-offset-2 dark:border-zinc-800 dark:bg-zinc-950 dark:ring-offset-zinc-950 dark:has-[input:focus-visible]:ring-zinc-800">
             <Badge variant="secondary">
-              {video.externalStatus || 'waiting'}
+              {video.externalStatus || dictionary.video_form_external_status_waiting}
             </Badge>
             <Separator orientation="vertical" className="h-4" />
             <input
               data-empty={!video.externalProviderId}
-              value={video.externalProviderId ?? '(not generated yet)'}
+              value={video.externalProviderId ?? dictionary.video_form_external_id_not_generated}
               id="externalProviderId"
               className="h-10 flex-1 bg-transparent py-2 text-sm outline-none"
               readOnly
@@ -127,8 +131,8 @@ export function VideoForm({ video }: VideoFormProps) {
 
         <div className="space-y-2">
           <Label htmlFor="commit">
-            Commit reference{' '}
-            <span className="text-muted-foreground">(synced with Skylab)</span>
+            {dictionary.video_form_commit_reference_label}{' '}
+            <span className="text-muted-foreground">{dictionary.video_form_commit_reference_synced}</span>
           </Label>
           <Input
             id="commit"
@@ -147,13 +151,13 @@ export function VideoForm({ video }: VideoFormProps) {
             {isSubmitting ? (
               <Loader2 className="h-4 w-4 animate-spin" />
             ) : (
-              'Save'
+              dictionary.video_form_save_button
             )}
           </Button>
           {isSubmitSuccessful && (
             <div className="flex items-center gap-2 text-sm text-emerald-500 dark:text-emerald-400">
               <CheckCircledIcon className="h-3 w-3" />
-              <span>Saved!</span>
+              <span>{dictionary.video_form_saved_message}</span>
             </div>
           )}
         </div>

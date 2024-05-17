@@ -6,8 +6,11 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip'
+import { useDictionary } from '@/state/dictionary'
 
 export function MetadataTooltip() {
+  const dictionary = useDictionary()
+
   return (
     <TooltipProvider>
       <Tooltip>
@@ -16,7 +19,7 @@ export function MetadataTooltip() {
         </TooltipTrigger>
         <TooltipContent className="max-w-[280px]">
           <p className="text-center text-xs text-zinc-600 dark:text-zinc-400">
-            Request body sent to the webhook
+            {dictionary.metadata_tooltip_request_body}
           </p>
         </TooltipContent>
       </Tooltip>

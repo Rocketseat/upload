@@ -1,3 +1,5 @@
+'use client'
+
 import { zodResolver } from '@hookform/resolvers/zod'
 import { AlertCircle, Loader2 } from 'lucide-react'
 import { useForm } from 'react-hook-form'
@@ -18,18 +20,20 @@ import {
 } from './ui/dialog'
 import { Input } from './ui/input'
 import { Label } from './ui/label'
+import { useDictionary } from '@/state/dictionary'
+import { Dictionary } from '@nivo/i18n'
 
-const newTagFormSchema = z.object({
+const newTagFormSchema = (dictionary: Dictionary) => z.object({
   tag: z
     .string({
-      required_error: 'The tag name is required.',
+      required_error: dictionary.new_tag_form_error_required,
     })
     .regex(/^[a-zA-Z]+(-[a-zA-Z]+)*$/, {
-      message: 'Use only letters and hyphens.',
+      message: dictionary.new_tag_form_error_format,
     }),
 })
 
-type NewTagFormSchema = z.infer<typeof newTagFormSchema>
+type NewTagFormSchema = z.infer<ReturnType<typeof newTagFormSchema>>
 
 interface CreateNewTagDialogProps {
   onRequestClose: () => void
@@ -38,6 +42,7 @@ interface CreateNewTagDialogProps {
 export function CreateNewTagDialog({
   onRequestClose,
 }: CreateNewTagDialogProps) {
+  const dictionary = useDictionary()
   const utils = trpc.useUtils()
 
   const {
@@ -46,7 +51,7 @@ export function CreateNewTagDialog({
     formState: { isSubmitting, errors },
     reset,
   } = useForm<NewTagFormSchema>({
-    resolver: zodResolver(newTagFormSchema),
+    resolver: zodResolver(newTagFormSchema(dictionary)),
     defaultValues: {
       tag: '',
     },
@@ -65,8 +70,8 @@ export function CreateNewTagDialog({
       reset()
       onRequestClose()
     } catch (err) {
-      toast.error('Uh oh! Something went wrong.', {
-        description: `An error ocurred while trying to create the tag. Maybe you're trying to create a duplicated tag.`,
+      toast.error(dictionary.create_tag_error, {
+        description: dictionary.create_tag_error_description,
       })
     }
   }
@@ -74,37 +79,34 @@ export function CreateNewTagDialog({
   return (
     <DialogContent className="outline-none sm:max-w-[600px]">
       <DialogHeader>
-        <DialogTitle>Create new tag</DialogTitle>
+        <DialogTitle>{dictionary.create_new_tag}</DialogTitle>
         <DialogDescription className="space-y-3">
           <p>
-            Remember to avoid creating tags unnecessarily and to keep a maximum
-            of{' '}
+            {dictionary.create_new_tag_description_1}{' '}
             <span className="font-semibold text-accent-foreground">
-              3 tags per video
+              {dictionary.create_new_tag_description_2}
             </span>
             .
           </p>
           <p className="flex items-center">
             <AlertCircle className="mr-2 inline h-4 w-4" />
             <span>
-              Use the{' '}
+              {dictionary.create_new_tag_description_3}{' '}
               <span className="font-semibold text-accent-foreground">
-                following examples
-              </span>{' '}
-              to name your tags:
+                {dictionary.create_new_tag_description_4}
+              </span>
+              :
             </span>
           </p>
           <ol className="space-y-2">
             <li>
-              <Badge variant="outline">ignite</Badge> - reference to the product
+              <Badge variant="outline">ignite</Badge> - {dictionary.example_tag_product}
             </li>
             <li>
-              <Badge variant="outline">react</Badge> - reference to the main
-              technology
+              <Badge variant="outline">react</Badge> - {dictionary.example_tag_technology}
             </li>
             <li>
-              <Badge variant="outline">fundamentos-do-react</Badge> - reference
-              to the course
+              <Badge variant="outline">fundamentos-do-react</Badge> - {dictionary.example_tag_course}
             </li>
           </ol>
         </DialogDescription>
@@ -114,12 +116,12 @@ export function CreateNewTagDialog({
         <div className="grid gap-4 py-4">
           <div className="grid grid-cols-4 items-baseline gap-4">
             <Label htmlFor="tag" className="text-right">
-              New tag
+              {dictionary.new_tag_label}
             </Label>
             <div className="col-span-3 space-y-4">
               <Input
                 id="tag"
-                placeholder="your-new-tag"
+                placeholder={dictionary.new_tag_placeholder}
                 disabled={isSubmitting}
                 {...register('tag')}
               />
@@ -134,14 +136,14 @@ export function CreateNewTagDialog({
         <DialogFooter>
           <DialogTrigger asChild>
             <Button type="button" variant="ghost">
-              Cancel
+              {dictionary.cancel_button}
             </Button>
           </DialogTrigger>
           <Button className="w-24" type="submit" disabled={isSubmitting}>
             {isSubmitting ? (
               <Loader2 className="h-4 w-4 animate-spin" />
             ) : (
-              'Create'
+              dictionary.create_button
             )}
           </Button>
         </DialogFooter>

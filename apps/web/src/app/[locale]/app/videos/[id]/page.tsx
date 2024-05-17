@@ -7,9 +7,10 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
 import { Overview } from './tabs/overview'
 import { Webhooks } from './tabs/webhooks'
+import { Locale, getDictionary } from '@nivo/i18n'
 
 interface VideoPageProps {
-  params: { id: string }
+  params: { id: string, locale: Locale }
 }
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -19,13 +20,14 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function VideoPage({ params }: VideoPageProps) {
+  const dictionary = await getDictionary(params.locale)
   const videoId = params.id
 
   return (
     <>
       <div className="flex items-center justify-between gap-4">
         <h2 className="truncate text-3xl font-bold tracking-tight">
-          Edit video
+          {dictionary.video_page_edit_video_title}
         </h2>
 
         <div className="flex items-center gap-2">
@@ -36,7 +38,7 @@ export default async function VideoPage({ params }: VideoPageProps) {
               rel="noreferrer"
             >
               <VideoIcon className="mr-2 h-4 w-4" />
-              <span>Download MP4</span>
+              <span>{dictionary.video_page_download_mp4}</span>
             </a>
           </Button>
           <Button variant="outline" asChild>
@@ -46,7 +48,7 @@ export default async function VideoPage({ params }: VideoPageProps) {
               rel="noreferrer"
             >
               <Music2 className="mr-2 h-4 w-4" />
-              <span>Download MP3</span>
+              <span>{dictionary.video_page_download_mp3}</span>
             </a>
           </Button>
         </div>
@@ -54,12 +56,12 @@ export default async function VideoPage({ params }: VideoPageProps) {
 
       <Tabs defaultValue="overview" className="space-y-4">
         <TabsList>
-          <TabsTrigger value="overview">Overview</TabsTrigger>
-          <TabsTrigger value="webhooks">Webhooks</TabsTrigger>
+          <TabsTrigger value="overview">{dictionary.video_page_overview_tab}</TabsTrigger>
+          <TabsTrigger value="webhooks">{dictionary.video_page_webhooks_tab}</TabsTrigger>
         </TabsList>
 
         <TabsContent value="overview">
-          <Overview videoId={videoId} />
+          <Overview videoId={videoId} dictionary={dictionary} />
         </TabsContent>
         <TabsContent value="webhooks">
           <Webhooks videoId={videoId} />
