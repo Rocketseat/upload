@@ -3,6 +3,7 @@
   "dashboard_page_title": "Dashboard",
   "languages_en": "English",
   "languages_pt": "Portuguese",
+  "languages_es": "Spanish",
   "language_form_heading": "Language Settings",
   "language_form_description": "This setting determines the language used throughout the app.",
   "language_form_label": "Current Setting",
