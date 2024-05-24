@@ -64,7 +64,9 @@ export function LanguageForm({
     window.location.reload()
   }
 
-  const { handleSubmit } = languageForm
+  const { handleSubmit, watch } = languageForm
+
+  const selectedOption = watch()
 
   return (
     <FormProvider {...languageForm}>
@@ -137,7 +139,12 @@ export function LanguageForm({
             </FormItem>
           )}
         />
-        <Button type="submit">{dictionary.language_form_submit}</Button>
+        <Button
+          type="submit"
+          disabled={!selectedOption?.language}
+        >
+          {dictionary.language_form_submit}
+        </Button>
       </form>
     </FormProvider>
   )
