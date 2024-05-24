@@ -1,4 +1,3 @@
-import { getDictionary } from '@nivo/i18n'
 import {
   Building,
   Code2,
@@ -9,15 +8,13 @@ import {
 import { ReactNode } from 'react'
 
 import { AsideLink } from './aside-link'
+import { getDictionaryByLocale } from '@nivo/i18n'
+import { Locale } from 'next/dist/compiled/@vercel/og/satori'
+import { setDictionary } from '@/utils/dictionary-server-side'
 
-export default async function Layout({
-  children,
-  params: { locale },
-}: {
-  children: ReactNode
-  params: { locale: string }
-}) {
-  const dictionary = await getDictionary(locale)
+export default async function Layout({ children, params: { locale } }: { children: ReactNode, params: { locale: Locale } }) {
+  const dictionary = await getDictionaryByLocale(locale)
+  setDictionary(dictionary)
 
   return (
     <>

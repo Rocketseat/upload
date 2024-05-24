@@ -1,7 +1,7 @@
 import './globals.css'
 
 import { env } from '@nivo/env'
-import { Locale } from '@nivo/i18n'
+import { Locale, getDictionaryByLocale } from '@nivo/i18n'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { ReactNode } from 'react'
@@ -9,6 +9,7 @@ import { ReactNode } from 'react'
 import { Toaster } from '@/components/ui/sonner'
 
 import { Providers } from './providers'
+import { setDictionary, setLocale } from '@/utils/dictionary-server-side'
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans' })
 
@@ -21,13 +22,17 @@ export const metadata: Metadata = {
   description: 'The all-in-one video solution for online learning.',
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
-  params: { locale },
+  params: { locale }
 }: {
   children: ReactNode
   params: { locale: Locale }
 }) {
+  setLocale(locale)
+  const dictionary = await getDictionaryByLocale(locale)
+  setDictionary(dictionary)
+
   return (
     <html lang={locale} className={inter.variable} suppressHydrationWarning>
       <body className="antialiased">

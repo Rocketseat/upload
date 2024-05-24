@@ -1,16 +1,16 @@
-import { getDictionary, Locale } from '@nivo/i18n'
 import { Metadata } from 'next'
 
 import { BatchUploadList } from './batch-upload-list'
+import { getDictionary } from '@/utils/dictionary-server-side'
 
 interface BatchPageProps {
-  params: { id: string; locale: Locale }
+  params: { id: string }
 }
 
 export async function generateMetadata({
   params,
 }: BatchPageProps): Promise<Metadata> {
-  const dictionary = await getDictionary(params.locale)
+  const dictionary = getDictionary()
   const id = params.id
 
   return {
@@ -19,7 +19,7 @@ export async function generateMetadata({
 }
 
 export default async function BatchPage({ params }: BatchPageProps) {
-  const dictionary = await getDictionary(params.locale)
+  const dictionary = getDictionary()
 
   return (
     <>

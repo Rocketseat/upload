@@ -1,16 +1,13 @@
-import { getDictionary, Locale } from '@nivo/i18n'
 import { ReactNode, Suspense } from 'react'
 
 import { UploadsFilters } from './uploads-filters'
+import { Locale, getDictionaryByLocale } from '@nivo/i18n'
 
-export default async function Layout({
-  children,
-  params: { locale },
-}: {
-  children: ReactNode
+export default async function Layout({ children, params: { locale } }: {
+  children: ReactNode,
   params: { locale: Locale }
 }) {
-  const dictionary = await getDictionary(locale)
+  const dictionary = await getDictionaryByLocale(locale)
 
   return (
     <>

@@ -11,7 +11,7 @@ export type Dictionary = Awaited<ReturnType<typeof dictionaries.en>> & {
   [key: `languages_${Locale}`]: string
 }
 
-export const getDictionary = async (locale: Locale): Promise<Dictionary> => {
+export const getDictionaryByLocale = async (locale: Locale): Promise<Dictionary> => {
   const dictionary = await dictionaries[locale as keyof typeof dictionaries]()
   return new Proxy(dictionary, {
     get(target, property) {

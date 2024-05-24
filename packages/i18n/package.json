@@ -9,7 +9,8 @@
   },
   "dependencies": {
     "next": "14.1.0",
-    "next-i18n-router": "^5.4.2"
+    "next-i18n-router": "^5.4.2",
+    "server-only-context": "^0.1.0"
   },
   "devDependencies": {
     "@nivo/eslint-config": "workspace:*",

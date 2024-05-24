@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { useDictionary } from '@/state/dictionary'
+import { getDictionary } from '@/utils/dictionary-server-side'
 
 export const apiKeySchema = (dictionary: Dictionary) =>
   z.object({
@@ -41,7 +42,7 @@ export function BunnyApiKeyForm({ onKeySubmit }: BunnyApiKeyFormProps) {
             {errors.apiKey.message}
           </p>
         )}
-        <BunnyApiKeyFormDescription dictionary={dictionary} />
+        <BunnyApiKeyFormDescription />
       </div>
 
       <div className="flex items-center justify-end gap-2">
@@ -62,11 +63,8 @@ export function BunnyApiKeyForm({ onKeySubmit }: BunnyApiKeyFormProps) {
   )
 }
 
-const BunnyApiKeyFormDescription = ({
-  dictionary,
-}: {
-  dictionary: Dictionary
-}) => {
+const BunnyApiKeyFormDescription = () => {
+  const dictionary = getDictionary()
   const accountPageUrl = 'https://dash.bunny.net/account/settings'
   const accountPageText = dictionary.bunny_api_key_form_account_page
   const onceText = dictionary.bunny_api_key_form_description_once

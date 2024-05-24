@@ -6,12 +6,15 @@ import Link from 'next/link'
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { serverClient } from '@/lib/trpc/server'
+import { getDictionary } from '@/utils/dictionary-server-side'
 
 const ViewsCountChart = dynamic(() => import('./views-count-chart'), {
   ssr: false,
 })
 
-export async function ViewsCount({ dictionary }: { dictionary: Dictionary }) {
+export async function ViewsCount() {
+  const dictionary = getDictionary()
+
   try {
     const { views } = await serverClient.viewsSummary()
 

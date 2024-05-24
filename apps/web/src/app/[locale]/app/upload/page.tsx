@@ -1,4 +1,3 @@
-import { getDictionary, Locale } from '@nivo/i18n'
 import { AlertCircle } from 'lucide-react'
 import Head from 'next/head'
 import Link from 'next/link'
@@ -6,13 +5,17 @@ import Link from 'next/link'
 import { serverClient } from '@/lib/trpc/server'
 
 import { UploadList } from './upload-list'
+import { getDictionary, setDictionary } from '@/utils/dictionary-server-side'
+import { Locale, getDictionaryByLocale } from '@nivo/i18n'
 
 export default async function Upload({
-  params: { locale },
+  params: { locale }
 }: {
   params: { locale: Locale }
 }) {
-  const dictionary = await getDictionary(locale)
+  const dictionaryByLocale = await getDictionaryByLocale(locale)
+  setDictionary(dictionaryByLocale)
+  const dictionary = getDictionary()
 
   const { company } = await serverClient.getCurrentUserCompany()
 

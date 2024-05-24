@@ -1,4 +1,3 @@
-import { Dictionary } from '@nivo/i18n'
 import { PlusCircle } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -11,8 +10,11 @@ import { MenuLink } from './menu-link'
 import { Search } from './search'
 import { ThemeSwitcher } from './theme-switcher'
 import { UserProfileButton } from './user-profile-button'
+import { getDictionary } from '@/utils/dictionary-server-side'
 
-export async function Header({ dictionary }: { dictionary: Dictionary }) {
+export async function Header() {
+  const dictionary = getDictionary()
+
   return (
     <div className="border-b">
       <div className="flex items-center justify-between px-8">
@@ -50,7 +52,7 @@ export async function Header({ dictionary }: { dictionary: Dictionary }) {
           <Separator orientation="vertical" className="h-6" />
 
           <ThemeSwitcher />
-          <UserProfileButton dictionary={dictionary} />
+          <UserProfileButton />
         </div>
       </div>
     </div>

@@ -1,4 +1,3 @@
-import { getDictionary, Locale } from '@nivo/i18n'
 import Head from 'next/head'
 import { Suspense } from 'react'
 
@@ -7,15 +6,19 @@ import { Storage } from '@/components/summary/storage'
 import { TotalCount } from '@/components/summary/total-count'
 
 import { ViewsCount } from './cards/views-count'
+import { getDictionary, setDictionary } from '@/utils/dictionary-server-side'
+import { Locale, getDictionaryByLocale } from '@nivo/i18n'
 
 export const revalidate = 900
 
 export default async function DashboardPage({
-  params: { locale },
+  params: { locale }
 }: {
   params: { locale: Locale }
 }) {
-  const dictionary = await getDictionary(locale)
+  const dictionaryByLocale = await getDictionaryByLocale(locale)
+  setDictionary(dictionaryByLocale)
+  const dictionary = getDictionary()
 
   return (
     <>
@@ -28,17 +31,17 @@ export default async function DashboardPage({
       <div className="grid grid-cols-6 gap-4">
         <div className="col-span-2">
           <Suspense fallback={<Loading />}>
-            <TotalCount dictionary={dictionary} />
+            <TotalCount />
           </Suspense>
         </div>
         <div className="col-span-2">
           <Suspense fallback={<Loading />}>
-            <Storage dictionary={dictionary} />
+            <Storage />
           </Suspense>
         </div>
         <div className="col-span-2">
           <Suspense fallback={<Loading />}>
-            <ViewsCount dictionary={dictionary} />
+            <ViewsCount />
           </Suspense>
         </div>
       </div>

@@ -1,5 +1,5 @@
 import { dayjs } from '@nivo/dayjs'
-import { getDictionary, Locale } from '@nivo/i18n'
+import { setDictionary } from '@/utils/dictionary-server-side'
 import { Cable, CopyIcon } from 'lucide-react'
 import { Metadata } from 'next'
 import { unstable_noStore } from 'next/cache'
@@ -28,6 +28,7 @@ import { formatBytes } from '@/utils/format-bytes'
 import { formatSecondsToMinutes } from '@/utils/format-seconds-to-minutes'
 
 import { UploadsPagination } from './uploads-pagination'
+import { Locale, getDictionaryByLocale } from '@nivo/i18n'
 
 export const metadata: Metadata = {
   title: 'Uploads',
@@ -47,12 +48,13 @@ type UploadsPageSearchParams = z.infer<typeof uploadsPageSearchParams>
 
 export default async function UploadsPage({
   searchParams,
-  params: { locale },
+  params: { locale }
 }: {
   searchParams: UploadsPageSearchParams
   params: { locale: Locale }
 }) {
-  const dictionary = await getDictionary(locale)
+  const dictionary = await getDictionaryByLocale(locale)
+  setDictionary(dictionary)
 
   unstable_noStore()
 

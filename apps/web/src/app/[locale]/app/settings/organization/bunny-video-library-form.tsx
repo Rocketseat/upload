@@ -15,6 +15,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
+import { getDictionary } from '@/utils/dictionary-server-side'
 
 export const videoLibrarySchema = (dictionary: Dictionary) =>
   z.object({
@@ -30,14 +31,14 @@ export type VideoLibrarySchema = z.infer<ReturnType<typeof videoLibrarySchema>>
 interface BunnyVideoLibraryFormProps {
   videoLibraries: VideoLibraries
   onVideoLibraryChosen: (data: VideoLibrarySchema) => Promise<void> | void
-  dictionary: Dictionary
 }
 
 export function BunnyVideoLibraryForm({
   onVideoLibraryChosen,
   videoLibraries,
-  dictionary,
 }: BunnyVideoLibraryFormProps) {
+  const dictionary = getDictionary()
+
   const {
     handleSubmit,
     formState: { errors, isSubmitting },

@@ -3,8 +3,10 @@ import { unstable_noStore } from 'next/cache'
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { serverClient } from '@/lib/trpc/server'
+import { getDictionary } from '@/utils/dictionary-server-side'
 
-export async function TotalCount({ dictionary }: { dictionary: Dictionary }) {
+export async function TotalCount() {
+  const dictionary = getDictionary()
   unstable_noStore()
 
   const { amountOverall, amountLastMonth } =

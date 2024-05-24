@@ -1,6 +1,4 @@
 import { dayjs } from '@nivo/dayjs'
-import { getDictionary } from '@nivo/i18n'
-import { Locale } from 'next/dist/compiled/@vercel/og/satori'
 import { getHighlighter } from 'shiki'
 
 import { InterceptedSheetContent } from '@/components/intercepted-sheet-content'
@@ -9,11 +7,11 @@ import { Separator } from '@/components/ui/separator'
 import { Sheet, SheetHeader, SheetTitle } from '@/components/ui/sheet'
 import { Table, TableBody, TableCell, TableRow } from '@/components/ui/table'
 import { serverClient } from '@/lib/trpc/server'
+import { getDictionary } from '@/utils/dictionary-server-side'
 
 interface WebhookLogsDetails {
   params: {
     logId: string
-    locale: Locale
   }
 }
 
@@ -28,9 +26,9 @@ function getParsedText(text: string) {
 }
 
 export default async function WebhookLogsDetails({
-  params: { logId, locale },
+  params: { logId },
 }: WebhookLogsDetails) {
-  const dictionary = await getDictionary(locale)
+  const dictionary = getDictionary()
   const { webhookLog } = await serverClient.getCompanyWebhookLog({
     companyWebhookLogId: logId,
   })
@@ -54,23 +52,23 @@ export default async function WebhookLogsDetails({
 
   const highlightedRequestBody = parsedRequestBody
     ? highlighter.codeToHtml(parsedRequestBody.code, {
-        lang: parsedRequestBody.lang,
-        themes: { light: 'rose-pine-dawn', dark: 'vesper' },
-      })
+      lang: parsedRequestBody.lang,
+      themes: { light: 'rose-pine-dawn', dark: 'vesper' },
+    })
     : null
 
   const highlightedRequestHeaders = parsedRequestHeaders
     ? highlighter.codeToHtml(parsedRequestHeaders.code, {
-        lang: parsedRequestHeaders.lang,
-        themes: { light: 'rose-pine-dawn', dark: 'vesper' },
-      })
+      lang: parsedRequestHeaders.lang,
+      themes: { light: 'rose-pine-dawn', dark: 'vesper' },
+    })
     : null
 
   const highlightedResponseBody = parsedResponseBody
     ? highlighter.codeToHtml(parsedResponseBody.code, {
-        lang: parsedResponseBody.lang,
-        themes: { light: 'rose-pine-dawn', dark: 'vesper' },
-      })
+      lang: parsedResponseBody.lang,
+      themes: { light: 'rose-pine-dawn', dark: 'vesper' },
+    })
     : null
 
   const nextRetryDelay = Math.round(
@@ -153,9 +151,8 @@ export default async function WebhookLogsDetails({
                 </TableCell>
                 <TableCell>
                   {webhookLog.status === 'ERROR'
-                    ? `${webhookLog.numberOfRetries} ${
-                        isNextRetryDateInFuture ? nextRetryDateFormatted : ''
-                      }`
+                    ? `${webhookLog.numberOfRetries} ${isNextRetryDateInFuture ? nextRetryDateFormatted : ''
+                    }`
                     : '-'}
                 </TableCell>
               </TableRow>

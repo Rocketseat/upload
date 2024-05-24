@@ -4,8 +4,10 @@ import { unstable_noStore } from 'next/cache'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { serverClient } from '@/lib/trpc/server'
 import { formatBytes } from '@/utils/format-bytes'
+import { getDictionary } from '@/utils/dictionary-server-side'
 
-export async function Storage({ dictionary }: { dictionary: Dictionary }) {
+export async function Storage() {
+  const dictionary = getDictionary()
   unstable_noStore()
 
   const { storageOverall, storageLastMonth } =

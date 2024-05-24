@@ -1,18 +1,18 @@
-import { getDictionary, Locale } from '@nivo/i18n'
 import Head from 'next/head'
 import { ReactNode, Suspense } from 'react'
 
 import { WebhookLogsFilters } from './webhook-logs-filters'
 import { WebhookLogsList } from './webhook-logs-list'
+import { setDictionary } from '@/utils/dictionary-server-side'
+import { getDictionaryByLocale } from '@nivo/i18n'
+import { Locale } from 'next/dist/compiled/@vercel/og/satori'
 
-export default async function WebhookLogsLayout({
-  children,
-  params: { locale },
-}: {
-  children: ReactNode
+export default async function WebhookLogsLayout({ children, params: { locale } }: {
+  children: ReactNode,
   params: { locale: Locale }
 }) {
-  const dictionary = await getDictionary(locale)
+  const dictionary = await getDictionaryByLocale(locale)
+  setDictionary(dictionary)
 
   return (
     <>

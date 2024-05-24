@@ -1,5 +1,4 @@
 import { auth, signOut } from '@nivo/auth'
-import { Dictionary } from '@nivo/i18n'
 import { Code, Cog, LogOut } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -13,12 +12,10 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '../ui/dropdown-menu'
+import { getDictionary } from '@/utils/dictionary-server-side'
 
-export async function UserProfileButton({
-  dictionary,
-}: {
-  dictionary: Dictionary
-}) {
+export async function UserProfileButton() {
+  const dictionary = getDictionary()
   const session = await auth()
 
   async function handleSignOut() {

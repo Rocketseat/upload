@@ -1,4 +1,3 @@
-import { Dictionary } from '@nivo/i18n'
 import { unstable_noStore } from 'next/cache'
 
 import {
@@ -12,13 +11,15 @@ import { serverClient } from '@/lib/trpc/server'
 
 import { TranscriptionCard } from '../../transcription-card'
 import { VideoForm } from './video-form'
+import { getDictionary } from '@/utils/dictionary-server-side'
 
 export interface OverviewProps {
   videoId: string
-  dictionary: Dictionary
 }
 
-export async function Overview({ videoId, dictionary }: OverviewProps) {
+export async function Overview({ videoId }: OverviewProps) {
+  const dictionary = getDictionary()
+
   unstable_noStore()
 
   const { video } = await serverClient.getUpload({

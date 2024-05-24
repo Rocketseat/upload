@@ -1,4 +1,3 @@
-import { getDictionary, Locale } from '@nivo/i18n'
 import { unstable_noStore } from 'next/cache'
 import Head from 'next/head'
 import Image from 'next/image'
@@ -19,13 +18,16 @@ import { Table, TableBody, TableCell, TableRow } from '@/components/ui/table'
 import { serverClient } from '@/lib/trpc/server'
 
 import { ConnectBunnyAccount } from './connect-bunny-account'
+import { setDictionary } from '@/utils/dictionary-server-side'
+import { Locale, getDictionaryByLocale } from '@nivo/i18n'
 
 export default async function OrganizationPage({
-  params: { locale },
+  params: { locale }
 }: {
   params: { locale: Locale }
 }) {
-  const dictionary = await getDictionary(locale)
+  const dictionary = await getDictionaryByLocale(locale)
+  setDictionary(dictionary)
   unstable_noStore()
 
   const { company } = await serverClient.getCurrentUserCompany()

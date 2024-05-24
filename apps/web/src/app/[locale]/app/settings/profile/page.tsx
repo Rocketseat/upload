@@ -1,5 +1,4 @@
 import { auth } from '@nivo/auth'
-import { getDictionary, Locale } from '@nivo/i18n'
 import Head from 'next/head'
 import Image from 'next/image'
 
@@ -14,13 +13,16 @@ import {
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Separator } from '@/components/ui/separator'
+import { Locale, getDictionaryByLocale } from '@nivo/i18n'
+import { setDictionary } from '@/utils/dictionary-server-side'
 
 export default async function ProfilePage({
-  params: { locale },
+  params: { locale }
 }: {
   params: { locale: Locale }
 }) {
-  const dictionary = await getDictionary(locale)
+  const dictionary = await getDictionaryByLocale(locale)
+  setDictionary(dictionary)
   const session = await auth()
 
   if (!session || !session.user) {

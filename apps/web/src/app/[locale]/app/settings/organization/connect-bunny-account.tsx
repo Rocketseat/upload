@@ -117,7 +117,6 @@ export function ConnectBunnyAccount({ externalId }: ConnectBunnyAccountProps) {
             <BunnyVideoLibraryForm
               videoLibraries={bunnyVideoLibraries}
               onVideoLibraryChosen={handleVideoLibraryChosen}
-              dictionary={dictionary}
             />
           )}
         </DialogContent>

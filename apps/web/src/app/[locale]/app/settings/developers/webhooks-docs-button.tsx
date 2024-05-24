@@ -17,12 +17,10 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog'
 import { serverClient } from '@/lib/trpc/server'
+import { getDictionary } from '@/utils/dictionary-server-side'
 
-export async function WebhookDocsButton({
-  dictionary,
-}: {
-  dictionary: Dictionary
-}) {
+export async function WebhookDocsButton() {
+  const dictionary = getDictionary()
   const { triggers } = await serverClient.getAvailableTriggers()
 
   return (

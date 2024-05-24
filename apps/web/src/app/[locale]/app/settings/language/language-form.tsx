@@ -29,7 +29,8 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover'
-import { useDictionary } from '@/state/dictionary'
+import { localeAtom, useDictionary } from '@/state/dictionary'
+import { useAtomValue } from 'jotai'
 
 export const createLanguageSchema = z.object({
   language: z.object({
@@ -42,15 +43,14 @@ export type UpdateLanguageSchema = z.infer<typeof createLanguageSchema>
 
 interface LanguageFormProps {
   languages: { code: Locale; label: string }[]
-  currentLocale: string
   updateLanguage(locale: Locale): Promise<void>
 }
 
 export function LanguageForm({
   languages,
-  currentLocale,
   updateLanguage,
 }: LanguageFormProps) {
+  const currentLocale = useAtomValue(localeAtom)
   const [open, setOpen] = useState(false)
 
   const dictionary = useDictionary()
@@ -89,8 +89,8 @@ export function LanguageForm({
                     >
                       {field.value
                         ? languages.find(
-                            (language) => language.code === field.value.code,
-                          )?.label
+                          (language) => language.code === field.value.code,
+                        )?.label
                         : dictionary.language_form_search_placeholder}
                       <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                     </Button>

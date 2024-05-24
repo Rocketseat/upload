@@ -1,4 +1,3 @@
-import { getDictionary, Locale } from '@nivo/i18n'
 import { ClipboardCopy, Code2 } from 'lucide-react'
 import Head from 'next/head'
 import Link from 'next/link'
@@ -19,13 +18,17 @@ import { Separator } from '@/components/ui/separator'
 import { WebhookDocsButton } from './webhooks-docs-button'
 import { WebhooksList } from './webhooks-list'
 import { WebhooksListLoading } from './webhooks-list-loading'
+import { getDictionary, setDictionary } from '@/utils/dictionary-server-side'
+import { Locale, getDictionaryByLocale } from '@nivo/i18n'
 
 export default async function SettingsPage({
-  params: { locale },
+  params: { locale }
 }: {
   params: { locale: Locale }
 }) {
-  const dictionary = await getDictionary(locale)
+  const dictionaryByLocale = await getDictionaryByLocale(locale)
+  setDictionary(dictionaryByLocale)
+  const dictionary = getDictionary()
 
   return (
     <>
@@ -83,7 +86,7 @@ export default async function SettingsPage({
                 </Link>
               </Button>
 
-              <WebhookDocsButton dictionary={dictionary} />
+              <WebhookDocsButton />
             </div>
           </div>
         </CardContent>
