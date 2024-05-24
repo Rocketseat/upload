@@ -1,0 +1,14 @@
+{
+  "extends": "@nivo/tsconfig/lib.json",
+  "include": [
+    "."
+  ],
+  "exclude": [
+    "dist",
+    "build",
+    "node_modules"
+  ],
+  "compilerOptions": {
+    "resolveJsonModule": true,
+  }
+}

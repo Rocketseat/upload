@@ -10,15 +10,18 @@ import { MenuLink } from './menu-link'
 import { Search } from './search'
 import { ThemeSwitcher } from './theme-switcher'
 import { UserProfileButton } from './user-profile-button'
+import { getDictionary } from '@/utils/dictionary-server-side'
 
-export function Header() {
+export async function Header() {
+  const dictionary = getDictionary()
+
   return (
     <div className="border-b">
       <div className="flex items-center justify-between px-8">
         <div className="flex items-center space-x-4">
           <Image
             src={nivoIcon}
-            alt="Nivo"
+            alt={dictionary.header_nivo_alt}
             className="size-6"
             width={24}
             height={24}
@@ -27,8 +30,10 @@ export function Header() {
           <Separator orientation="vertical" className="h-6" />
 
           <nav className="flex items-center space-x-2 lg:space-x-3">
-            <MenuLink href="/app">Dashboard</MenuLink>
-            <MenuLink href="/app/uploads">Uploads</MenuLink>
+            <MenuLink href="/app">{dictionary.header_nav_dashboard}</MenuLink>
+            <MenuLink href="/app/uploads">
+              {dictionary.header_nav_uploads}
+            </MenuLink>
           </nav>
         </div>
 
@@ -40,7 +45,7 @@ export function Header() {
           <Button size="sm" asChild>
             <Link href="/app/upload">
               <PlusCircle className="mr-2 size-4" />
-              Upload video
+              {dictionary.header_button_upload_video}
             </Link>
           </Button>
 

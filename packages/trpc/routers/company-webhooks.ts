@@ -16,31 +16,31 @@ export const companyWebhooksRouter = createTRPCRouter({
     const triggers = [
       {
         trigger: 'upload.created',
-        description: 'Occurs whenever a video is uploaded.',
+        description: 'trigger_upload_created_desc',
       },
       {
         trigger: 'upload.transcription.created',
-        description: 'Occurs whenever a transcription is generated.',
+        description: 'trigger_upload_transcription_created_desc',
       },
       {
         trigger: 'upload.updated',
-        description: 'Occurs whenever a video is updated.',
+        description: 'trigger_upload_updated_desc',
       },
       {
         trigger: 'upload.deleted',
-        description: 'Occurs whenever a video is deleted.',
+        description: 'trigger_upload_deleted_desc',
       },
       {
         trigger: 'tag.created',
-        description: 'Occurs whenever a tag is created.',
+        description: 'trigger_tag_created_desc',
       },
       {
         trigger: 'tag.deleted',
-        description: 'Occurs whenever a tag is deleted.',
+        description: 'trigger_tag_deleted_desc',
       },
-    ] as const
+    ] as const;
 
-    return { triggers }
+    return { triggers };
   }),
 
   getCompanyWebhooks: protectedProcedure

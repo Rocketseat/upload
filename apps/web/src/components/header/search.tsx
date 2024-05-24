@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react'
 
 import useDebounceValue from '@/hooks/useDebounceValue'
 import { trpc } from '@/lib/trpc/react'
+import { useDictionary } from '@/state/dictionary'
 
 import { Button } from '../ui/button'
 import {
@@ -16,6 +17,7 @@ import {
 import { SearchItem } from './search-item'
 
 export function Search() {
+  const dictionary = useDictionary()
   const [open, setOpen] = useState(false)
   const [search, setSearch] = useState('')
 
@@ -55,7 +57,7 @@ export function Search() {
         className="flex w-[240px] items-center justify-between text-muted-foreground"
         onClick={() => setOpen(true)}
       >
-        Search videos...
+        {dictionary.search_button_text}
         <kbd className="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-semibold text-muted-foreground opacity-100">
           <span className="text-sm">⌘</span>K
         </kbd>
@@ -65,18 +67,18 @@ export function Search() {
         <CommandInput
           value={search}
           onValueChange={setSearch}
-          placeholder="Search videos..."
+          placeholder={dictionary.search_input_placeholder}
         />
         <CommandList className="h-auto">
-          <CommandGroup heading="Recent uploads">
+          <CommandGroup heading={dictionary.search_recent_uploads}>
             {isPendingVideos || isLoadingVideos ? (
               <div className="flex cursor-default select-none items-center justify-center gap-2 rounded-sm px-2 py-1.5 text-sm text-muted-foreground">
                 <Loader2 className="h-3 w-3 animate-spin" />
-                <span>Loading videos...</span>
+                {dictionary.search_loading_videos}
               </div>
             ) : data?.videos && data.videos.length === 0 ? (
               <div className="flex h-full cursor-default select-none items-center justify-center gap-2 rounded-sm px-2 py-1.5 text-sm text-muted-foreground">
-                No results found.
+                {dictionary.search_no_results_found}
               </div>
             ) : (
               data?.videos &&

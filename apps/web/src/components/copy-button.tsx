@@ -3,6 +3,8 @@
 import { ComponentProps, useRef, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
 
+import { useDictionary } from '@/state/dictionary'
+
 import { Button } from './ui/button'
 
 export interface CopyButtonProps extends ComponentProps<typeof Button> {
@@ -10,6 +12,7 @@ export interface CopyButtonProps extends ComponentProps<typeof Button> {
 }
 
 export function CopyButton({ textToCopy, ...props }: CopyButtonProps) {
+  const dictionary = useDictionary()
   const [wasCopiedRecently, setWasCopiedRecently] = useState(false)
   const copyTimeoutRef = useRef<NodeJS.Timeout>()
 
@@ -35,7 +38,7 @@ export function CopyButton({ textToCopy, ...props }: CopyButtonProps) {
         props.className,
       )}
     >
-      {wasCopiedRecently ? 'Copied!' : props.children}
+      {wasCopiedRecently ? dictionary.copy_button_copied : props.children}
     </Button>
   )
 }

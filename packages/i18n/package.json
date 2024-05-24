@@ -1,0 +1,27 @@
+{
+  "name": "@nivo/i18n",
+  "main": "./index.ts",
+  "types": "./index.ts",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "next": "14.1.0",
+    "next-i18n-router": "^5.4.2",
+    "server-only-context": "^0.1.0"
+  },
+  "devDependencies": {
+    "@nivo/eslint-config": "workspace:*",
+    "@nivo/prettier": "workspace:*",
+    "@nivo/tsconfig": "workspace:*"
+  },
+  "eslintConfig": {
+    "root": true,
+    "extends": [
+      "@nivo/eslint-config/lib"
+    ]
+  },
+  "prettier": "@nivo/prettier"
+}

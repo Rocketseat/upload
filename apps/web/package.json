@@ -20,6 +20,7 @@
     "@nivo/drizzle": "workspace:*",
     "@nivo/env": "workspace:*",
     "@nivo/ffmpeg": "workspace:*",
+    "@nivo/i18n": "workspace:*",
     "@nivo/openai": "workspace:*",
     "@nivo/qstash": "workspace:*",
     "@nivo/trpc": "workspace:*",
