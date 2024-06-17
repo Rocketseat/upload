@@ -180,7 +180,10 @@ export function BatchUploadList({ batchId }: BatchUploadListProps) {
                       </div>
                     </TableCell>
                     <TableCell>
-                      <UploadItemActions videoId={video.id} />
+                      <UploadItemActions
+                        uploadBatchId={video.uploadBatchId}
+                        videoId={video.id}
+                      />
                     </TableCell>
                   </TableRow>
                 ))
