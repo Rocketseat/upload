@@ -84,7 +84,11 @@ export function ConnectBunnyAccount({ externalId }: ConnectBunnyAccountProps) {
     <div className="flex items-center gap-2">
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <DialogTrigger asChild>
-          <Button disabled={!!externalId} variant="secondary" className="w-56 shrink-0">
+          <Button
+            disabled={!!externalId}
+            variant="secondary"
+            className="w-56 shrink-0"
+          >
             {externalId ? (
               <>
                 <Check className="mr-2 size-4" />
@@ -103,7 +107,7 @@ export function ConnectBunnyAccount({ externalId }: ConnectBunnyAccountProps) {
           <DialogHeader>
             <DialogTitle>Connect Bunny account</DialogTitle>
             <DialogDescription>
-              This will allow you to upload new videos on Nivo.
+              This will allow you to upload new videos.
             </DialogDescription>
           </DialogHeader>
 
@@ -123,7 +127,7 @@ export function ConnectBunnyAccount({ externalId }: ConnectBunnyAccountProps) {
         id="bunnyLibraryId"
         disabled
         readOnly
-        placeholder="Connect your Bunny account to upload on Nivo"
+        placeholder="Connect your Bunny account to upload"
         value={externalId ?? ''}
       />
     </div>

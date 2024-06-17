@@ -109,7 +109,7 @@ export default async function WebhookLogsDetails({
                 <TableCell>
                   {webhookLog.status === 'SUCCESS' && (
                     <div className="flex items-center gap-2">
-                      <span className="size-2 shrink-0 rounded-full bg-teal-400" />
+                      <span className="size-2 shrink-0 rounded-full bg-violet-400" />
                       <span className="font-semibold">Success</span>
                     </div>
                   )}

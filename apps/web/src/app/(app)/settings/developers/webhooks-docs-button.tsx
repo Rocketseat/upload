@@ -33,7 +33,7 @@ export async function WebhookDocsButton() {
         <DialogHeader>
           <DialogTitle>Webhook events</DialogTitle>
           <DialogDescription>
-            Listen to events that happen inside Nivo in your application.
+            Listen to events in your application.
           </DialogDescription>
         </DialogHeader>
 

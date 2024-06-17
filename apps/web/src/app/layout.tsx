@@ -14,10 +14,9 @@ const inter = Inter({ subsets: ['latin'], variable: '--font-sans' })
 export const metadata: Metadata = {
   metadataBase: new URL(env.NEXT_PUBLIC_VERCEL_URL),
   title: {
-    template: '%s | Nivo',
-    absolute: 'Nivo',
+    template: '%s | Rocketseat',
+    absolute: 'Rocketseat',
   },
-  description: 'The all-in-one video solution for online learning.',
 }
 
 export default function RootLayout({ children }: { children: ReactNode }) {

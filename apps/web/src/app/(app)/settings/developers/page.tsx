@@ -29,7 +29,7 @@ export default async function SettingsPage() {
       <CardHeader>
         <CardTitle>Developers</CardTitle>
         <CardDescription>
-          Integrate with Nivo using Webhooks or our API.
+          Connect your application through our webhooks.
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -39,7 +39,7 @@ export default async function SettingsPage() {
             <Input
               name="apiUrl"
               id="apiUrl"
-              defaultValue="https://nivo.video/api/v1"
+              defaultValue="https://upload.rocketseat.com.br/api/v1"
               disabled
             />
             <p className="text-[0.8rem] text-muted-foreground">

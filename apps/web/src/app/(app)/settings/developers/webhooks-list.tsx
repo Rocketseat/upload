@@ -82,7 +82,7 @@ export function WebhooksList() {
             <span>Webhooks</span>
           </Label>
           <p className="text-[0.8rem] text-muted-foreground">
-            Listen to Nivo events in your application.
+            Listen to events in your application.
           </p>
         </div>
         <div className="flex items-center space-x-2">
@@ -186,7 +186,7 @@ export function WebhooksList() {
                     </TableCell>
                     <TableCell className="py-1.5">
                       <div className="flex items-center gap-2">
-                        <span className="size-2 shrink-0 rounded-full bg-teal-400" />
+                        <span className="size-2 shrink-0 rounded-full bg-violet-400" />
                         <span className="text-xs font-semibold">ACTIVE</span>
                       </div>
                     </TableCell>

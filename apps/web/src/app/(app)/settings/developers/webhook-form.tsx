@@ -70,7 +70,7 @@ export function WebhookForm({ webhookToEdit }: WebhookFormProps) {
       utils.getCompanyWebhooks.invalidate()
 
       toast.success('Webhook successfully saved!', {
-        description: 'Now your endpoint is listening to Nivo events!',
+        description: 'Now your endpoint is listening to the webhook events!',
       })
     } catch {
       toast.error('Uh oh! Something went wrong.', {

@@ -86,9 +86,9 @@ export function WebhookListItemActions({
 
           <DialogContent>
             <DialogHeader>
-              <DialogTitle>Listen to Nivo events</DialogTitle>
+              <DialogTitle>Listen to events</DialogTitle>
               <DialogDescription>
-                Set up your webhook endpoint to receive live events from Nivo.
+                Set up your webhook endpoint to receive live events.
               </DialogDescription>
             </DialogHeader>
 
