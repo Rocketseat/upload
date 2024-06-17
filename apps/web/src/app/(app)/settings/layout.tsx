@@ -15,11 +15,11 @@ export default async function Layout({ children }: { children: ReactNode }) {
               <span className="mb-2 px-4 text-xxs font-semibold uppercase text-muted-foreground">
                 General
               </span>
-              <AsideLink href="/app/settings/profile">
+              <AsideLink href="/settings/profile">
                 <User2 className="mr-2 size-4" />
                 Profile
               </AsideLink>
-              <AsideLink href="/app/settings/organization">
+              <AsideLink href="/settings/organization">
                 <Building className="mr-2 size-4" />
                 Organization
               </AsideLink>
@@ -28,11 +28,11 @@ export default async function Layout({ children }: { children: ReactNode }) {
               <span className="mb-2 px-4 text-xxs font-semibold uppercase text-muted-foreground">
                 Developers
               </span>
-              <AsideLink href="/app/settings/developers">
+              <AsideLink href="/settings/developers">
                 <Code2 className="mr-2 size-4" />
                 API & Webhooks
               </AsideLink>
-              <AsideLink href="/app/settings/developers/logs">
+              <AsideLink href="/settings/developers/logs">
                 <SquareDashedBottomCode className="mr-2 size-4" />
                 Webhook Logs
               </AsideLink>

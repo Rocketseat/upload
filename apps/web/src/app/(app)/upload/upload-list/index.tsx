@@ -45,7 +45,7 @@ export function UploadList() {
     try {
       const { batchId } = await createUploadBatch({ files })
 
-      router.push(`/app/batches/${batchId}`)
+      router.push(`/batches/${batchId}`)
     } catch {
       toast.error('Uh oh! Something went wrong.', {
         description:

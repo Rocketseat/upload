@@ -45,7 +45,7 @@ export function WebhookLogsFilters() {
     }
 
     startTransition(() => {
-      router.push(`/app/settings/developers/logs?${params.toString()}`)
+      router.push(`/settings/developers/logs?${params.toString()}`)
     })
   }
 
@@ -58,7 +58,7 @@ export function WebhookLogsFilters() {
     params.delete('query')
     params.delete('trigger')
 
-    router.push(`/app/settings/developers/logs?${params.toString()}`)
+    router.push(`/settings/developers/logs?${params.toString()}`)
   }
 
   const hasFilters = trigger !== undefined || query !== ''

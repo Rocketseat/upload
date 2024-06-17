@@ -21,7 +21,7 @@ export default async function Upload() {
           <AlertCircle className="mt-1.5 size-6 shrink-0 text-amber-400" />
           <p className="leading-relaxed text-muted-foreground">
             Setup your{' '}
-            <Link href="/app/settings/organization" className="underline">
+            <Link href="/settings/organization" className="underline">
               Bunny account integration
             </Link>{' '}
             before uploading videos on Nivo.

@@ -42,13 +42,13 @@ export async function UserProfileButton() {
       <DropdownMenuContent align="end" className="w-48">
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
         <DropdownMenuItem className="flex items-center gap-2" asChild>
-          <Link href="/app/settings/profile" className="w-full">
+          <Link href="/settings/profile" className="w-full">
             <Cog className="size-4" />
             Settings
           </Link>
         </DropdownMenuItem>
         <DropdownMenuItem className="flex items-center gap-2" asChild>
-          <Link href="/app/settings/developers" className="w-full">
+          <Link href="/settings/developers" className="w-full">
             <Code className="size-4" />
             Developers
           </Link>

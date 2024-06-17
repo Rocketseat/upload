@@ -20,7 +20,7 @@ export function SearchItem({ video, onRequestClose }: SearchItemProps) {
 
   function handleNavigate() {
     startTransition(() => {
-      router.push(`/app/videos/${video.id}`)
+      router.push(`/videos/${video.id}`)
     })
   }
 

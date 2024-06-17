@@ -98,7 +98,7 @@ export function BatchUploadList({ batchId }: BatchUploadListProps) {
                     <TableCell>
                       <div className="flex flex-col">
                         <Link
-                          href={`/app/videos/${video.id}`}
+                          href={`/videos/${video.id}`}
                           prefetch={false}
                           className="font-medium text-primary outline-none hover:underline"
                         >
