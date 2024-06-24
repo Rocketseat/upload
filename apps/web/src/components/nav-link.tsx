@@ -4,13 +4,15 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { ComponentProps } from 'react'
 
-export type NavLinkProps = ComponentProps<typeof Link>
+export type NavLinkProps = ComponentProps<typeof Link> & {
+  shouldMatchExact?: boolean
+}
 
-export function NavLink(props: NavLinkProps) {
+export function NavLink({ shouldMatchExact = false, ...props }: NavLinkProps) {
   const pathName = usePathname()
 
   const isCurrent =
-    props.href === '/'
+    props.href === '/' || shouldMatchExact
       ? pathName === props.href
       : pathName.startsWith(props.href.toString())
 

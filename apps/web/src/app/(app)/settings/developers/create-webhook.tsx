@@ -26,9 +26,9 @@ export function CreateWebhook() {
 
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Listen to Nivo events</DialogTitle>
+          <DialogTitle>Listen to upload events</DialogTitle>
           <DialogDescription>
-            Set up your webhook endpoint to receive live events from Nivo.
+            Set up your webhook endpoint to receive live events.
           </DialogDescription>
         </DialogHeader>
 

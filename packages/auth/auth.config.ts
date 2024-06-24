@@ -65,10 +65,10 @@ export const authConfig = {
     authorized({ auth, request: { nextUrl } }) {
       const isLoggedIn = !!auth?.user
 
-      const isOnPublicPages = nextUrl.pathname.startsWith('/auth')
       const isOnWebhooks = nextUrl.pathname.startsWith('/api/webhooks')
       const isOnPublicAPIRoutes = nextUrl.pathname.startsWith('/api/auth')
       const isOnAPIRoutes = nextUrl.pathname.startsWith('/api')
+      const isOnPublicPages = nextUrl.pathname.startsWith('/auth')
       const isOnPrivatePages = !isOnPublicPages
 
       if (isOnWebhooks || isOnPublicAPIRoutes) {
@@ -76,7 +76,7 @@ export const authConfig = {
       }
 
       if (isOnPublicPages && isLoggedIn) {
-        return Response.redirect(new URL('/dashboard', nextUrl))
+        return Response.redirect(new URL('/', nextUrl))
       }
 
       if (isOnAPIRoutes && !isLoggedIn) {
@@ -84,7 +84,6 @@ export const authConfig = {
       }
 
       if (isOnPrivatePages && !isLoggedIn) {
-        // Redirect user back to sign in
         return false
       }
 

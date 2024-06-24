@@ -2,7 +2,7 @@
 
 import { useTheme } from 'next-themes'
 import Chart from 'react-apexcharts'
-import { teal } from 'tailwindcss/colors'
+import { violet } from 'tailwindcss/colors'
 
 interface ViewsCountChartProps {
   dates: string[]
@@ -51,7 +51,7 @@ export default function ViewsCountChart({
             formatter: (value) => Math.round(value).toString(),
           },
         },
-        colors: [teal[400]],
+        colors: [violet[400]],
         stroke: {
           curve: 'smooth',
           width: 2,
